@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.demo.MainActivity;
 import com.example.demo.R;
@@ -32,17 +34,13 @@ import java.util.List;
 
 public class GalleryFragment extends KeyDwonFragment {
 
-//    private MainActivity mContext;
-//    private TextView producto;
-//    private Spinner spTipoProducto, spClasProd, DescripcionProducto, spClaveProducto;
-//    public EditText numserie;
-//    public Button btn_imprimir;
-//
-//    private WebServiceManager webServiceManager;
-
-
-    private FragmentGalleryBinding binding;
+    private MainActivity mContext;
+    private TextView producto;
+    private Spinner spTipoProducto, spClasProd, DescripcionProducto, spClaveProducto;
+    private EditText numserie;
+    public Button btn_imprimir;
     private WebServiceManager webServiceManager;
+    private FragmentGalleryBinding binding;
     private boolean isLayout1 = true; // Variable para controlar el layout actual
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -85,8 +83,10 @@ public class GalleryFragment extends KeyDwonFragment {
         spinner3.setOnItemSelectedListener(listener);
         spinner4.setOnItemSelectedListener(listener);
 
-        // Configura el botón para cambiar el layout
-        buttonChangeLayout.setOnClickListener(new View.OnClickListener() {
+        btn_imprimir = root.findViewById(R.id.btn_imprimir);
+        numserie = root.findViewById(R.id.et_numeroser);
+
+        btn_imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cambiarLayout();
@@ -171,16 +171,14 @@ public class GalleryFragment extends KeyDwonFragment {
     }
 
     private void cambiarLayout() {
-        // Alterna entre los dos layouts
-        if (isLayout1) {
-            binding.getRoot().removeAllViews();
-            LayoutInflater.from(getContext()).inflate(R.layout.fragment_barcode, (ViewGroup) binding.getRoot(), true);
-            isLayout1 = false;
-        } else {
-            binding.getRoot().removeAllViews();
-            LayoutInflater.from(getContext()).inflate(R.layout.fragment_gallery, (ViewGroup) binding.getRoot(), true);
-            isLayout1 = true;
-        }
+        String codigo = numserie.getText().toString();
+        Bundle bundle = new Bundle();
+        bundle.putString("barcode", codigo);
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+        // Navegar al fragmento BarcodeFragment
+        navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
     }
 
     @Override
