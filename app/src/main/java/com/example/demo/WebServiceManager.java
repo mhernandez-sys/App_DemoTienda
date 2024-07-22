@@ -30,7 +30,7 @@ public class WebServiceManager {
             @Override
             protected String doInBackground(Void... voids) {
                 String NAMESPACE = "http://tempuri.org/";
-                String URL = "http://192.168.1.9/WebServices1.1/Procedimientos.asmx";
+                String URL = "http://192.168.1.13/WebServices1.1/Procedimientos.asmx";
                 String SOAP_ACTION = NAMESPACE + METHOD_NAME;
                 String res = "";
                 int timeout = 5000; // 5000 milisegundos (5 segundos)

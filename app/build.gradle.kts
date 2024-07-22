@@ -53,6 +53,9 @@ dependencies {
     implementation(fileTree(mapOf(
         "dir" to "C:\\Users\\vamaf\\AndroidStudioProjects\\gitdemo\\demo2\\app\\libs",
         "include" to listOf("*.aar", "*.jar"))))
+    implementation(fileTree(mapOf(
+        "dir" to "C:\\Users\\emanu\\demo principal\\App_DemoTienda\\app\\libs",
+        "include" to listOf("*.aar", "*.jar"))))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

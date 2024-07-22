@@ -19,6 +19,9 @@ import com.example.demo.R;
 import com.example.demo.WebServiceManager;
 import com.example.demo.main.KeyDwonFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,12 +82,12 @@ public class ClientesFragment extends KeyDwonFragment {
 
         // Crear propiedades para el web service
         Map<String, String> properties = new HashMap<>();
-        properties.put("nombreCliente", nombreCliente);
-        properties.put("rfc", rfc);
-        properties.put("claveCliente", claveCliente);
+        properties.put("nuevoNombre", nombreCliente);
+        properties.put("nuevoRFC", rfc);
+        properties.put("nuevaClave", claveCliente);
 
         // Llamar al web service
-        webServiceManager.callWebService("GuardarCliente", properties, new WebServiceManager.WebServiceCallback() {
+        webServiceManager.callWebService("GuardarClientes", properties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 handleSaveClientResult(result);
@@ -92,13 +95,27 @@ public class ClientesFragment extends KeyDwonFragment {
         });
     }
 
+
     private void handleSaveClientResult(String result) {
         // Manejar el resultado del web service
-        // Puedes agregar lógica para manejar el resultado aquí, por ejemplo:
-        if (result.equals("success")) {
-            Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Error al guardar el cliente", Toast.LENGTH_SHORT).show();
+        if (result == null || result.isEmpty()) {
+            Toast.makeText(getContext(), "Error al guardar el cliente: Respuesta vacía del servidor", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Aquí asumimos que el resultado contiene una respuesta JSON
+        try {
+            JSONObject jsonResponse = new JSONObject(result);
+            String status = jsonResponse.getString("status");
+            if (status.equals("success")) {
+                Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+            } else {
+                String errorMessage = jsonResponse.getString("message");
+                Toast.makeText(getContext(), "Error al guardar el cliente: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            Toast.makeText(getContext(), "Error al guardar el cliente: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 }
