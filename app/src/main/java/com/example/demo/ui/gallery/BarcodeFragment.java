@@ -1,41 +1,44 @@
 package com.example.demo.ui.gallery;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import android.os.Environment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.example.demo.R;
-import com.example.demo.assist.AddressRepo;
 import com.example.demo.main.KeyDwonFragment;
-import com.sewoo.jpos.command.ESCPOSConst;
-import com.sewoo.jpos.printer.ESCPOSPrinter;
-import com.sewoo.port.android.BluetoothPort;
-import com.sewoo.request.android.RequestHandler;
+
+import android.content.Intent;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Vector;
+
+import com.example.demo.assist.AddressRepo;
+import com.sewoo.jpos.command.ESCPOSConst;
+import com.sewoo.jpos.printer.ESCPOSPrinter;
+import com.sewoo.port.android.BluetoothPort;
+import com.sewoo.request.android.RequestHandler;
 
 public class BarcodeFragment extends KeyDwonFragment {
 
@@ -234,7 +237,7 @@ public class BarcodeFragment extends KeyDwonFragment {
 
     public void Print_Bar_2D(ESCPOSPrinter escposPrinter) throws UnsupportedEncodingException {
         String data = Et_datosLKP.getText().toString();
-        String data1 = ("\t\t      ")+ data + ("\r\n");
+        String data1 = ("\t  ")+ data + ("\r\n");
         escposPrinter.printString(data1);
         escposPrinter.printPDF417(data, data.length(), 0, 10, ESCPOSConst.LK_ALIGNMENT_LEFT);
         escposPrinter.printString("\r\n");
