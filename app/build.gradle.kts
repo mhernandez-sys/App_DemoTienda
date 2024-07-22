@@ -51,7 +51,7 @@ dependencies {
     implementation(files("libs\\Sewoo_Android_1113.jar"))
     implementation(files("libs\\xUtils-2.5.5.jar"))
     implementation(fileTree(mapOf(
-        "dir" to "C:\\Users\\emanu\\AndroidStudioProjects\\demo2\\app\\libs",
+        "dir" to "C:\\Users\\vamaf\\AndroidStudioProjects\\gitdemo\\demo2\\app\\libs",
         "include" to listOf("*.aar", "*.jar"))))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
