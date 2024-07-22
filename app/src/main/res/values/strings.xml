@@ -1,0 +1,322 @@
+<resources>
+    <string name="app_name">demo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Exportar datos</string>
+
+    <string name="Menu_Inicio">Inicio</string>
+    <string name="Menu_Producto">Productos</string>
+    <string name="Menu_CLI">Cliente</string>
+    <string name="Menu_PRO">Proveedor</string>
+    <string name="Menu_ENT">Entradas</string>
+    <string name="Menu_SAL">Salidas</string>
+    <string name="Menu_configuracion">Configuraciones</string>
+    <string name="Menu_inventario">Inventario</string>
+
+
+    <!-- res/values/styles.xml -->
+
+        <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
+            <item name="android:fontFamily">@font/coiny</item>
+            <!-- otros atributos -->
+        </style>
+
+        <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+            <item name="android:fontFamily">@font/coiny</item>
+            <!-- otros atributos -->
+        </style>
+
+
+    <!-- res/values/styles.xml -->
+        <style name="CustomEditTextStyle2" parent="Widget.AppCompat.EditText">
+            <item name="android:background">@drawable/edittext</item>
+            <item name="android:padding">12dp</item>
+            <item name="android:textColor">@color/black</item>
+            <item name="android:textSize">16sp</item>
+
+        </style>
+
+        <style name="CustomSpinnerStyle3" parent="Widget.AppCompat.Spinner">
+            <item name="android:background">@drawable/spinner</item>
+            <item name="android:padding">12dp</item>
+            <item name="android:textColor">@color/black</item>
+            <item name="android:textSize">16sp</item>
+        </style>
+
+<!--    <string name="app_name">Arkcom</string>-->
+<!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
+<!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
+<!--    <string name="nav_header_title">Android Studio</string>-->
+<!--    <string name="nav_header_subtitle">android.studio@android.com</string>-->
+<!--    <string name="nav_header_desc">Navigation header</string>-->
+<!--    <string name="action_settings">Exportar DAtos</string>-->
+    <string name="action_uhf_ver">UHF Version</string>
+    <string name="Error_1">Error de conexion !!!</string>
+    <string name="carga">Volver a cargar</string>
+
+
+
+
+
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_inicio1">Menu</string>
+    <string name="menu_home">Asignación</string>
+    <string name="menu_gallery">Altas</string>
+    <string name="menu_slideshow">Bajas</string>
+    <string name="menu_Configuraciones">Configuraciones</string>
+    <string name="menu_inventario">Inventario</string>
+
+    <string name="close">cerrar</string>
+
+    ---En esta parte van los titulos para Scanner
+    <string name="UHF_Filtro">Filtro</string>
+    --El termino rb Se refiere a radiobutton
+    <string name="rbInventarioUnico">Inventario Unico</string>
+    <string name="rbAuto">Automatico</string>
+    --El termino tv se refiere a TextView
+    <string name="tvPtr">Ptr</string>
+    <string name="tvLongitud">Longitud</string>
+    <string name="tvDatosaleer">Datos a Leer</string>
+    <string name="tvEPC">EPC</string>
+    <string name="tvTagsContados">Cuenta</string>
+    --El termino bt se refiere a Boton
+    <string name="btInventario">Iniciar</string>
+    <string name="btLimpiar">Limpiar</string>
+    <string name="btverificar">Verificar</string>
+    <string name="tiempo_d_s">Tiempo：%f s</string>
+    --Mensajes del lector
+    <string name="MSG_Filtro_hexadecimal">Los datos del filtro deben ser hexadecimales.</string>
+    <string name="MSG_Filtro_exitoso">Se establecio el filtro correctamente</string>
+    <string name="MSG_Fallo_en_el_filtro">Fallo al establecer el filtro</string>
+    <string name="MSG_Desabolitar_exito">Deshabilitar el éxito</string>
+    <string name="MSG_Desabilitar_fallo">Deshabilitar falla</string>
+    --Boton de inicio y final
+    <string name="btInventory">Inicio</string>
+    <string name="title_stop_Inventory">Parar</string>
+    --Mensajes para FileManagerActivity
+    <string name="PermisoDenegado">Sin permisos</string>
+    <string name="current_dir">.(refrescar)</string>
+    <string name="up_one_level">..(up)</string>
+    <string name="file_title_sel_file">Elija el archivo</string>
+    <string name="file_title_sel_file_confirm">¿Estás seguro de seleccionar el archivo?</string>
+    <string name="file_btn_confirm">Confirmar</string>
+    <string name="file_btn_cancel">Cancelar</string>
+    <string name="file_msg_cancel">Cancelar</string>
+
+    --Mensajes para configuraciones
+    <string name="Configuraciones">Configuraciones</string>
+    <string name="Configuraciones_comunes">Configuraciones basicas</string>
+    <string name="tvMode">Modo de Trabajo：</string>
+
+    <string name="ETSI_Standard">ETSI Standard(865~868MHz)</string>
+    <string name="United_States_Standard">United States Standard(902~928MHz)</string>
+    <string name="Fixed_Frequency_915MHz">Fixed Frequency(915MHz)</string>
+    <string name="Korea">Korea</string>
+    <string name="Japan">Japan</string>
+    <string name="Morocco">Morocco</string>
+    <string name="China_Standard_840_845MHz">China Standard(840~845MHz)</string>
+    <string name="China_Standard_920_925MHz">China Standard(920~925MHz)</string>
+    <string name="South_Africa_915_919MHz">South Africa(915~919MHz)</string>
+    <string name="New_Zealand">New Zealand</string>
+    <string-array name="matrisfre">
+        <item>@string/ETSI_Standard</item>
+        <item>@string/United_States_Standard</item>
+        <item>@string/China_Standard_840_845MHz</item>
+        <item>@string/China_Standard_920_925MHz</item>
+        <item>@string/South_Africa_915_919MHz</item>
+        <item>@string/Korea</item>
+        <item>@string/Japan</item>
+        <item>@string/Morocco</item>
+        <item>@string/New_Zealand</item>
+    </string-array>
+
+    <string name="btEstFre">Establecer Frecuencia</string>
+    <string name="btObtFre">Obtener Frecuencia</string>
+
+
+    <!-- potencia -->
+    <string name="Poten_salida">Potencia de salida：</string>
+    <string name="Est_pot">Establecer potencia</string>
+    <string name="Est_PWM">Establecer Pwm</string>
+    <string name="Obt_pwm">Obtener Pwm</string>
+    <string name="Obt_pot">Obtener potencia</string>
+    <string name="tiulo_dbm">dBm</string>
+    <string name="tvProtocolo">Protocolo：</string>
+    <string name="btEst_Protocolo">Establecer protocolo</string>
+
+    <string-array name="arrayProtocol" translatable="false">
+        <item>ISO 18000-6C</item>
+        <item>GB/T 29768</item>
+        <item>GJB 7377.1</item>
+        <item>ISO 18000-6B</item>
+    </string-array>
+
+    <string name="Enlace_RF">Enlace RF：</string>
+    <string name="uhf_btn_set_link">Establecer enlace</string>
+    <string name="uhf_btn_get_link">Obtener Link</string>
+
+    <string-array name="arrayLink" translatable="false">
+        <item>DSB_ASK/FM0/40KHz</item>
+        <item>PR_ASK/Miller4/250KHz</item>
+        <item>PR_ASK/Miller4/300KHz</item>
+        <item>DSB_ASK/FM0/400KHz</item>
+    </string-array>
+
+    <string name="tagFocus">Abra el enfoque de TAG</string>
+    <string name="fastID">Abra el ID rápido</string>
+    <string name="EPC_TID">Abra el EPC y el TID</string>
+    <string name="fastID_off">Cierra el ID rápido</string>
+    <string name="EPC_TID_off">Cierra el EPC y el TID</string>
+
+    <string name="setAgreement_succ">Establecer éxito</string>
+    <string name="setAgreement_fail">Establecer error</string>
+
+    <string name="bt_Conse">Conseguir</string>
+    <string name="er_dsoft_get_Set">Colocar</string>
+
+    <string name="freHopType">Tipo de salto：</string>
+    <string name="China">China</string>
+    <string name="Europe">Europa</string>
+    <string name="America">America</string>
+    <string name="Others">Otros</string>
+
+    <string name="tvFreHop">Hop：</string>
+    <string-array name="arrayFreHop_us" translatable="false">
+        <item>902.75</item>
+        <item>903.25</item>
+        <item>903.75</item>
+        <item>904.25</item>
+        <item>904.75</item>
+        <item>905.25</item>
+        <item>905.75</item>
+        <item>906.25</item>
+        <item>906.75</item>
+        <item>907.25</item>
+        <item>907.75</item>
+        <item>908.25</item>
+        <item>908.75</item>
+        <item>909.25</item>
+        <item>909.75</item>
+        <item>910.25</item>
+        <item>910.75</item>
+        <item>911.25</item>
+        <item>911.75</item>
+        <item>912.25</item>
+        <item>912.75</item>
+        <item>913.25</item>
+        <item>913.75</item>
+        <item>914.25</item>
+        <item>914.75</item>
+        <item>915.25</item>
+        <item>915.75</item>
+        <item>916.25</item>
+        <item>916.75</item>
+        <item>917.25</item>
+        <item>917.75</item>
+        <item>918.25</item>
+        <item>918.75</item>
+        <item>919.25</item>
+        <item>919.75</item>
+        <item>920.25</item>
+        <item>920.75</item>
+        <item>921.25</item>
+        <item>921.75</item>
+        <item>922.25</item>
+        <item>922.75</item>
+        <item>923.25</item>
+        <item>923.75</item>
+        <item>924.25</item>
+        <item>924.75</item>
+        <item>925.25</item>
+        <item>925.75</item>
+        <item>926.25</item>
+        <item>926.75</item>
+        <item>927.25</item>
+
+    </string-array>
+
+    <string-array name="arrayFreHop" translatable="false">
+        <item>865.700</item>
+        <item>866.300</item>
+        <item>866.900</item>
+        <item>867.500</item>
+        <item>920.625</item>
+        <item>920.875</item>
+        <item>921.125</item>
+        <item>921.375</item>
+        <item>921.625</item>
+        <item>921.875</item>
+        <item>922.125</item>
+        <item>922.375</item>
+        <item>922.625</item>
+        <item>922.875</item>
+        <item>923.125</item>
+        <item>923.375</item>
+        <item>923.625</item>
+        <item>923.875</item>
+        <item>924.125</item>
+        <item>924.375</item>
+
+    </string-array>
+
+    <string name="btSetFreHop">Colocar FreHop</string>
+
+    --Mensajes para Configuraciones
+    <string name="uhf_msg_set_succ">Exitoso</string>
+    <string name="uhf_msg_set_fail">Fallo</string>
+    <string name="uhf_msg_set_frequency_fail">Establecer la frecuencia de fallo</string>
+    <string name="uhf_msg_set_frequency_succ">Establecer la frecuencia de éxito</string>
+    <string name="uhf_msg_read_frequency_fail">Leer el fallo de frecuencia.</string>
+    <string name="tagFocus_off">Cerrar la etiquetaEnfocar</string>
+    <string name="uhf_msg_read_power_fail">Leer el corte de energía</string>
+    <string name="uhf_msg_read_power_succ">Lea el éxito del poder.</string>
+    <string name="uhf_msg_set_power_fail">Configurar el corte de energía</string>
+    <string name="uhf_msg_set_power_succ">Establecer el éxito del poder</string>
+    <string name="uhf_msg_set_frehop_succ">Establecer la frecuencia Salto exitoso</string>
+    <string name="uhf_msg_set_frehop_fail">Establecer la frecuencia Fallo de salto</string>
+
+    <string name="uhf_msg_get_para_succ">Exito</string>
+    <string name="uhf_msg_get_para_fail">Fallo</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    --Mensajes para la pantalla de inicio
+    <string name="Inicio">Bienvenido a ARKCOM</string>
+    <string name="Saludo">Es un gusto tenerlo de vuelta !!!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Fragmento de altas</string>
+
+
+    --Mensajes para la pantalla de readtag
+    <string name="button_enable">Activar</string>
+    <string name="button_disable">Desactivar</string>
+    <string name="tvData_Read">Lectura de datos:</string>
+    <string name="tvBank">Bank：</string>
+    <string-array name="arrayBank">
+        <item><R>RESERVADA</R></item>
+        <item>EPC</item>
+        <item>TID</item>
+        <item>USIARIO</item>
+    </string-array>
+    <string name="tvLen">Len：</string>
+    <string name="tvAccessPwd">Access Pwd：</string>
+    <string name="btRead">Leer</string>
+    <string name="uhf_msg_filter_data_must_hex">Los datos del filtro deben ser hexadecimales.</string>
+    <string name="uhf_msg_addr_not_null">La direccion nu puede estar vacia </string>
+    <string name="uhf_msg_addr_must_decimal">La dirección debe ser un dato decimal.</string>
+    <string name="uhf_msg_len_not_null">La longitud no puede estar vacía</string>
+    <string name="uhf_msg_len_must_decimal">La longitud debe ser un dato decimal</string>
+    <string name="uhf_msg_addr_must_len8">La longitud de la contraseña de acceso debe ser 8</string>
+    <string name="rfid_mgs_error_nohex">Por favor ingrese el contenido del número hexadecimal</string>
+    <string name="uhf_msg_filter_addr_not_null">FiLa dirección del filtro no puede estar vacía</string>
+    <string name="uhf_msg_filter_len_not_null">La longitud del filtro no puede estar vacía</string>
+    <string name="uhf_msg_filter_data_not_null">Los datos del filtro no pueden estar vacíos</string>
+    <string name="uhf_msg_read_data_fail">Error de lectura</string>
+
+
+
+
+</resources>

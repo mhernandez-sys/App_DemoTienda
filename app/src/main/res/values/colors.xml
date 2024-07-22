@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="azulgrism">#93b7be</color>
+    <color name="azulgris">#93b7be</color>
+    <color name="azulgrisc">#F1FFFA</color>
+    <color name="azulclaro">#93B7BE</color>
+    <color name="azul3">#C6C4C4</color>
+    <color name="azul2">#E5F2C9</color>
+    <color name="azul1">#33658a</color>
+    <color name="azul">#7F534B</color>
+    <color name="azuld">#D5C7BC</color>
+    <color name="azulc">#B9BFD4</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    --Tonalidades de rojo 3A3A3, 93b7be, 33658a
+    <color name="red">#F60000</color>
+    <color name="red1">#6E0202</color>
+    <color name="red2">#CD1717</color>
+    --Tonalidades de gris
+    <color name="gris">#736F6F</color>
+    <color name="gris4">#B3AFAF</color>
+    <color name="gris5">#4A4949</color>
+    --colores Azules
+    <color name="azul.0">#000099</color>
+    <color name="azul1.1">#000066</color>
+    <color name="azul2.1">#000033</color>
+    --colores primarios de app
+    <color name="gris1">#676363</color>
+    <color name="gris2">#232323</color>
+    <color name="gris3">#8E8888</color>
+
+    --login
+    <color name="grisclaro">#F5F5F5</color>
+    <color name="grismedio">#E0E0E0</color>
+    <color name="azulgris2">#ECEFF1</color>
+</resources>

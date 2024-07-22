@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.demo.ui.inicio.InicioFragment"
+        android:label="@string/Menu_Inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.demo.ui.gallery.GalleryFragment"
+        android:label="@string/Menu_Producto"
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_barcode"
+            app:destination="@id/nav_barcode" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_barcode"
+        android:name="com.example.demo.ui.gallery.BarcodeFragment"
+        tools:layout="@layout/fragment_barcode" />
+
+    <fragment
+        android:id="@+id/nav_clientes"
+        android:name="com.example.demo.ui.FragDinamico.ClientesFragment"
+        android:label="@string/Menu_CLI"
+        tools:layout="@layout/fragment_clientes" />
+
+    <fragment
+        android:id="@+id/nav_proveedores"
+        android:name="com.example.demo.ui.FragDinamico.ProveedorFragment"
+        android:label="@string/Menu_PRO"
+        tools:layout="@layout/fragment_proveedor" />
+
+    <fragment
+        android:id="@+id/nav_entradas"
+        android:name="com.example.demo.ui.Entrada_y_Salidas.EntradasFragment"
+        android:label="@string/Menu_ENT"
+        tools:layout="@layout/fragment_entradas" />
+
+    <fragment
+        android:id="@+id/nav_salidas"
+        android:name="com.example.demo.ui.Entrada_y_Salidas.SalidasFragment"
+        android:label="@string/Menu_SAL"
+        tools:layout="@layout/fragment_salidas" />
+
+    <fragment
+        android:id="@+id/nav_inventario"
+        android:name="com.example.demo.ui.Inventario.InventarioFragment"
+        android:label="@string/Menu_inventario"
+        tools:layout="@layout/fragment_inventario" />
+
+    <fragment
+        android:id="@+id/nav_configuraciones"
+        android:name="com.example.demo.ui.configuraciones.ConfiguracionFragment"
+        android:label="@string/Menu_configuracion"
+        tools:layout="@layout/fragment_configuracion" />
+</navigation>

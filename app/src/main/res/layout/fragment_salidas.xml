@@ -1,0 +1,65 @@
+<!-- res/layout/activity_main.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Spinner
+            android:id="@+id/spinner_salida_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borde_redondeado2" />
+
+        <Spinner
+            android:id="@+id/spinner_salida_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borde_redondeado2" />
+
+        <EditText
+            android:id="@+id/edit_text_salida_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cantidad de salidas"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borde_redondeado" />
+
+        <EditText
+            android:id="@+id/edit_text_salida_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de salida"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borde_redondeado" />
+
+        <CheckBox
+            android:id="@+id/checkbox_salida_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lotes"
+            android:layout_marginBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_salida_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Número de serie"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/button_save_salida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar Salidas"
+            android:backgroundTint="@color/boton_colores"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

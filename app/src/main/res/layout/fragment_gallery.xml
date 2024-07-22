@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.gallery.GalleryFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_add_tipo"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:text="Descripcion del Activo:"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="14dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/producto"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:background="@drawable/bordetv"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_add_descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:text="Tipo Prod:"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_TipoProducto"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/borde_redondeado2">
+                <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_add_valor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:text="Clasifica Prod:"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_ClasProd"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/borde_redondeado2">
+                <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_add_unidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:text="Desc Prod:"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/DescripcionProducto"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/borde_redondeado2">
+                <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_add_claveActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:text="Clav Prod:"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/sp_ClaveProducto"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/borde_redondeado2">
+                <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/numserie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="N.Ser:"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/et_numeroser"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/borde_redondeado"
+                android:hint="Ingrese Número de Serie"
+                android:contentDescription="Campo para ingresar Número de Serie"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:longClickable="false"
+                android:cursorVisible="false" />
+        </LinearLayout>
+
+<!--       -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:gravity="center">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/asignacion"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Asig A:"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/sp_Asignacion"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_weight="0.255"-->
+<!--                android:background="@drawable/borde_redondeado" />-->
+<!--            &lt;!&ndash; Aquí coloca los elementos que desees dentro del Spinner &ndash;&gt;-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:gravity="center">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/RFID"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="RFID:"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_rfid"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_weight="0.25"-->
+<!--                android:background="@drawable/borde_redondeado"-->
+<!--                android:hint="Ingrese RFID"-->
+<!--                android:contentDescription="Campo para ingresar RFID" />-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:gravity="center">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/numserie"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:text="N.Ser:"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_weight="1" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_numeroser"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_weight="0.25"-->
+<!--                android:background="@drawable/borde_redondeado"-->
+<!--                android:hint="Ingrese Número de Serie"-->
+<!--                android:contentDescription="Campo para ingresar Número de Serie" />-->
+<!--        </LinearLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnguardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Guardar"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/boton_colores"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:visibility="gone"/>
+
+
+            <Button
+                android:id="@+id/btn_imprimir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="imprimir"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/boton_colores"
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
+
+
+            <Button
+                android:id="@+id/btncancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Cancelar"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/boton_colores"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

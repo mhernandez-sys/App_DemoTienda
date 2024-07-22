@@ -1,0 +1,12 @@
+<!-- res/drawable/custom_spinner_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/azulc"/>
+            <corners android:radius="8dp"/>
+            <stroke android:width="1dp" android:color="@color/gris5"/>
+            <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp"/>
+<!--            <shadow android:color="#80000000" android:dx="0" android:dy="1" android:radius="3"/>-->
+        </shape>
+    </item>
+</selector>

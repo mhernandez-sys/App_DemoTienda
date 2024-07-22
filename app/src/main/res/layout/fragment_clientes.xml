@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_text_cliente_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de Cliente"
+        android:background="@drawable/borde_redondeado"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/edit_text_cliente_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="RFC"
+        android:background="@drawable/borde_redondeado"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/edit_text_cliente_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Clave cliente"
+        android:background="@drawable/borde_redondeado"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/button_save_cliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar Cliente"
+        android:backgroundTint="@color/boton_colores"
+        android:textColor="@color/white"/>
+</LinearLayout>

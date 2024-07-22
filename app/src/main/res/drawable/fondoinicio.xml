@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo de la imagen -->
+    <item>
+        <bitmap
+            android:src="@drawable/fondog"
+            android:gravity="center"
+            android:alpha="0.6"/>
+    </item>
+
+    <!-- Puedes agregar más elementos, como formas o gradientes, encima de la imagen si lo deseas -->
+
+</layer-list>

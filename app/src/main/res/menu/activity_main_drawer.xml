@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_24"
+            android:title="@string/Menu_Inicio" />
+
+
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/lector"
+            android:title="@string/Menu_Producto" />
+
+        <item
+            android:id="@+id/nav_clientes"
+            android:icon="@drawable/cliente"
+            android:title="@string/Menu_CLI" />
+
+        <item
+            android:id="@+id/nav_proveedores"
+            android:icon="@drawable/proveedores"
+            android:title="@string/Menu_PRO" />
+
+        <item
+            android:id="@+id/nav_entradas"
+            android:icon="@drawable/caja"
+            android:title="@string/Menu_ENT"/>
+
+        <item
+            android:id="@+id/nav_salidas"
+            android:icon="@drawable/carga"
+            android:title="@string/Menu_SAL"/>
+
+        <item
+            android:id="@+id/nav_inventario"
+            android:icon="@drawable/icono_de_tareas"
+            android:title="@string/Menu_inventario" />
+
+        <item
+            android:id="@+id/nav_configuraciones"
+            android:icon="@drawable/confi"
+            android:title="@string/Menu_configuracion" />
+
+
+    </group>
+</menu>

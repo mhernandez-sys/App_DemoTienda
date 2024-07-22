@@ -1,0 +1,59 @@
+<!-- res/layout/fragment_entradas.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Spinner
+        android:id="@+id/spinner_entrada_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borde_redondeado2"/>
+
+    <Spinner
+        android:id="@+id/spinner_entrada_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borde_redondeado2"/>
+
+    <EditText
+        android:id="@+id/edit_text_entrada_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cantidad de entrada"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borde_redondeado"/>
+
+    <EditText
+        android:id="@+id/edit_text_entrada_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de entrada"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borde_redondeado"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_entrada_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lotes"
+        android:layout_marginBottom="8dp"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_entrada_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número de serie"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/button_save_entrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar Entradas"
+        android:backgroundTint="@color/boton_colores"
+        android:textColor="@color/white"/>
+</LinearLayout>
