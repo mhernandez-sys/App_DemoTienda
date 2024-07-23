@@ -1,5 +1,6 @@
 package com.example.demo.ui.FragDinamico;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -9,11 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
@@ -30,9 +34,7 @@ public class ProveedorFragment extends KeyDwonFragment {
     private Button buttonSaveCliente;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
 
-    public static ClientesFragment newInstance() {
-        return new ClientesFragment();
-    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,6 +56,14 @@ public class ProveedorFragment extends KeyDwonFragment {
             public void onClick(View v) {
                 saveClient();
                 limpiar();
+                FragmentManager fragmentManager = getParentFragmentManager();
+
+                // Comprueba que haya tenido un fragmento anteriormente
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    // Regresa al fragmento anterior
+                    fragmentManager.popBackStack();
+                }
+
             }
 
             private void limpiar() {
@@ -67,6 +77,44 @@ public class ProveedorFragment extends KeyDwonFragment {
 //                spinner2.setSelection(0);
             }
         });
+
+        // Configurar los EditTexts para cambiar el foco al presionar Enter
+        editTextproveedor1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    editTextproveedor2.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editTextproveedor2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    editTextproveedor3.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editTextproveedor3.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    buttonSaveCliente.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Establecer el foco inicial en el EditText de nombre
+        editTextproveedor1.requestFocus();
+
 
         return view;
     }
