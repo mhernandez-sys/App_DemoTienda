@@ -2,6 +2,7 @@ package com.example.demo;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -16,15 +17,12 @@ import java.util.Map;
 public class WebServiceManager {
 
     private final Context mContext;
-    private androidx.appcompat.app.AlertDialog dialog;
 
     public WebServiceManager(Context context) {
         this.mContext = context;
     }
 
-
     public void callWebService(final String METHOD_NAME, final Map<String, String> properties, final WebServiceCallback callback) {
-
 
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -61,6 +59,7 @@ public class WebServiceManager {
 
             @Override
             protected void onPostExecute(String result) {
+                Log.d("WebServiceManager", "WebService Result: " + result);
                 if (callback != null) {
                     callback.onWebServiceCallComplete(result);
                 }
