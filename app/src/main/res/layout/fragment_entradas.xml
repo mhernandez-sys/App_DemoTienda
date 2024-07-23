@@ -65,13 +65,13 @@
                 android:id="@+id/TV_Cajas"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Num. de cajas:"
-                android:visibility="gone"
-                android:textSize="16sp"
+                android:layout_gravity="center"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Num. de cajas:"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/Et_CanCajas"
@@ -80,8 +80,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:hint="Inserte cantidad"
-                android:textSize="16dp"
                 android:inputType="number"
+                android:textSize="16dp"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -95,13 +95,13 @@
                 android:id="@+id/TV_Cantidad"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Piezas:"
-                android:visibility="gone"
-                android:textSize="16sp"
+                android:layout_gravity="center"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Piezas:"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/ET_PiezasCaja"
@@ -110,8 +110,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:hint="Numero de piezas"
-                android:textSize="16dp"
                 android:inputType="number"
+                android:textSize="16dp"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -120,11 +120,11 @@
             android:id="@+id/BT_Añadir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:backgroundTint="@color/boton_colores"
             android:text="Añadir"
             android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
