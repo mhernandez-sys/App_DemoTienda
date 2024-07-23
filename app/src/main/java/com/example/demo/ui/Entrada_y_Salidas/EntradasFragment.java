@@ -1,5 +1,6 @@
 package com.example.demo.ui.Entrada_y_Salidas;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -17,8 +18,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.main.KeyDwonFragment;
@@ -29,8 +32,9 @@ public class EntradasFragment extends KeyDwonFragment {
     private CheckBox CB_Lotes, CB_Unidad;
     private Spinner Sp_Provedor, SP_Producto;
     private TextView TV_Cantidad, TV_Cajas;
-    private EditText ET_Can_Lotes, ET_ArtEsperados, Et_CanCajas;
+    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas;
     private Button BT_Añadir;
+    private String Ban_leido = "";
 
     public static EntradasFragment newInstance() {
         return new EntradasFragment();
@@ -53,24 +57,25 @@ public class EntradasFragment extends KeyDwonFragment {
 
         TV_Cajas = root.findViewById(R.id.TV_Cajas);
         TV_Cantidad = root.findViewById(R.id.TV_Cantidad);
-        ET_Can_Lotes = root.findViewById(R.id.et_piezascaja);
+        ET_PiezasCaja = root.findViewById(R.id.ET_PiezasCaja);
         ET_ArtEsperados = root.findViewById(R.id.ET_ArtEsperados);
         Et_CanCajas = root.findViewById(R.id.Et_CanCajas);
+
 
         CB_Lotes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (isChecked) {
+                    CB_Unidad.setChecked(false);
                     // Mostrar TextView y EditText
-                    ET_Can_Lotes.setVisibility(View.VISIBLE);
+                    ET_PiezasCaja.setVisibility(View.VISIBLE);
                     TV_Cantidad.setVisibility(View.VISIBLE);
                     Et_CanCajas.setVisibility(View.VISIBLE);
                     TV_Cajas.setVisibility(View.VISIBLE);
                     BT_Añadir.setVisibility(View.VISIBLE);
                 }else{
                     // Ocultar TextView y EditText
-                    ET_Can_Lotes.setVisibility(View.GONE);
+                    ET_PiezasCaja.setVisibility(View.GONE);
                     TV_Cantidad.setVisibility(View.GONE);
                     BT_Añadir.setVisibility(View.GONE);
                     Et_CanCajas.setVisibility(View.GONE);
@@ -83,6 +88,7 @@ public class EntradasFragment extends KeyDwonFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    CB_Lotes.setChecked(false);
                     cantidadIngresada = ET_ArtEsperados.getText().toString();
                     showCustomAlertDialog("Número de serie");
                 }
@@ -94,7 +100,7 @@ public class EntradasFragment extends KeyDwonFragment {
             @Override
             public void onClick(View v) {
                 cantidadIngresada = ET_ArtEsperados.getText().toString();
-                showCustomAlertDialog("Número de lote");
+                showCustomAlertDialog("QR Caja");
             }
         });
         return root;
@@ -118,38 +124,101 @@ public class EntradasFragment extends KeyDwonFragment {
 
         AlertDialog alertDialog = builder.create();
 
-        TextView tvCantidadLabel = dialogView.findViewById(R.id.tv_cantidad_label);
-        TextView tvCantidadValue = dialogView.findViewById(R.id.tv_cantidad_value);
-        EditText etLoteSerie = dialogView.findViewById(R.id.et_lote_serie);
-        TextView tvEntradasLeidas = dialogView.findViewById(R.id.tv_entradas_leidas);
-        TextView tvEntradas = dialogView.findViewById(R.id.tv_entradas);
+        TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
+        TextView TV_CajasLeidas = dialogView.findViewById(R.id.TV_CajasLeidas);
+        TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
+        LinearLayout llPorCajas = dialogView.findViewById(R.id.LL_PorCajas);
+        EditText ET_Numserie = dialogView.findViewById(R.id.ET_Numserie);
         Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
+        Button BT_Siguiente = dialogView.findViewById(R.id.BT_Siguiente);
+        String seleccionado = hintText;
 
-        tvCantidadLabel.setText("Cantidad Esp");
-        tvCantidadValue.setText(cantidadIngresada);
-        etLoteSerie.setHint(hintText);
+
+        TV_CanEsperada.setText(cantidadIngresada);
+        ET_Numserie.setHint(hintText);
+        // Establecer el foco en el EditText
+        ET_Numserie.requestFocus();
+
+        if (hintText.equals("QR Caja")){
+            llPorCajas.setVisibility(View.VISIBLE);
+            BT_Siguiente.setVisibility(View.VISIBLE);
+            btnCompletar.setVisibility(View.GONE);
+
+        }else {
+            llPorCajas.setVisibility(View.GONE);
+            BT_Siguiente.setVisibility(View.VISIBLE);
+            btnCompletar.setVisibility(View.GONE);
+        }
+
 
         // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
-        etLoteSerie.addTextChangedListener(new TextWatcher() {
+        ET_Numserie.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Actualiza el TextView de entradas leídas
-                tvEntradas.setText(s);
+                // Aquí puedes agregar cualquier lógica que necesites ejecutar cuando el texto cambia
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                try {
+                    if(!Ban_leido.equals("1")) {
+                        Ban_leido = "1";
+                        if (seleccionado.equals("QR Caja")) {
+                            // Suma de los artículos leídos
+                            int datopz = Integer.parseInt(ET_PiezasCaja.getText().toString());
+                            int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                            int suma = datopz + datoleidos;
+                            TV_ArtLeidos.setText(String.valueOf(suma));
+
+                            // Suma de las cajas leídas
+                            int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
+                            numcajas++;
+                            TV_CajasLeidas.setText(String.valueOf(numcajas));
+                        } else {
+                            // Suma de los artículos leídos
+                            int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                            datoleidos++;
+                            TV_ArtLeidos.setText(String.valueOf(datoleidos));
+                        }
+
+                    }
+                } catch (NumberFormatException e) {
+                    // Manejar la excepción si los valores no son números válidos
+                    Toast.makeText(getContext(), "Por favor, ingrese números válidos.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btnCompletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+
+                // Comprueba que haya tenido un fragmento anteriormente
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    // Regresa al fragmento anterior
+                    fragmentManager.popBackStack();
+                }
                 alertDialog.dismiss();
+            }
+        });
+
+        BT_Siguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ET_Numserie.setText("");
+                Ban_leido="0";
+
+                String articulos = TV_ArtLeidos.getText().toString();
+                if (articulos.equals(ET_ArtEsperados.getText().toString())) {
+                    BT_Siguiente.setVisibility(View.GONE);
+                    btnCompletar.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 

@@ -104,7 +104,7 @@
                 android:gravity="center"/>
 
             <EditText
-                android:id="@+id/et_piezascaja"
+                android:id="@+id/ET_PiezasCaja"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -172,11 +172,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_save_entrada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar Entradas"
-        android:backgroundTint="@color/boton_colores"
-        android:textColor="@color/white"/>
 </LinearLayout>

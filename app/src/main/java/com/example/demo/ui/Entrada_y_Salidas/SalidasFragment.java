@@ -68,40 +68,40 @@ public class SalidasFragment extends KeyDwonFragment {
 
         AlertDialog alertDialog = builder.create();
 
-        TextView tvCantidadLabel = dialogView.findViewById(R.id.tv_cantidad_label);
-        TextView tvCantidadValue = dialogView.findViewById(R.id.tv_cantidad_value);
-        EditText etLoteSerie = dialogView.findViewById(R.id.et_lote_serie);
-        TextView tvEntradasLeidas = dialogView.findViewById(R.id.tv_entradas_leidas);
-        TextView tvEntradas = dialogView.findViewById(R.id.tv_entradas);
-        Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
+//        TextView tvCantidadLabel = dialogView.findViewById(R.id.tv_cantidad_label);
+//        TextView tvCantidadValue = dialogView.findViewById(R.id.tv_cantidad_value);
+//        EditText etLoteSerie = dialogView.findViewById(R.id.et_lote_serie);
+//        TextView tvEntradasLeidas = dialogView.findViewById(R.id.tv_entradas_leidas);
+//        TextView tvEntradas = dialogView.findViewById(R.id.tv_entradas);
+//        Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
 
-        tvCantidadLabel.setText("Cantidad Esp");
-        tvCantidadValue.setText(cantidadIngresada);
-        etLoteSerie.setHint(hintText);
+//        tvCantidadLabel.setText("Cantidad Esp");
+//        tvCantidadValue.setText(cantidadIngresada);
+//        etLoteSerie.setHint(hintText);
 
-        // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
-        etLoteSerie.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Actualiza el TextView de entradas leídas
-                tvEntradas.setText(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        btnCompletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+//        // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
+//        etLoteSerie.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                // Actualiza el TextView de entradas leídas
+//                tvEntradas.setText(s);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+//
+//        btnCompletar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertDialog.dismiss();
+//            }
+//        });
 
         alertDialog.show();
     }
