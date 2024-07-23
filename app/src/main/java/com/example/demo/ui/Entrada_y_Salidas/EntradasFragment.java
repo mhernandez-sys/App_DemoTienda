@@ -7,14 +7,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -28,6 +26,11 @@ public class EntradasFragment extends KeyDwonFragment {
 
     private EntradasViewModel mViewModel;
     private String cantidadIngresada;
+    private CheckBox CB_Lotes, CB_Unidad;
+    private Spinner Sp_Provedor, SP_Producto;
+    private TextView TV_Cantidad, TV_Cajas;
+    private EditText ET_Can_Lotes, ET_ArtEsperados, Et_CanCajas;
+    private Button BT_Añadir;
 
     public static EntradasFragment newInstance() {
         return new EntradasFragment();
@@ -39,48 +42,61 @@ public class EntradasFragment extends KeyDwonFragment {
         View root = inflater.inflate(R.layout.fragment_entradas, container, false);
 
         // Obtén los Spinners del layout
-        Spinner spinner1 = root.findViewById(R.id.spinner_entrada_1);
-        Spinner spinner2 = root.findViewById(R.id.spinner_entrada_2);
-
-        // Datos para los Spinners
-        String[] datosSpinner1 = {"Opción 1", "Opción 2", "Opción 3"};
-        String[] datosSpinner2 = {"Elemento A", "Elemento B", "Elemento C"};
-
-        // Adaptador para el primer Spinner
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(adapter1);
-
-        // Adaptador para el segundo Spinner
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner2);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(adapter2);
+        Sp_Provedor = root.findViewById(R.id.spinner_entrada_1);
+        SP_Producto = root.findViewById(R.id.spinner_entrada_2);
 
         // Obtén los CheckBoxes y el EditText del layout
-        CheckBox checkboxEntrada1 = root.findViewById(R.id.checkbox_entrada_1);
-        CheckBox checkboxEntrada2 = root.findViewById(R.id.checkbox_entrada_2);
-        EditText editTextCantidad = root.findViewById(R.id.edit_text_entrada_1);
+        CB_Lotes = root.findViewById(R.id.CB_Lotes);
+        CB_Unidad = root.findViewById(R.id.CB_Unidad);
 
-        checkboxEntrada1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        BT_Añadir = root.findViewById(R.id.BT_Añadir);
+
+        TV_Cajas = root.findViewById(R.id.TV_Cajas);
+        TV_Cantidad = root.findViewById(R.id.TV_Cantidad);
+        ET_Can_Lotes = root.findViewById(R.id.et_piezascaja);
+        ET_ArtEsperados = root.findViewById(R.id.ET_ArtEsperados);
+        Et_CanCajas = root.findViewById(R.id.Et_CanCajas);
+
+        CB_Lotes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if (isChecked) {
-                    cantidadIngresada = editTextCantidad.getText().toString();
-                    showCustomAlertDialog("Número de lote");
+                    // Mostrar TextView y EditText
+                    ET_Can_Lotes.setVisibility(View.VISIBLE);
+                    TV_Cantidad.setVisibility(View.VISIBLE);
+                    Et_CanCajas.setVisibility(View.VISIBLE);
+                    TV_Cajas.setVisibility(View.VISIBLE);
+                    BT_Añadir.setVisibility(View.VISIBLE);
+                }else{
+                    // Ocultar TextView y EditText
+                    ET_Can_Lotes.setVisibility(View.GONE);
+                    TV_Cantidad.setVisibility(View.GONE);
+                    BT_Añadir.setVisibility(View.GONE);
+                    Et_CanCajas.setVisibility(View.GONE);
+                    TV_Cajas.setVisibility(View.GONE);
                 }
             }
         });
 
-        checkboxEntrada2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CB_Unidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    cantidadIngresada = editTextCantidad.getText().toString();
+                    cantidadIngresada = ET_ArtEsperados.getText().toString();
                     showCustomAlertDialog("Número de serie");
                 }
             }
         });
 
+
+        BT_Añadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantidadIngresada = ET_ArtEsperados.getText().toString();
+                showCustomAlertDialog("Número de lote");
+            }
+        });
         return root;
     }
 

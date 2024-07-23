@@ -36,6 +36,7 @@
         android:layout_marginTop="16dp" />
 
     <LinearLayout
+        android:id="@+id/LL_PorCajas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -45,13 +46,13 @@
             android:id="@+id/tv_entradas_leidas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad Esp"
+            android:text="Cajas escaneadas"
             android:layout_weight="1"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_entradas"
+            android:id="@+id/tv_entradascajas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
