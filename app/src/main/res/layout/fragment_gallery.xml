@@ -52,7 +52,7 @@
                 android:textSize="14sp" />
 
             <Spinner
-                android:id="@+id/sp_TipoProducto"
+                android:id="@+id/SP_TipoProducto"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="0.25"
@@ -78,7 +78,7 @@
                 android:textSize="14sp" />
 
             <Spinner
-                android:id="@+id/sp_ClasProd"
+                android:id="@+id/SP_ClasProd"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="0.25"
@@ -103,14 +103,14 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <Spinner
-                android:id="@+id/DescripcionProducto"
+            <EditText
+                android:id="@+id/ET_DescProducto"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
-            </Spinner>
+            </EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -129,21 +129,21 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <Spinner
-                android:id="@+id/sp_ClaveProducto"
+            <EditText
+                android:id="@+id/ET_ClaveProducto"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
-                <!-- Aquí coloca los elementos que desees dentro del Spinner -->
-            </Spinner>
+            </EditText>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/numserie"
@@ -273,28 +273,25 @@
 
 
             <Button
-                android:id="@+id/btn_imprimir"
+                android:id="@+id/BT_Guardar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="imprimir"
+                android:text="Guardar"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/boton_colores"
                 android:layout_weight="1"
                 android:layout_margin="5dp"/>
 
-
             <Button
-                android:id="@+id/btncancelar"
+                android:id="@+id/BT_Imprimir"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Cancelar"
+                android:layout_height="match_parent"
+                android:text="Imprimir"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/boton_colores"
                 android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:visibility="gone"/>
+                android:layout_margin="5dp"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
