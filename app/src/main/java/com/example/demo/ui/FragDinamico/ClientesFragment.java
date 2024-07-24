@@ -73,7 +73,7 @@ public class ClientesFragment extends KeyDwonFragment {
         String nombreCliente = editTextCliente1.getText().toString().trim();
         String rfc = editTextCliente2.getText().toString().trim();
         String claveCliente = editTextCliente3.getText().toString().trim();
-
+      
         // Validar los datos (opcional)
         if (nombreCliente.isEmpty() || rfc.isEmpty() || claveCliente.isEmpty()) {
             Toast.makeText(getContext(), "Por favor, llene todos los campos", Toast.LENGTH_SHORT).show();
