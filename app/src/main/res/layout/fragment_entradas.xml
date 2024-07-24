@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <Spinner
-        android:id="@+id/spinner_entrada_1"
+        android:id="@+id/sp_proveedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -15,7 +15,7 @@
         android:background="@drawable/borde_redondeado2"/>
 
     <Spinner
-        android:id="@+id/spinner_entrada_2"
+        android:id="@+id/sp_producto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
