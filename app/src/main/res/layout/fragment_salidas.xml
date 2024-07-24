@@ -1,5 +1,5 @@
 <!-- res/layout/activity_main.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_layout">
@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:entries="@array/sp_provedores"
             android:background="@drawable/borde_redondeado2" />
 
         <Spinner
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:entries="@array/sp_productos"
             android:background="@drawable/borde_redondeado2" />
 
         <EditText
@@ -30,6 +32,7 @@
             android:layout_height="wrap_content"
             android:hint="Cantidad de salidas"
             android:layout_marginBottom="8dp"
+            android:gravity=""
             android:background="@drawable/borde_redondeado" />
 
         <EditText
@@ -41,17 +44,96 @@
             android:background="@drawable/borde_redondeado" />
 
         <CheckBox
-            android:id="@+id/checkbox_salida_1"
+            android:id="@+id/CB_SalLote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lotes"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:buttonTint="@color/azul1.1"
+            android:text="Lotes" />
+
+        <LinearLayout
+            android:id="@+id/LL_SalidasLote"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Num. de cajas:"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/Et_SalCajasCan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:hint="Inserte cantidad"
+                    android:inputType="number"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Piezas:"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/ET_SalPiezasCaja"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:hint="Numero de piezas"
+                    android:inputType="number"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/BT_Añadir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/boton_colores"
+                android:text="Añadir"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
 
         <CheckBox
-            android:id="@+id/checkbox_salida_2"
+            android:id="@+id/CB_SalUnidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Número de serie"
+            android:buttonTint="@color/azul1.1"
             android:layout_marginBottom="16dp" />
 
         <Button
@@ -62,4 +144,4 @@
             android:backgroundTint="@color/boton_colores"
             android:textColor="@color/white" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

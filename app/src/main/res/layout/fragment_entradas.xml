@@ -1,5 +1,6 @@
 <!-- res/layout/fragment_entradas.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:entries="@array/sp_provedores"
         android:background="@drawable/borde_redondeado2"/>
 
     <Spinner
@@ -17,15 +19,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:entries="@array/sp_productos"
         android:background="@drawable/borde_redondeado2"/>
 
     <EditText
-        android:id="@+id/edit_text_entrada_1"
+        android:id="@+id/ET_ArtEsperados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Cantidad de entrada"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/borde_redondeado"/>
+        android:background="@drawable/borde_redondeado"
+        android:hint="Cantidad de entrada"
+        android:inputType="number"
+        android:focusable="true"/>
 
     <EditText
         android:id="@+id/edit_text_entrada_2"
@@ -33,27 +38,138 @@
         android:layout_height="wrap_content"
         android:hint="Fecha de entrada"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/borde_redondeado"/>
+        android:background="@drawable/borde_redondeado"
+        android:inputType="date"/>
 
-    <CheckBox
-        android:id="@+id/checkbox_entrada_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lotes"
-        android:layout_marginBottom="8dp"/>
+    <LinearLayout
+        android:id="@+id/LL_Lotes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
 
-    <CheckBox
-        android:id="@+id/checkbox_entrada_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Número de serie"
-        android:layout_marginBottom="16dp"/>
+        <CheckBox
+            android:id="@+id/CB_Lotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/azul1.1"
+            android:text="Por lotes:"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/button_save_entrada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar Entradas"
-        android:backgroundTint="@color/boton_colores"
-        android:textColor="@color/white"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TV_Cajas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Num. de cajas:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/Et_CanCajas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:hint="Inserte cantidad"
+                android:inputType="number"
+                android:textSize="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TV_Cantidad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Piezas:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/ET_PiezasCaja"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:hint="Numero de piezas"
+                android:inputType="number"
+                android:textSize="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/BT_Añadir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/boton_colores"
+            android:text="Añadir"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LL_Unidad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <CheckBox
+            android:id="@+id/CB_Unidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Por unidad:"
+            android:buttonTint="@color/azul1.1"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Unidad:"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/et_unidad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Numero de productos"
+                android:visibility="gone"
+                android:textSize="16dp"
+                android:layout_weight="2"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

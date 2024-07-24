@@ -11,51 +11,92 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_cantidad_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Cantidad Esp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
         <TextView
-            android:id="@+id/tv_cantidad_value"
-            android:layout_width="wrap_content"
+            android:id="@+id/TV_CanEsperada"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:text="0"
             android:textSize="16sp"
             android:textColor="@color/black"/>
     </LinearLayout>
 
     <EditText
-        android:id="@+id/et_lote_serie"
+        android:id="@+id/ET_Numserie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16sp"
         android:hint="Número de lote o serie"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="2dp" />
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/azulgris"
+        android:layout_margin="4dp" />
 
     <LinearLayout
+        android:id="@+id/LL_PorCajas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_entradas_leidas"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cantidad Esp"
-            android:layout_weight="1"
+            android:text="Cajas escaneadas"
+            android:layout_weight="2"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_entradas"
+            android:id="@+id/TV_CajasLeidas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="0"
+            android:layout_gravity=""
             android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Articulos leidos:"
+            android:layout_weight="2"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TV_ArtLeidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:layout_gravity=""
+            android:textSize="16sp"
+            android:gravity="center"
             android:textColor="@color/black"/>
     </LinearLayout>
 
@@ -64,6 +105,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Completar"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/boton_colores"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/BT_Siguiente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar"
+        android:visibility="gone"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/boton_colores"
         android:textColor="@color/white"/>

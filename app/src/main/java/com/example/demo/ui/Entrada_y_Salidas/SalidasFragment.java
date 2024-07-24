@@ -25,16 +25,18 @@ import com.example.demo.main.KeyDwonFragment;
 public class SalidasFragment extends KeyDwonFragment {
 
     private String cantidadIngresada;
+    private CheckBox CB_SalLote, CB_SalUnidad;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_salidas, container, false);
 
-        CheckBox checkboxSalida1 = view.findViewById(R.id.checkbox_salida_1);
-        CheckBox checkboxSalida2 = view.findViewById(R.id.checkbox_salida_2);
+        CB_SalLote = view.findViewById(R.id.CB_SalLote);
+        CB_SalUnidad = view.findViewById(R.id.CB_SalUnidad);
         EditText editTextCantidad = view.findViewById(R.id.edit_text_salida_1);
 
-        checkboxSalida1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CB_SalLote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -44,7 +46,7 @@ public class SalidasFragment extends KeyDwonFragment {
             }
         });
 
-        checkboxSalida2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CB_SalUnidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -68,40 +70,40 @@ public class SalidasFragment extends KeyDwonFragment {
 
         AlertDialog alertDialog = builder.create();
 
-        TextView tvCantidadLabel = dialogView.findViewById(R.id.tv_cantidad_label);
-        TextView tvCantidadValue = dialogView.findViewById(R.id.tv_cantidad_value);
-        EditText etLoteSerie = dialogView.findViewById(R.id.et_lote_serie);
-        TextView tvEntradasLeidas = dialogView.findViewById(R.id.tv_entradas_leidas);
-        TextView tvEntradas = dialogView.findViewById(R.id.tv_entradas);
-        Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
+//        TextView tvCantidadLabel = dialogView.findViewById(R.id.tv_cantidad_label);
+//        TextView tvCantidadValue = dialogView.findViewById(R.id.tv_cantidad_value);
+//        EditText etLoteSerie = dialogView.findViewById(R.id.et_lote_serie);
+//        TextView tvEntradasLeidas = dialogView.findViewById(R.id.tv_entradas_leidas);
+//        TextView tvEntradas = dialogView.findViewById(R.id.tv_entradas);
+//        Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
 
-        tvCantidadLabel.setText("Cantidad Esp");
-        tvCantidadValue.setText(cantidadIngresada);
-        etLoteSerie.setHint(hintText);
+//        tvCantidadLabel.setText("Cantidad Esp");
+//        tvCantidadValue.setText(cantidadIngresada);
+//        etLoteSerie.setHint(hintText);
 
-        // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
-        etLoteSerie.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Actualiza el TextView de entradas leídas
-                tvEntradas.setText(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        btnCompletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+//        // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
+//        etLoteSerie.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                // Actualiza el TextView de entradas leídas
+//                tvEntradas.setText(s);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+//
+//        btnCompletar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertDialog.dismiss();
+//            }
+//        });
 
         alertDialog.show();
     }

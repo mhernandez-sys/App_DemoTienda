@@ -132,9 +132,45 @@
         <item>@string/Morocco</item>
         <item>@string/New_Zealand</item>
     </string-array>
-
     <string name="btEstFre">Establecer Frecuencia</string>
     <string name="btObtFre">Obtener Frecuencia</string>
+
+    ---Spinner para provedores
+    <string-array name="sp_provedores">
+        <item>@string/seleccionar</item>
+        <item>@string/proverdor1</item>
+        <item>@string/proverdor2</item>
+        <item>@string/proverdor3</item>
+        <item>@string/proverdor4</item>
+        <item>@string/proverdor5</item>
+        <item>@string/proverdor6</item>
+    </string-array>
+
+    <string name="seleccionar">Seleccionar</string>
+    <string name="proverdor1">Aguas con la rata</string>
+    <string name="proverdor2">Parisina</string>
+    <string name="proverdor3">Modatelas</string>
+    <string name="proverdor4">El nuevo mundo</string>
+    <string name="proverdor5">Yale</string>
+    <string name="proverdor6">Sasha</string>
+
+    ---Spinner para productos
+    <string-array name="sp_productos">
+        <item>@string/seleccionar</item>
+        <item>@string/producto1</item>
+        <item>@string/producto2</item>
+        <item>@string/producto3</item>
+        <item>@string/producto4</item>
+        <item>@string/producto5</item>
+        <item>@string/producto6</item>
+    </string-array>
+
+    <string name="producto1">Tela satinada</string>
+    <string name="producto2">Tela cuadriculada</string>
+    <string name="producto3">Tela de mesclilla</string>
+    <string name="producto4">Tela tipo gamusa</string>
+    <string name="producto5">Tela cuadriculada</string>
+    <string name="producto6">Tela tipo yute</string>
 
 
     <!-- potencia -->
