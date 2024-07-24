@@ -54,22 +54,18 @@ public class GalleryFragment extends KeyDwonFragment {
         // Inicializa WebServiceManager
         webServiceManager = new WebServiceManager(requireContext());
 
-        // Obtén los Spinners y el EditText del binding
-        Spinner spinner1 = binding.spTipoProducto;
-        Spinner spinner2 = binding.spClasProd;
-        Spinner spinner3 = binding.DescripcionProducto;
-        Spinner spinner4 = binding.spClaveProducto;
-        EditText etNumeroSerie = binding.etNumeroser;
-        Button buttonChangeLayout = binding.btncancelar;
+        // Obtén los Spinners del layout
+        spTipoProducto = root.findViewById(R.id.sp_TipoProducto);
+        spClasProd = root.findViewById(R.id.sp_ClasProd);
 
         // Llama al WebService para obtener los datos
-        obtenerDatosParaSpinners(spinner1, spinner2, spinner3, spinner4);
+        tipoProducto(spTipoProducto);
+        ClasProd(spClasProd);
 
         // Añadir listeners a los spinners
         AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                generarNumeroSerie(spinner1, spinner2, spinner3, spinner4, etNumeroSerie);
             }
 
             @Override
@@ -78,10 +74,9 @@ public class GalleryFragment extends KeyDwonFragment {
             }
         };
 
-        spinner1.setOnItemSelectedListener(listener);
-        spinner2.setOnItemSelectedListener(listener);
-        spinner3.setOnItemSelectedListener(listener);
-        spinner4.setOnItemSelectedListener(listener);
+//        provedores.setOnItemSelectedListener(listener);
+//        productos.setOnItemSelectedListener(listener);
+
 
         btn_imprimir = root.findViewById(R.id.btn_imprimir);
         numserie = root.findViewById(R.id.et_numeroser);
@@ -96,51 +91,53 @@ public class GalleryFragment extends KeyDwonFragment {
         return root;
     }
 
-    private void obtenerDatosParaSpinners(Spinner spinner1, Spinner spinner2, Spinner spinner3, Spinner spinner4) {
-        webServiceManager.callWebService("ObtenerProductosConDetalles", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
+    private void tipoProducto(Spinner provedores) {
+        webServiceManager.callWebService("Tipo_Producto", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
                         List<String> datosSpinner1 = new ArrayList<>();
-                        List<String> datosSpinner2 = new ArrayList<>();
-                        List<String> datosSpinner3 = new ArrayList<>();
-                        List<String> datosSpinner4 = new ArrayList<>();
-
-                        // Agrega la opción "Seleccionar" como primera opción
                         datosSpinner1.add("Seleccionar");
-                        datosSpinner2.add("Seleccionar");
-                        datosSpinner3.add("Seleccionar");
-                        datosSpinner4.add("Seleccionar");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion_Tipo"));
-                            datosSpinner2.add(jsonObject.getString("Descripcion_Clasificacion"));
-                            datosSpinner3.add(jsonObject.getString("Descripcion"));
-                            datosSpinner4.add(jsonObject.getString("ClaveProds"));
+                            datosSpinner1.add(jsonObject.getString("Descripcion"));
                         }
 
-                        // Adaptador para el primer Spinner
                         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
                         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner1.setAdapter(adapter1);
+                        provedores.setAdapter(adapter1);
 
-                        // Adaptador para el segundo Spinner
-                        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner2);
-                        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner2.setAdapter(adapter2);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+    private void ClasProd(Spinner productos) {
+        webServiceManager.callWebService("Clasifica_producto", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(result);
+                        List<String> datosSpinner1 = new ArrayList<>();
+                        datosSpinner1.add("Seleccionar");
 
-                        // Adaptador para el tercer Spinner
-                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner3);
-                        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner3.setAdapter(adapter3);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            datosSpinner1.add(jsonObject.getString("Descripcion"));
+                        }
 
-                        // Adaptador para el cuarto Spinner
-                        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner4);
-                        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner4.setAdapter(adapter4);
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
+                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        productos.setAdapter(adapter1);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -153,37 +150,21 @@ public class GalleryFragment extends KeyDwonFragment {
         });
     }
 
-    private void generarNumeroSerie(Spinner spinner1, Spinner spinner2, Spinner spinner3, Spinner spinner4, EditText etNumeroSerie) {
-        String tipoProducto = spinner1.getSelectedItem().toString();
-        String clasProd = spinner2.getSelectedItem().toString();
-        String descripcionProducto = spinner3.getSelectedItem().toString();
-        String claveProducto = spinner4.getSelectedItem().toString();
 
-        if (!tipoProducto.equals("Seleccionar") && !clasProd.equals("Seleccionar") &&
-                !descripcionProducto.equals("Seleccionar") && !claveProducto.equals("Seleccionar")) {
-            String numeroSerie = tipoProducto.substring(0, 2) + clasProd.substring(0, 2) +
-                    descripcionProducto.substring(0, 2) + claveProducto.substring(0, 2) +
-                    System.currentTimeMillis();
-            etNumeroSerie.setText(numeroSerie);
-        } else {
-            etNumeroSerie.setText("");
+        private void cambiarLayout () {
+            String codigo = numserie.getText().toString();
+            Bundle bundle = new Bundle();
+            bundle.putString("barcode", codigo);
+
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+            // Navegar al fragmento BarcodeFragment
+            navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
+        }
+
+        @Override
+        public void onDestroyView () {
+            super.onDestroyView();
+            binding = null;
         }
     }
-
-    private void cambiarLayout() {
-        String codigo = numserie.getText().toString();
-        Bundle bundle = new Bundle();
-        bundle.putString("barcode", codigo);
-
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-
-        // Navegar al fragmento BarcodeFragment
-        navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-}
