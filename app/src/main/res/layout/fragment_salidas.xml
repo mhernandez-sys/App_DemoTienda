@@ -27,13 +27,14 @@
             android:background="@drawable/borde_redondeado2" />
 
         <EditText
-            android:id="@+id/edit_text_salida_1"
+            android:id="@+id/ET_SalidasArtEsperados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cantidad de salidas"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/borde_redondeado"
+            android:inputType="number"
             android:gravity=""
-            android:background="@drawable/borde_redondeado" />
+            android:hint="Cantidad de salidas" />
 
         <EditText
             android:id="@+id/edit_text_salida_2"
@@ -41,21 +42,25 @@
             android:layout_height="wrap_content"
             android:hint="Fecha de salida"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/borde_redondeado" />
+            android:background="@drawable/borde_redondeado"
+            android:inputType="date"/>
 
-        <CheckBox
-            android:id="@+id/CB_SalLote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:buttonTint="@color/azul1.1"
-            android:text="Lotes" />
+
+
+            <CheckBox
+                android:id="@+id/CB_SalLote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:buttonTint="@color/azul1.1"
+                android:text="Lotes" />
 
         <LinearLayout
             android:id="@+id/LL_SalidasLote"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,8 +75,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Num. de cajas:"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/Et_SalCajasCan"
@@ -81,8 +85,7 @@
                     android:layout_weight="2"
                     android:hint="Inserte cantidad"
                     android:inputType="number"
-                    android:textSize="16dp"
-                    android:visibility="gone" />
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
@@ -99,8 +102,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Piezas:"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="16sp"/>
 
                 <EditText
                     android:id="@+id/ET_SalPiezasCaja"
@@ -110,20 +112,18 @@
                     android:layout_weight="2"
                     android:hint="Numero de piezas"
                     android:inputType="number"
-                    android:textSize="16dp"
-                    android:visibility="gone" />
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/BT_Añadir"
+                android:id="@+id/BT_SalAñadir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/boton_colores"
                 android:text="Añadir"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -136,12 +136,5 @@
             android:buttonTint="@color/azul1.1"
             android:layout_marginBottom="16dp" />
 
-        <Button
-            android:id="@+id/button_save_salida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar Salidas"
-            android:backgroundTint="@color/boton_colores"
-            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>
