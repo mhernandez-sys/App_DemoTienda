@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -65,21 +66,26 @@ public class EntradasFragment extends KeyDwonFragment {
         CB_Lotes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    CB_Unidad.setChecked(false);
-                    // Mostrar TextView y EditText
-                    ET_PiezasCaja.setVisibility(View.VISIBLE);
-                    TV_Cantidad.setVisibility(View.VISIBLE);
-                    Et_CanCajas.setVisibility(View.VISIBLE);
-                    TV_Cajas.setVisibility(View.VISIBLE);
-                    BT_Añadir.setVisibility(View.VISIBLE);
-                }else{
-                    // Ocultar TextView y EditText
-                    ET_PiezasCaja.setVisibility(View.GONE);
-                    TV_Cantidad.setVisibility(View.GONE);
-                    BT_Añadir.setVisibility(View.GONE);
-                    Et_CanCajas.setVisibility(View.GONE);
-                    TV_Cajas.setVisibility(View.GONE);
+                if(ET_ArtEsperados.getText().toString().isEmpty()){
+                    CB_Lotes.setChecked(false);
+                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (isChecked) {
+                        CB_Unidad.setChecked(false);
+                        // Mostrar TextView y EditText
+                        ET_PiezasCaja.setVisibility(View.VISIBLE);
+                        TV_Cantidad.setVisibility(View.VISIBLE);
+                        Et_CanCajas.setVisibility(View.VISIBLE);
+                        TV_Cajas.setVisibility(View.VISIBLE);
+                        BT_Añadir.setVisibility(View.VISIBLE);
+                    } else {
+                        // Ocultar TextView y EditText
+                        ET_PiezasCaja.setVisibility(View.GONE);
+                        TV_Cantidad.setVisibility(View.GONE);
+                        BT_Añadir.setVisibility(View.GONE);
+                        Et_CanCajas.setVisibility(View.GONE);
+                        TV_Cajas.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -87,10 +93,15 @@ public class EntradasFragment extends KeyDwonFragment {
         CB_Unidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    CB_Lotes.setChecked(false);
-                    cantidadIngresada = ET_ArtEsperados.getText().toString();
-                    showCustomAlertDialog("Número de serie");
+                if(ET_ArtEsperados.getText().toString().isEmpty()){
+                    CB_Unidad.setChecked(false);
+                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (isChecked) {
+                        CB_Lotes.setChecked(false);
+                        cantidadIngresada = ET_ArtEsperados.getText().toString();
+                        showCustomAlertDialog("Número de serie");
+                    }
                 }
             }
         });
@@ -141,12 +152,12 @@ public class EntradasFragment extends KeyDwonFragment {
 
         if (hintText.equals("QR Caja")){
             llPorCajas.setVisibility(View.VISIBLE);
-            BT_Siguiente.setVisibility(View.VISIBLE);
+            BT_Siguiente.setVisibility(View.GONE);
             btnCompletar.setVisibility(View.GONE);
 
         }else {
             llPorCajas.setVisibility(View.GONE);
-            BT_Siguiente.setVisibility(View.VISIBLE);
+            BT_Siguiente.setVisibility(View.GONE);
             btnCompletar.setVisibility(View.GONE);
         }
 
@@ -167,24 +178,43 @@ public class EntradasFragment extends KeyDwonFragment {
                 try {
                     if(!Ban_leido.equals("1")) {
                         Ban_leido = "1";
-                        if (seleccionado.equals("QR Caja")) {
-                            // Suma de los artículos leídos
-                            int datopz = Integer.parseInt(ET_PiezasCaja.getText().toString());
-                            int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
-                            int suma = datopz + datoleidos;
-                            TV_ArtLeidos.setText(String.valueOf(suma));
 
-                            // Suma de las cajas leídas
-                            int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
-                            numcajas++;
-                            TV_CajasLeidas.setText(String.valueOf(numcajas));
-                        } else {
-                            // Suma de los artículos leídos
-                            int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
-                            datoleidos++;
-                            TV_ArtLeidos.setText(String.valueOf(datoleidos));
+                        // Verifica si el código introducido es válido (puedes agregar una lógica de validación aquí si es necesario)
+                        if (s.length() > 0) {
+                            if (seleccionado.equals("QR Caja")) {
+                                // Suma de los artículos leídos
+                                int datopz = Integer.parseInt(ET_PiezasCaja.getText().toString());
+                                int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                                int suma = datopz + datoleidos;
+                                TV_ArtLeidos.setText(String.valueOf(suma));
+
+                                // Suma de las cajas leídas
+                                int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
+                                numcajas++;
+                                TV_CajasLeidas.setText(String.valueOf(numcajas));
+                            } else {
+                                // Suma de los artículos leídos
+                                int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                                datoleidos++;
+                                TV_ArtLeidos.setText(String.valueOf(datoleidos));
+                            }
+
+                            // Muestra el código leído por 2 segundos antes de limpiar el EditText
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ET_Numserie.setText("");
+                                    Ban_leido = "0";
+                                }
+                            }, 500); // 2000 milisegundos = 2 segundos
+
+                            // Comprueba si se ha alcanzado el número esperado de artículos
+                            String articulos = TV_ArtLeidos.getText().toString();
+                            if (articulos.equals(ET_ArtEsperados.getText().toString())) {
+                                BT_Siguiente.setVisibility(View.GONE);
+                                btnCompletar.setVisibility(View.VISIBLE);
+                            }
                         }
-
                     }
                 } catch (NumberFormatException e) {
                     // Manejar la excepción si los valores no son números válidos
