@@ -59,6 +59,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation (libs.lottie){
+        exclude("com.squareup.okio", "okio")//Con esta linea se excluye la clase que se encuentre duplicada
+    }
 //    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 //    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 //    implementation("com.squareup.retrofit2:loggin-interceptor:4.11.0")

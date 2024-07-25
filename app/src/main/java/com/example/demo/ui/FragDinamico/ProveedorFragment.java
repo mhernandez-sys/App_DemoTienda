@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
+import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.main.KeyDwonFragment;
 
 import java.util.HashMap;
@@ -127,6 +128,7 @@ public class ProveedorFragment extends KeyDwonFragment {
     }
 
     private void saveClient() {
+        DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener los valores de los EditTexts
         String nombreCliente = "";
         nombreCliente = ET_Nom_Provedor.getText().toString();
@@ -148,12 +150,14 @@ public class ProveedorFragment extends KeyDwonFragment {
             webServiceManager.callWebService("GuadarProveedor", properties, new WebServiceManager.WebServiceCallback() {
                 @Override
                 public void onWebServiceCallComplete(String result) {
+                //DialogoAnimaciones.hideLoadingDialog();
                     handleSaveClientResult(result);
                 }
             });
 
         } catch (Exception e) {
             Toast.makeText(getContext(), "Error al llamar al web service: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
     }
     private void handleSaveClientResult(String result) {
