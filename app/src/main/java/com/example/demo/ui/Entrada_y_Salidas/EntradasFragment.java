@@ -154,7 +154,7 @@ public class EntradasFragment extends KeyDwonFragment {
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion_Tipo"));
+                            datosSpinner1.add(jsonObject.getString("Nombre"));
                         }
 
                         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
@@ -183,7 +183,7 @@ public class EntradasFragment extends KeyDwonFragment {
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion_Tipo"));
+                            datosSpinner1.add(jsonObject.getString("Descripcion"));
                         }
 
                         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
