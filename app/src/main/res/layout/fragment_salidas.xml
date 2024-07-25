@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:entries="@array/sp_provedores"
             android:background="@drawable/borde_redondeado2" />
 
         <Spinner
@@ -23,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:entries="@array/sp_productos"
             android:background="@drawable/borde_redondeado2" />
 
         <EditText
