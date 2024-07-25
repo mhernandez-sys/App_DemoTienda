@@ -1,6 +1,7 @@
 package com.example.demo.ui.gallery;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,9 @@ public class GalleryFragment extends KeyDwonFragment {
     public Button BT_Guardar, BT_Imprimir;
     private WebServiceManager webServiceManager;
     private FragmentGalleryBinding binding;
+    private List<TipoItem> datosProductos = new ArrayList<>();
+    private List<String> datosClasificacionP = new ArrayList<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,8 +63,8 @@ public class GalleryFragment extends KeyDwonFragment {
         BT_Imprimir = root.findViewById(R.id.BT_Imprimir);
 
         // Llama al WebService para obtener los datos
-        tipoProducto(SP_TipoProducto);
-        ClasProd(SP_ClasProd);
+        llenarSpinners(SP_TipoProducto, datosProductos, "Tipo_Producto", "id_Tipo");
+        llenarSpinners(SP_ClasProd, datosClasificacionP, "Clasifica_producto", "id_ClasiP");
         //obtenerDatosParaSpinners(SP_TipoProducto, SP_ClasProd, spinner3, spinner4);
 
         // Añadir listeners a los spinners
@@ -76,9 +80,6 @@ public class GalleryFragment extends KeyDwonFragment {
             }
         };
 
-|
-
-
         BT_Imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,60 +87,48 @@ public class GalleryFragment extends KeyDwonFragment {
             }
         });
 
-        return root;
-    }
-
-    private void tipoProducto(Spinner provedores) {
-        webServiceManager.callWebService("Tipo_Producto", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
+        BT_Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
+            public void onClick(View v) {
+                // Obtener el elemento seleccionado del Spinner
+                TipoItem selectedTipoItem = (TipoItem) SP_TipoProducto.getSelectedItem();
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion"));
-                        }
+                if (selectedTipoItem != null) {
+                    // Obtener el id_Tipo del elemento seleccionado
+                    String idTipo = selectedTipoItem.getIdTipo();
 
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        provedores.setAdapter(adapter1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                    // Aquí puedes usar el idTipo como lo necesites
+                    Log.d("Seleccionado", "ID Tipo seleccionado: " + idTipo);
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                    Log.d("Error", "No se seleccionó ningún elemento.");
                 }
             }
         });
+
+        return root;
     }
-    private void ClasProd(Spinner productos) {
-        webServiceManager.callWebService("Clasifica_producto", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
+
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
+        webServiceManager.callWebService(metodo, new HashMap<>(), new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
+                        datos.add(new TipoItem("0", "Seleccionar")); // Opción predeterminada
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion"));
+                            String idTipo = jsonObject.getString(id);
+                            String descripcion = jsonObject.getString("Descripcion");
+                            datos.add(new TipoItem(idTipo, descripcion));
                         }
 
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        productos.setAdapter(adapter1);
-
+                        ArrayAdapter<TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        provedores.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
@@ -165,4 +154,29 @@ public class GalleryFragment extends KeyDwonFragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public class TipoItem {
+        private String idTipo;
+        private String descripcion;
+
+        public TipoItem(String idTipo, String descripcion) {
+            this.idTipo = idTipo;
+            this.descripcion = descripcion;
+        }
+
+        public String getIdTipo() {
+            return idTipo;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        @Override
+        public String toString() {
+            return descripcion; // Esto es lo que se mostrará en el Spinner
+        }
+    }
+
+
 }
