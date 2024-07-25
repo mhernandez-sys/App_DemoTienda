@@ -30,8 +30,8 @@ import java.util.Map;
 public class ProveedorFragment extends KeyDwonFragment {
 
     private ClientesViewModel mViewModel;
-    private EditText editTextproveedor1, editTextproveedor2, editTextproveedor3;
-    private Button buttonSaveCliente;
+    private EditText ET_Nom_Provedor, ET_FRC, ET_ClaveProvedor;
+    private Button BT_GuardarProvedor;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
 
 
@@ -42,16 +42,16 @@ public class ProveedorFragment extends KeyDwonFragment {
         View view = inflater.inflate(R.layout.fragment_proveedor, container, false);
 
         // Inicializar los EditTexts y el botón
-        editTextproveedor1 = view.findViewById(R.id.edit_text_1);
-        editTextproveedor2 = view.findViewById(R.id.edit_text_2);
-        editTextproveedor3 = view.findViewById(R.id.edit_text_3);
-        buttonSaveCliente = view.findViewById(R.id.button_save);
+        ET_Nom_Provedor = view.findViewById(R.id.ET_Nom_Provedor);
+        ET_FRC = view.findViewById(R.id.ET_FRC);
+        ET_ClaveProvedor = view.findViewById(R.id.ET_ClaveProvedor);
+        BT_GuardarProvedor = view.findViewById(R.id.BT_GuardarProvedor);
 
         // Inicializar WebServiceManager
         webServiceManager = new WebServiceManager(getContext());
 
         // Configurar el listener para el botón
-        buttonSaveCliente.setOnClickListener(new View.OnClickListener() {
+        BT_GuardarProvedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveClient();
@@ -68,9 +68,9 @@ public class ProveedorFragment extends KeyDwonFragment {
 
             private void limpiar() {
                 // Limpiar los EditTexts
-                editTextproveedor1.setText("");
-                editTextproveedor2.setText("");
-                editTextproveedor3.setText("");
+                ET_Nom_Provedor.setText("");
+                ET_FRC.setText("");
+                ET_ClaveProvedor.setText("");
 
                 // Restablecer los Spinners a su valor predeterminado (generalmente la posición 0)
 //                spinner1.setSelection(0);
@@ -79,33 +79,33 @@ public class ProveedorFragment extends KeyDwonFragment {
         });
 
         // Configurar los EditTexts para cambiar el foco al presionar Enter
-        editTextproveedor1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        ET_Nom_Provedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    editTextproveedor2.requestFocus();
+                    ET_FRC.requestFocus();
                     return true;
                 }
                 return false;
             }
         });
 
-        editTextproveedor2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        ET_FRC.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    editTextproveedor3.requestFocus();
+                    ET_ClaveProvedor.requestFocus();
                     return true;
                 }
                 return false;
             }
         });
 
-        editTextproveedor3.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        ET_ClaveProvedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    buttonSaveCliente.requestFocus();
+                    BT_GuardarProvedor.requestFocus();
                     return true;
                 }
                 return false;
@@ -113,7 +113,7 @@ public class ProveedorFragment extends KeyDwonFragment {
         });
 
         // Establecer el foco inicial en el EditText de nombre
-        editTextproveedor1.requestFocus();
+        ET_Nom_Provedor.requestFocus();
 
 
         return view;
@@ -129,9 +129,9 @@ public class ProveedorFragment extends KeyDwonFragment {
     private void saveClient() {
         // Obtener los valores de los EditTexts
         String nombreCliente = "";
-        nombreCliente = editTextproveedor1.getText().toString();
-        String rfc = editTextproveedor2.getText().toString();
-        String claveCliente = editTextproveedor3.getText().toString();
+        nombreCliente = ET_Nom_Provedor.getText().toString();
+        String rfc = ET_FRC.getText().toString();
+        String claveCliente = ET_ClaveProvedor.getText().toString();
 
         // Validar los datos (opcional)
         if (nombreCliente.isEmpty() || rfc.isEmpty() || claveCliente.isEmpty()) {
@@ -148,7 +148,6 @@ public class ProveedorFragment extends KeyDwonFragment {
             webServiceManager.callWebService("GuadarProveedor", properties, new WebServiceManager.WebServiceCallback() {
                 @Override
                 public void onWebServiceCallComplete(String result) {
-                    Log.d("ClientesFragment", "WebService Result: " + result);
                     handleSaveClientResult(result);
                 }
             });
@@ -160,10 +159,10 @@ public class ProveedorFragment extends KeyDwonFragment {
     private void handleSaveClientResult(String result) {
         // Manejar el resultado del web service
         // Puedes agregar lógica para manejar el resultado aquí, por ejemplo:
-        if (result.equals("Success")) {
+        if (result.equals("Se realizó el insert correctamente.")) {
             Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(getContext(), "Error al guardar el cliente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Error al guardar el cliente", Toast.LENGTH_SHORT).show();
 
         }
     }

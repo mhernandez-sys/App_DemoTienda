@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/edit_text_1"
+        android:id="@+id/ET_Nom_Provedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre de proveedor"
@@ -14,15 +14,15 @@
         android:layout_marginBottom="8dp"/>
 
     <EditText
-        android:id="@+id/edit_text_2"
+        android:id="@+id/ET_FRC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="FRC"
+        android:hint="RFC"
         android:background="@drawable/borde_redondeado"
         android:layout_marginBottom="8dp"/>
 
     <EditText
-        android:id="@+id/edit_text_3"
+        android:id="@+id/ET_ClaveProvedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Clave de proveedor"
@@ -30,10 +30,11 @@
         android:layout_marginBottom="8dp"/>
 
     <Button
-        android:id="@+id/button_save"
+        android:id="@+id/BT_GuardarProvedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guardar Proveedor"
+        android:layout_gravity="center"
         android:backgroundTint="@color/boton_colores"
         android:textColor="@color/white"/>
 </LinearLayout>
