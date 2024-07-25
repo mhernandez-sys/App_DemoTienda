@@ -76,8 +76,7 @@ public class GalleryFragment extends KeyDwonFragment {
             }
         };
 
-//        provedores.setOnItemSelectedListener(listener);
-//        productos.setOnItemSelectedListener(listener);
+|
 
 
         BT_Imprimir.setOnClickListener(new View.OnClickListener() {
