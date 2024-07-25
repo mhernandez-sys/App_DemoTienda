@@ -15,7 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -84,53 +84,6 @@ public class EntradasFragment extends KeyDwonFragment {
         // Llama al WebService para obtener los datos
         obtenerDatosParaSpinners(Sp_Provedor);
         obtenerDatosParaSpinners2(SP_Producto);
-
-
-//        // Añadir listeners a los spinners
-//        Sp_Provedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(ET_ArtEsperados.getText().toString().isEmpty()){
-//                    CB_Lotes.setChecked(false);
-//                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    if (isChecked) {
-//                        CB_Unidad.setChecked(false);
-//                        // Mostrar TextView y EditText
-//                        ET_PiezasCaja.setVisibility(View.VISIBLE);
-//                        TV_Cantidad.setVisibility(View.VISIBLE);
-//                        Et_CanCajas.setVisibility(View.VISIBLE);
-//                        TV_Cajas.setVisibility(View.VISIBLE);
-//                        BT_Añadir.setVisibility(View.VISIBLE);
-//                    } else {
-//                        // Ocultar TextView y EditText
-//                        ET_PiezasCaja.setVisibility(View.GONE);
-//                        TV_Cantidad.setVisibility(View.GONE);
-//                        BT_Añadir.setVisibility(View.GONE);
-//                        Et_CanCajas.setVisibility(View.GONE);
-//                        TV_Cajas.setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-//        });
-//
-//        // Añadir listeners a los spinners
-//        SP_Producto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(ET_ArtEsperados.getText().toString().isEmpty()){
-//                    CB_Unidad.setChecked(false);
-//                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    if (isChecked) {
-//                        CB_Lotes.setChecked(false);
-//                        cantidadIngresada = ET_ArtEsperados.getText().toString();
-//                        showCustomAlertDialog("Número de serie");
-//                    }
-//                }
-//
-//            }
-//        });
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
@@ -271,13 +224,11 @@ public class EntradasFragment extends KeyDwonFragment {
 
         if (QR_CAJA.equals(hintText)) {
             llPorCajas.setVisibility(View.VISIBLE);
-            BT_Siguiente.setVisibility(View.GONE);
-            btnCompletar.setVisibility(View.GONE);
         } else {
             llPorCajas.setVisibility(View.GONE);
-            BT_Siguiente.setVisibility(View.GONE);
-            btnCompletar.setVisibility(View.GONE);
         }
+        BT_Siguiente.setVisibility(View.GONE);
+        btnCompletar.setVisibility(View.GONE);
 
         ET_Numserie.addTextChangedListener(new TextWatcher() {
             @Override
@@ -313,12 +264,9 @@ public class EntradasFragment extends KeyDwonFragment {
                             }
 
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ET_Numserie.setText("");
-                                    Ban_leido = "0";
-                                }
+                            new Handler().postDelayed(() -> {
+                                ET_Numserie.setText("");
+                                Ban_leido = "0";
                             }, 500); // 2000 milisegundos = 2 segundos
 
                             // Comprueba si se ha alcanzado el número esperado de artículos

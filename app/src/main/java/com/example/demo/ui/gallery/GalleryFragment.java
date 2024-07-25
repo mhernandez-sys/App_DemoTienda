@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GalleryFragment extends KeyDwonFragment {
 
@@ -90,17 +92,15 @@ public class GalleryFragment extends KeyDwonFragment {
         BT_Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtener el elemento seleccionado del Spinner
-                TipoItem selectedTipoItem = (TipoItem) SP_TipoProducto.getSelectedItem();
-
-                if (selectedTipoItem != null) {
-                    // Obtener el id_Tipo del elemento seleccionado
-                    String idTipo = selectedTipoItem.getIdTipo();
-
-                    // Aquí puedes usar el idTipo como lo necesites
-                    Log.d("Seleccionado", "ID Tipo seleccionado: " + idTipo);
-                } else {
-                    Log.d("Error", "No se seleccionó ningún elemento.");
+                TipoItem selected_tipoProducto = (TipoItem) SP_TipoProducto.getSelectedItem();
+                TipoItem selected_clasProducto = (TipoItem) SP_ClasProd.getSelectedItem();
+                // Obtener el id_Tipo del elemento seleccionado
+                String idTipo = selected_tipoProducto.getIdTipo();
+                String idClasificacion = selected_clasProducto.getIdTipo();
+                if(idTipo.equals("Seleccionar")||idClasificacion.equals("Seleccionar")||ET_ClaveProducto.getText().toString().isEmpty()||ET_DescProducto.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Campos incompletos, favor de completar todos los campos", Toast.LENGTH_LONG).show();
+                }else {
+                    insertar_producto();
                 }
             }
         });
@@ -109,7 +109,7 @@ public class GalleryFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
-        webServiceManager.callWebService(metodo, new HashMap<>(), new WebServiceManager.WebServiceCallback() {
+        webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
@@ -175,6 +175,48 @@ public class GalleryFragment extends KeyDwonFragment {
         @Override
         public String toString() {
             return descripcion; // Esto es lo que se mostrará en el Spinner
+        }
+    }
+
+    private void insertar_producto() {
+
+        TipoItem selected_tipoProducto = (TipoItem) SP_TipoProducto.getSelectedItem();
+        TipoItem selected_clasProducto = (TipoItem) SP_ClasProd.getSelectedItem();
+        // Obtener el id_Tipo del elemento seleccionado
+        String idTipo = selected_tipoProducto.getIdTipo();
+        String idClasificacion = selected_clasProducto.getIdTipo();
+        String Descripcion = ET_DescProducto.getText().toString();
+        String Clave = ET_ClaveProducto.getText().toString();
+
+        Map<String, String> propeties = new HashMap<>();
+        propeties.put("Descripcion",Descripcion);
+        propeties.put("existencia","0");
+        propeties.put("tipo",idTipo);
+        propeties.put("clasificacionp",idClasificacion);
+        propeties.put("claveprod",Clave);
+
+        webServiceManager.callWebService("GuardarProductos", propeties, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
+                        salir();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    public void salir(){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
         }
     }
 
