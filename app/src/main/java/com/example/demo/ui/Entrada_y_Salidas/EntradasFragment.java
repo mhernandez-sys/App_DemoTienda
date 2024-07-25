@@ -30,6 +30,8 @@ import com.example.demo.MainActivity;
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
 import com.example.demo.main.KeyDwonFragment;
+import com.example.demo.spinners.TipoItem;
+import com.example.demo.ui.gallery.GalleryFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,18 +95,10 @@ public class EntradasFragment extends KeyDwonFragment {
                 if (isChecked) {
                         CB_Unidad.setChecked(false);
                         // Mostrar TextView y EditText
-                        ET_PiezasCaja.setVisibility(View.VISIBLE);
-                        TV_Cantidad.setVisibility(View.VISIBLE);
-                        Et_CanCajas.setVisibility(View.VISIBLE);
-                        TV_Cajas.setVisibility(View.VISIBLE);
-                        BT_Añadir.setVisibility(View.VISIBLE);
+                        setLotesVisibility(View.VISIBLE);
                     } else {
                         // Ocultar TextView y EditText
-                        ET_PiezasCaja.setVisibility(View.GONE);
-                        TV_Cantidad.setVisibility(View.GONE);
-                        BT_Añadir.setVisibility(View.GONE);
-                        Et_CanCajas.setVisibility(View.GONE);
-                        TV_Cajas.setVisibility(View.GONE);
+                        setLotesVisibility(View.GONE);
                     }
             }
         });
@@ -301,7 +295,36 @@ public class EntradasFragment extends KeyDwonFragment {
                 btnCompletar.setVisibility(View.VISIBLE);
             }
         });
-
         alertDialog.show();
     }
+
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
+        webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(result);
+                        datos.add(new TipoItem("0", "Seleccionar")); // Opción predeterminada
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String idTipo = jsonObject.getString(id);
+                            String descripcion = jsonObject.getString("Descripcion");
+                            datos.add(new TipoItem(idTipo, descripcion));
+                        }
+
+                        ArrayAdapter<GalleryFragment.TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        provedores.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 }
