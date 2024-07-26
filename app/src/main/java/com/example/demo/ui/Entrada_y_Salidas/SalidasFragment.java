@@ -73,9 +73,6 @@ public class SalidasFragment extends KeyDwonFragment {
         llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre");
         llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
 
-//        obtenerDatosParaSpinners(sp_cliente);
-//        obtenerDatosParaSpinners2(sp_producto);
-
         //Linear layout para lotes
         LL_SalidasLote = view.findViewById(R.id.LL_SalidasLote);
         //Edit text para lotes y unidad
@@ -126,73 +123,8 @@ public class SalidasFragment extends KeyDwonFragment {
                 showCustomAlertDialog("QR Caja");
             }
         });
-
-
-
         return view;
     }
-
-
-    private void obtenerDatosParaSpinners(Spinner clientes) {
-        webServiceManager.callWebService("clientessp", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
-            @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Nombre"));
-                        }
-
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        clientes.setAdapter(adapter1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-    private void obtenerDatosParaSpinners2(Spinner prosuctos) {
-        webServiceManager.callWebService("productossp", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
-            @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion"));
-                        }
-
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        prosuctos.setAdapter(adapter1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-
 
     private void showCustomAlertDialog(String hintText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
