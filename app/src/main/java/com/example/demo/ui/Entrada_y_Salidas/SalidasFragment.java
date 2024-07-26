@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
 import com.example.demo.main.KeyDwonFragment;
+import com.example.demo.ui.gallery.GalleryFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SalidasFragment extends KeyDwonFragment {
 
@@ -47,9 +49,12 @@ public class SalidasFragment extends KeyDwonFragment {
     private WebServiceManager webServiceManager;
 
     private LinearLayout LL_SalidasLote;
-    private EditText Et_SalCajasCan, ET_SalPiezasCaja, ET_SalidasArtEsperados;
+    private EditText Et_SalCajasCan, ET_SalPiezasCaja, ET_SalidasArtEsperados, ET_FechaSalidas;
     private Button BT_Añadir;
     private String Ban_leido = "";
+    private List<String> DatosClientes = new ArrayList<>();
+    private List<String> DatosProducto = new ArrayList<>();
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +69,12 @@ public class SalidasFragment extends KeyDwonFragment {
 
         webServiceManager = new WebServiceManager(requireContext());
 
-        obtenerDatosParaSpinners(sp_cliente);
-        obtenerDatosParaSpinners2(sp_producto);
+        // Llama al WebService para obtener los datos
+        llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre");
+        llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
+
+//        obtenerDatosParaSpinners(sp_cliente);
+//        obtenerDatosParaSpinners2(sp_producto);
 
         //Linear layout para lotes
         LL_SalidasLote = view.findViewById(R.id.LL_SalidasLote);
@@ -73,6 +82,7 @@ public class SalidasFragment extends KeyDwonFragment {
         Et_SalCajasCan = view.findViewById(R.id.Et_SalCajasCan);
         ET_SalPiezasCaja = view.findViewById(R.id.ET_SalPiezasCaja);
         ET_SalidasArtEsperados =view.findViewById(R.id.ET_SalidasArtEsperados);
+        ET_FechaSalidas = view.findViewById(R.id.ET_FechaSalidas);
         //Boton para llamar a recicler view
         BT_Añadir = view.findViewById(R.id.BT_SalAñadir);
 
@@ -116,6 +126,8 @@ public class SalidasFragment extends KeyDwonFragment {
                 showCustomAlertDialog("QR Caja");
             }
         });
+
+
 
         return view;
     }
@@ -312,4 +324,98 @@ public class SalidasFragment extends KeyDwonFragment {
 
         alertDialog.show();
     }
+
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
+        webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(result);
+                        datos.add(new TipoItem("0", "Seleccionar")); // Opción predeterminada
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String idTipo = jsonObject.getString(id);
+                            String descripcion = jsonObject.getString(Descripcion);
+                            datos.add(new TipoItem(idTipo, descripcion));
+                        }
+
+                        ArrayAdapter<GalleryFragment.TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        provedores.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    public class TipoItem {
+        private String idTipo;
+        private String descripcion;
+
+        public TipoItem(String idTipo, String descripcion) {
+            this.idTipo = idTipo;
+            this.descripcion = descripcion;
+        }
+
+        public String getIdTipo() {
+            return idTipo;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        @Override
+        public String toString() {
+            return descripcion; // Esto es lo que se mostrará en el Spinner
+        }
+    }
+
+    private void insertar_producto() {
+
+        TipoItem selected_cliente = (TipoItem) sp_cliente.getSelectedItem();
+        TipoItem selected_producto = (TipoItem) sp_producto.getSelectedItem();
+        // Obtener el id_Tipo del elemento seleccionado
+        String Cliente = selected_cliente.getIdTipo();
+        String Producto = selected_producto.getIdTipo();
+        String Cantidad = ET_SalidasArtEsperados.getText().toString();
+        String Fecha = ET_FechaSalidas.getText().toString();
+
+        Map<String, String> propeties = new HashMap<>();
+        propeties.put("nuevoTM","2");
+        propeties.put("nuevoproducto",Producto);
+        propeties.put("nuevacant",Cantidad);
+        propeties.put("nuevafecha",Fecha);
+        propeties.put("nuevocliente",Cliente);
+
+        webServiceManager.callWebService("GuardarSalidas ", propeties, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        salir();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+    public void salir(){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    }
+
 }

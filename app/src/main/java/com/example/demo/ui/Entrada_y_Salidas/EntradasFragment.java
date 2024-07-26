@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EntradasFragment extends KeyDwonFragment {
 
@@ -48,11 +49,14 @@ public class EntradasFragment extends KeyDwonFragment {
     private CheckBox CB_Lotes, CB_Unidad;
     private Spinner Sp_Provedor, SP_Producto;
     private TextView TV_Cantidad, TV_Cajas;
-    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas;
+    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas, ET_FechaEntrada;
     private Button BT_Añadir;
     private String Ban_leido = "";
     private WebServiceManager webServiceManager;
     private String seleccionado = "";
+    private List<String> DatosProvedor = new ArrayList<>();
+    private List<String> DatosProducto = new ArrayList<>();
+
 
     private static final String QR_CAJA = "QR Caja";
     private static final String NUMERO_SERIE = "Número de serie";
@@ -82,10 +86,12 @@ public class EntradasFragment extends KeyDwonFragment {
         ET_PiezasCaja = root.findViewById(R.id.ET_PiezasCaja);
         ET_ArtEsperados = root.findViewById(R.id.ET_ArtEsperados);
         Et_CanCajas = root.findViewById(R.id.Et_CanCajas);
+        ET_FechaEntrada = root.findViewById(R.id.ET_FechaEntrada);
 
         // Llama al WebService para obtener los datos
-        obtenerDatosParaSpinners(Sp_Provedor);
-        obtenerDatosParaSpinners2(SP_Producto);
+        llenarSpinners(Sp_Provedor, DatosProvedor, "Proveedoressp", "id_Proveedores", "Nombre");
+        llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
+
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
@@ -130,65 +136,6 @@ public class EntradasFragment extends KeyDwonFragment {
         Et_CanCajas.setVisibility(visibility);
         TV_Cajas.setVisibility(visibility);
         BT_Añadir.setVisibility(visibility);
-    }
-
-    private void obtenerDatosParaSpinners(Spinner provedores) {
-        webServiceManager.callWebService("Proveedoressp", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
-            @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Nombre"));
-                        }
-
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        provedores.setAdapter(adapter1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        }
-        private void obtenerDatosParaSpinners2(Spinner prosuctos) {
-        webServiceManager.callWebService("productossp", new HashMap<>(), new WebServiceManager.WebServiceCallback() {
-            @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(result);
-                        List<String> datosSpinner1 = new ArrayList<>();
-                        datosSpinner1.add("Seleccionar");
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            datosSpinner1.add(jsonObject.getString("Descripcion"));
-                        }
-
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datosSpinner1);
-                        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        prosuctos.setAdapter(adapter1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Error parsing response: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 
     @Override
@@ -278,6 +225,7 @@ public class EntradasFragment extends KeyDwonFragment {
         });
 
         btnCompletar.setOnClickListener(v -> {
+            insertar_producto();
             FragmentManager fragmentManager = getParentFragmentManager();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
@@ -298,7 +246,7 @@ public class EntradasFragment extends KeyDwonFragment {
         alertDialog.show();
     }
 
-    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
@@ -310,7 +258,7 @@ public class EntradasFragment extends KeyDwonFragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String idTipo = jsonObject.getString(id);
-                            String descripcion = jsonObject.getString("Descripcion");
+                            String descripcion = jsonObject.getString(Descripcion);
                             datos.add(new TipoItem(idTipo, descripcion));
                         }
 
@@ -326,5 +274,69 @@ public class EntradasFragment extends KeyDwonFragment {
             }
         });
     }
+    public class TipoItem {
+        private String idTipo;
+        private String descripcion;
+
+        public TipoItem(String idTipo, String descripcion) {
+            this.idTipo = idTipo;
+            this.descripcion = descripcion;
+        }
+
+        public String getIdTipo() {
+            return idTipo;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        @Override
+        public String toString() {
+            return descripcion; // Esto es lo que se mostrará en el Spinner
+        }
+    }
+
+    private void insertar_producto() {
+
+        TipoItem selected_provedor = (TipoItem) Sp_Provedor.getSelectedItem();
+        TipoItem selected_producto = (TipoItem) SP_Producto.getSelectedItem();
+        // Obtener el id_Tipo del elemento seleccionado
+        String Provedor = selected_provedor.getIdTipo();
+        String Producto = selected_producto.getIdTipo();
+        String Cantidad = ET_ArtEsperados.getText().toString();
+        String Fecha = ET_FechaEntrada.getText().toString();
+
+        Map<String, String> propeties = new HashMap<>();
+        propeties.put("nuevoTM","1");
+        propeties.put("nuevoproducto",Producto);
+        propeties.put("nuevacant",Cantidad);
+        propeties.put("nuevafecha",Fecha);
+        propeties.put("nuevoprovedor",Provedor);
+
+        webServiceManager.callWebService("GuardarEntradas", propeties, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                if (result != null) {
+                    try {
+                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        salir();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+    public void salir(){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    }
+
 
 }
