@@ -35,5 +35,6 @@
         android:layout_height="wrap_content"
         android:text="Guardar Cliente"
         android:backgroundTint="@color/boton_colores"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:layout_gravity="center"/>
 </LinearLayout>
