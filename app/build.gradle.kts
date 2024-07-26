@@ -44,12 +44,13 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.legacy.support.v4)
-    implementation(files("libs\\jxl.jar"))
-    implementation(files("libs\\ksoap2-android-assembly-3.6.4-jar-with-dependencies.jar"))
-    implementation(files("libs\\poi-3.12-android-a.jar"))
-    implementation(files("libs\\poi-ooxml-schemas-3.12-20150511-a.jar"))
-    implementation(files("libs\\Sewoo_Android_1113.jar"))
-    implementation(files("libs\\xUtils-2.5.5.jar"))
+    //implementation(files("libs\\jxl.jar"))
+    //implementation(files("libs\\ksoap2-android-assembly-3.6.4-jar-with-dependencies.jar"))
+    //implementation(files("libs\\poi-3.12-android-a.jar"))
+
+    //implementation(files("libs\\poi-ooxml-schemas-3.12-20150511-a.jar"))
+    //implementation(files("libs\\Sewoo_Android_1113.jar"))
+    //implementation(files("libs\\xUtils-2.5.5.jar"))
     implementation(fileTree(mapOf(
         "dir" to "C:\\Users\\vamaf\\AndroidStudioProjects\\gitdemo\\demo2\\app\\libs",
         "include" to listOf("*.aar", "*.jar"))))
@@ -62,6 +63,7 @@ dependencies {
     implementation (libs.lottie){
         exclude("com.squareup.okio", "okio")//Con esta linea se excluye la clase que se encuentre duplicada
     }
+
 //    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 //    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 //    implementation("com.squareup.retrofit2:loggin-interceptor:4.11.0")

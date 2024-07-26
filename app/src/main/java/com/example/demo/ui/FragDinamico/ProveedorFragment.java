@@ -56,14 +56,14 @@ public class ProveedorFragment extends KeyDwonFragment {
             @Override
             public void onClick(View v) {
                 saveClient();
-                limpiar();
-                FragmentManager fragmentManager = getParentFragmentManager();
-
-                // Comprueba que haya tenido un fragmento anteriormente
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    // Regresa al fragmento anterior
-                    fragmentManager.<popBackStack>();
-                }
+                //limpiar();
+//                FragmentManager fragmentManager = getParentFragmentManager();
+//
+//                // Comprueba que haya tenido un fragmento anteriormente
+//                if (fragmentManager.getBackStackEntryCount() > 0) {
+//                    // Regresa al fragmento anterior
+//                    fragmentManager.popBackStack();
+//                }
 
             }
 
@@ -74,8 +74,6 @@ public class ProveedorFragment extends KeyDwonFragment {
                 ET_ClaveProvedor.setText("");
 
                 // Restablecer los Spinners a su valor predeterminado (generalmente la posición 0)
-//                spinner1.setSelection(0);
-//                spinner2.setSelection(0);
             }
         });
 
@@ -128,7 +126,8 @@ public class ProveedorFragment extends KeyDwonFragment {
     }
 
     private void saveClient() {
-        DialogoAnimaciones.showLoadingDialog(getContext());
+
+        DialogoAnimaciones.showLoadingDialog(requireContext());
         // Obtener los valores de los EditTexts
         String nombreCliente = "";
         nombreCliente = ET_Nom_Provedor.getText().toString();
@@ -150,7 +149,7 @@ public class ProveedorFragment extends KeyDwonFragment {
             webServiceManager.callWebService("GuadarProveedor", properties, new WebServiceManager.WebServiceCallback() {
                 @Override
                 public void onWebServiceCallComplete(String result) {
-                //DialogoAnimaciones.hideLoadingDialog();
+                DialogoAnimaciones.hideLoadingDialog();
                     handleSaveClientResult(result);
                 }
             });
