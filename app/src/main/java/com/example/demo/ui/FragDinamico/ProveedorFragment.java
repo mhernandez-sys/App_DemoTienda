@@ -62,7 +62,7 @@ public class ProveedorFragment extends KeyDwonFragment {
                 // Comprueba que haya tenido un fragmento anteriormente
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     // Regresa al fragmento anterior
-                    fragmentManager.<popBackStack>();
+                     fragmentManager.popBackStack();
                 }
 
             }
@@ -73,9 +73,6 @@ public class ProveedorFragment extends KeyDwonFragment {
                 ET_FRC.setText("");
                 ET_ClaveProvedor.setText("");
 
-                // Restablecer los Spinners a su valor predeterminado (generalmente la posición 0)
-//                spinner1.setSelection(0);
-//                spinner2.setSelection(0);
             }
         });
 
