@@ -13,18 +13,27 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.demo.ui.gallery.GalleryFragment"
+        android:name="com.example.demo.ui.productos.MenuProductosFragment"
         android:label="@string/Menu_Producto"
-        tools:layout="@layout/fragment_gallery" >
+        tools:layout="@layout/fragment_menu_productos" >
         <action
             android:id="@+id/action_nav_gallery_to_nav_barcode"
             app:destination="@id/nav_barcode" />
+
+        <action
+            android:id="@+id/menuProdu_to_addProdu"
+            app:destination="@id/nav_agregarproducto" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_agregarproducto"
+        android:name="com.example.demo.ui.productos.GalleryFragment"
+        tools:layout="@layout/fragment_gallery" />
 
 
     <fragment
         android:id="@+id/nav_barcode"
-        android:name="com.example.demo.ui.gallery.BarcodeFragment"
+        android:name="com.example.demo.ui.productos.BarcodeFragment"
         tools:layout="@layout/fragment_barcode" />
 
     <fragment

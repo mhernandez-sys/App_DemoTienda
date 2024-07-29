@@ -352,6 +352,12 @@
     <string name="uhf_msg_filter_data_not_null">Los datos del filtro no pueden estar vacíos</string>
     <string name="uhf_msg_read_data_fail">Error de lectura</string>
 
+    <string name="Credito1"><a href="https://www.flaticon.es/iconos-gratis/valores" title="valores iconos">Valores iconos creados por Hilmy Abiyyu A. - Flaticon</a></string>
+    <string name="Credito2"><a href="https://www.flaticon.es/iconos-gratis/agregar-producto" title="agregar producto iconos">Agregar producto iconos creados por Andrean Prabowo - Flaticon</a></string>
+    <string name="Credito3"><a href="https://www.flaticon.es/iconos-gratis/eliminar-producto" title="eliminar producto iconos">Eliminar producto iconos creados por Andrean Prabowo - Flaticon</a></string>
+    <string name="Credito4"><a href="https://www.flaticon.es/iconos-gratis/inspeccion" title="inspección iconos">Inspección iconos creados por Andrean Prabowo - Flaticon</a></string>
+    <string name="Credito5"><a href="https://www.flaticon.es/iconos-gratis/imprimir-tarjetas" title="imprimir tarjetas iconos">Imprimir tarjetas iconos creados por madness - Flaticon</a></string>
+
 
 
 
