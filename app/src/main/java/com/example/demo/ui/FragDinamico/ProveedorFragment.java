@@ -51,32 +51,15 @@ public class ProveedorFragment extends KeyDwonFragment {
         // Inicializar WebServiceManager
         webServiceManager = new WebServiceManager(getContext());
 
+
+
         // Configurar el listener para el botón
         BT_GuardarProvedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveClient();
-                limpiar();
-                FragmentManager fragmentManager = getParentFragmentManager();
-
-                // Comprueba que haya tenido un fragmento anteriormente
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    // Regresa al fragmento anterior
-                    fragmentManager.popBackStack();
-                }
-
             }
 
-            private void limpiar() {
-                // Limpiar los EditTexts
-                ET_Nom_Provedor.setText("");
-                ET_FRC.setText("");
-                ET_ClaveProvedor.setText("");
-
-                // Restablecer los Spinners a su valor predeterminado (generalmente la posición 0)
-//                spinner1.setSelection(0);
-//                spinner2.setSelection(0);
-            }
         });
 
         // Configurar los EditTexts para cambiar el foco al presionar Enter
@@ -128,7 +111,7 @@ public class ProveedorFragment extends KeyDwonFragment {
     }
 
     private void saveClient() {
-        DialogoAnimaciones.showLoadingDialog(getContext());
+   //     DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener los valores de los EditTexts
         String nombreCliente = "";
         nombreCliente = ET_Nom_Provedor.getText().toString();
@@ -165,9 +148,23 @@ public class ProveedorFragment extends KeyDwonFragment {
         // Puedes agregar lógica para manejar el resultado aquí, por ejemplo:
         if (result.equals("Se realizó el insert correctamente.")) {
             Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+            limpiar();
+            FragmentManager fragmentManager = getParentFragmentManager();
+
+            // Comprueba que haya tenido un fragmento anteriormente
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                // Regresa al fragmento anterior
+                fragmentManager.popBackStack();
+            }
         } else {
             Toast.makeText(getContext(), "Error al guardar el cliente", Toast.LENGTH_SHORT).show();
-
+            limpiar();
         }
+    }
+    
+    private void limpiar() {
+        ET_Nom_Provedor.setText("");
+        ET_FRC.setText("");
+        ET_ClaveProvedor.setText("");
     }
 }
