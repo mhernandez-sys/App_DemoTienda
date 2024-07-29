@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class MenuProductosFragment extends Fragment {
     private ListAdapterProductos listAdapterProductos;
     private WebServiceManager webServiceManager;
     private String[] Id, Descripvion, Clave, Existencia, TipoProducto, ClasificacionProducto;
+    private ImageButton AddProducto;
 
 
     @Override
@@ -47,7 +49,21 @@ public class MenuProductosFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_menu_productos, container, false);
         webServiceManager = new WebServiceManager(getContext());
         recyclerView = root.findViewById(R.id.ListRecyclerViewproductos);
+        AddProducto = root.findViewById(R.id.IB_AgregarProducto);
         lleanrlista();
+
+        AddProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                // Navegar al fragmento BarcodeFragment
+                navController.navigate(R.id.nav_agregarproducto, bundle);
+            }
+        });
+
         // Inflate the layout for this fragment
         return root;
     }

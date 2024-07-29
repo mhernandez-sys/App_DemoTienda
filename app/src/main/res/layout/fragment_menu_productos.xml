@@ -21,25 +21,36 @@
 
             <ImageButton
                 android:id="@+id/IB_AgregarProducto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/azulgris"
-                android:src="@mipmap/prducto_agregado" />
+                android:backgroundTint="#FFFFFF"
+                android:src="@mipmap/agregarproducto_foreground" />
 
             <ImageButton
                 android:id="@+id/IB_EliminarProducto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
                 android:layout_weight="1"
-                android:src="@mipmap/eliminar_producto" />
+                android:backgroundTint="@color/azulc"
+                android:src="@mipmap/eliminarproducto_foreground" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/IB_BuscarProducto"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
                 android:layout_weight="1"
-                android:src="@mipmap/prducto_agregado" />
+                android:backgroundTint="@color/boton_colores"
+                android:src="@mipmap/buscarproducto_foreground" />
+
+            <ImageButton
+                android:id="@+id/IB_ImprimirProducto"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/boton_colores"
+                android:src="@mipmap/impresoraproducto_foreground" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
