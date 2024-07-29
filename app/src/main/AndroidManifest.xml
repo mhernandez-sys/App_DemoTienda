@@ -53,7 +53,7 @@
 
         </activity>
 
-        <activity android:name=".ui.gallery.Bluetooth_Activity"
+        <activity android:name=".ui.productos.Bluetooth_Activity"
             android:label="BlueTooth"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">

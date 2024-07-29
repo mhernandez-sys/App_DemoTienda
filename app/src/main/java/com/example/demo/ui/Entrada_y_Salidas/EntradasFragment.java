@@ -19,20 +19,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.demo.MainActivity;
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
 import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.main.KeyDwonFragment;
-import com.example.demo.spinners.TipoItem;
-import com.example.demo.ui.gallery.GalleryFragment;
+import com.example.demo.ui.productos.GalleryFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -284,7 +281,7 @@ public class EntradasFragment extends KeyDwonFragment {
             }
         });
     }
-    
+
     public class TipoItem {
         private String idTipo;
         private String descripcion;

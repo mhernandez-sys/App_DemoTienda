@@ -1,14 +1,11 @@
 package com.example.demo.ui.Entrada_y_Salidas;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.text.Editable;
@@ -29,7 +26,7 @@ import android.widget.Toast;
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
 import com.example.demo.main.KeyDwonFragment;
-import com.example.demo.ui.gallery.GalleryFragment;
+import com.example.demo.ui.productos.GalleryFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;

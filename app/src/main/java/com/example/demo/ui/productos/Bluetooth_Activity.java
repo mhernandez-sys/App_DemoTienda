@@ -1,4 +1,4 @@
-package com.example.demo.ui.gallery;
+package com.example.demo.ui.productos;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
