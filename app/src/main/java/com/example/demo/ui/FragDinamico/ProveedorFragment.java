@@ -62,7 +62,7 @@ public class ProveedorFragment extends KeyDwonFragment {
                 // Comprueba que haya tenido un fragmento anteriormente
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     // Regresa al fragmento anterior
-                    fragmentManager.<popBackStack>();
+                    fragmentManager.popBackStack();
                 }
 
             }
