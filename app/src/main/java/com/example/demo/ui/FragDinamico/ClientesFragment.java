@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
+import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.main.KeyDwonFragment;
 
 import org.json.JSONException;
@@ -69,17 +70,19 @@ public class ClientesFragment extends KeyDwonFragment {
     }
 
     private void saveClient() {
+        DialogoAnimaciones.hideLoadingDialog();
+        DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener los valores de los EditTexts
-        String nombreCliente = editTextCliente1.getText().toString().trim();
-        String rfc = editTextCliente2.getText().toString().trim();
-        String claveCliente = editTextCliente3.getText().toString().trim();
-      
+        String nombreCliente = editTextCliente1.getText().toString();
+        String rfc = editTextCliente2.getText().toString();
+        String claveCliente = editTextCliente3.getText().toString();
+
         // Validar los datos (opcional)
         if (nombreCliente.isEmpty() || rfc.isEmpty() || claveCliente.isEmpty()) {
             Toast.makeText(getContext(), "Por favor, llene todos los campos", Toast.LENGTH_SHORT).show();
+            DialogoAnimaciones.hideLoadingDialog();
             return;
         }
-
         // Crear propiedades para el web service
         Map<String, String> properties = new HashMap<>();
         properties.put("nuevoNombre", nombreCliente);
@@ -90,11 +93,17 @@ public class ClientesFragment extends KeyDwonFragment {
         webServiceManager.callWebService("GuardarClientes", properties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
-                handleSaveClientResult(result);
+                try{
+                    DialogoAnimaciones.hideLoadingDialog();
+                    handleSaveClientResult(result);
+                }catch (Exception e) {
+                    Toast.makeText(getContext(), "Error al llamar al web service: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
             }
         });
-    }
 
+    }
 
     private void handleSaveClientResult(String result) {
         // Manejar el resultado del web service
@@ -105,17 +114,22 @@ public class ClientesFragment extends KeyDwonFragment {
 
         // Aquí asumimos que el resultado contiene una respuesta JSON
         try {
-            JSONObject jsonResponse = new JSONObject(result);
-            String status = jsonResponse.getString("status");
-            if (status.equals("success")) {
+
+            if (result.equals("Se realizó el insert correctamente.")) {
+                limpiar();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+
             } else {
-                String errorMessage = jsonResponse.getString("message");
-                Toast.makeText(getContext(), "Error al guardar el cliente: " + errorMessage, Toast.LENGTH_SHORT).show();
+                DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: CF-123", () -> saveClient());
             }
-        } catch (JSONException e) {
-            Toast.makeText(getContext(), "Error al guardar el cliente: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
             e.printStackTrace();
+            DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: CF-127", () -> saveClient());
         }
+    }
+    private void limpiar() {
+        editTextCliente1.setText("");
+        editTextCliente2.setText("");
+        editTextCliente3.setText("");
     }
 }

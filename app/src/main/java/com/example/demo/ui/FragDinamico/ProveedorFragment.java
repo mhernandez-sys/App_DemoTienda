@@ -27,7 +27,6 @@ import com.example.demo.main.KeyDwonFragment;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class ProveedorFragment extends KeyDwonFragment {
 
     private ClientesViewModel mViewModel;
@@ -51,8 +50,6 @@ public class ProveedorFragment extends KeyDwonFragment {
         // Inicializar WebServiceManager
         webServiceManager = new WebServiceManager(getContext());
 
-
-
         // Configurar el listener para el botón
         BT_GuardarProvedor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,43 +58,6 @@ public class ProveedorFragment extends KeyDwonFragment {
             }
 
         });
-
-        // Configurar los EditTexts para cambiar el foco al presionar Enter
-        ET_Nom_Provedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    ET_FRC.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        ET_FRC.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    ET_ClaveProvedor.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        ET_ClaveProvedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    BT_GuardarProvedor.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        // Establecer el foco inicial en el EditText de nombre
-        ET_Nom_Provedor.requestFocus();
 
 
         return view;
@@ -111,7 +71,8 @@ public class ProveedorFragment extends KeyDwonFragment {
     }
 
     private void saveClient() {
-   //     DialogoAnimaciones.showLoadingDialog(getContext());
+        DialogoAnimaciones.hideLoadingDialog();
+        DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener los valores de los EditTexts
         String nombreCliente = "";
         nombreCliente = ET_Nom_Provedor.getText().toString();
@@ -121,47 +82,54 @@ public class ProveedorFragment extends KeyDwonFragment {
         // Validar los datos (opcional)
         if (nombreCliente.isEmpty() || rfc.isEmpty() || claveCliente.isEmpty()) {
             Toast.makeText(getContext(), "Por favor, llene todos los campos", Toast.LENGTH_SHORT).show();
+            DialogoAnimaciones.hideLoadingDialog();
             return;
         }
 
-        try{
-            Map<String, String> properties = new HashMap<>();
-            properties.put("nuevoNombre", nombreCliente);
-            properties.put("nuevoRFC", rfc);
-            properties.put("nuevaClave", claveCliente);
+        Map<String, String> properties = new HashMap<>();
+        properties.put("nuevoNombre", nombreCliente);
+        properties.put("nuevoRFC", rfc);
+        properties.put("nuevaClave", claveCliente);
 
-            webServiceManager.callWebService("GuadarProveedor", properties, new WebServiceManager.WebServiceCallback() {
-                @Override
-                public void onWebServiceCallComplete(String result) {
-                //DialogoAnimaciones.hideLoadingDialog();
+
+        webServiceManager.callWebService("GuadarProveedor", properties, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                DialogoAnimaciones.hideLoadingDialog();
+                try {
+                    DialogoAnimaciones.hideLoadingDialog();
                     handleSaveClientResult(result);
+
+                } catch (Exception e) {
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Fallo de conexion", () -> saveClient());
+
                 }
-            });
-
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "Error al llamar al web service: " + e.getMessage(), Toast.LENGTH_LONG).show();
-
-        }
+            }
+        });
     }
+
     private void handleSaveClientResult(String result) {
         // Manejar el resultado del web service
-        // Puedes agregar lógica para manejar el resultado aquí, por ejemplo:
-        if (result.equals("Se realizó el insert correctamente.")) {
-            Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
-            limpiar();
-            FragmentManager fragmentManager = getParentFragmentManager();
+        if (result == null || result.isEmpty()) {
+            Toast.makeText(getContext(), "Error al guardar el cliente: Respuesta vacía del servidor", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Comprueba que haya tenido un fragmento anteriormente
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                // Regresa al fragmento anterior
-                fragmentManager.popBackStack();
+        // Aquí asumimos que el resultado contiene una respuesta JSON
+        try {
+
+            if (result.equals("Se realizó el insert correctamente.")) {
+                limpiar();
+                Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+
+            } else {
+                DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: PF-127", () -> saveClient());
             }
-        } else {
-            Toast.makeText(getContext(), "Error al guardar el cliente", Toast.LENGTH_SHORT).show();
-            limpiar();
+        } catch (Exception e) {
+            e.printStackTrace();
+            DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: PF-129", () -> saveClient());
         }
     }
-    
     private void limpiar() {
         ET_Nom_Provedor.setText("");
         ET_FRC.setText("");
