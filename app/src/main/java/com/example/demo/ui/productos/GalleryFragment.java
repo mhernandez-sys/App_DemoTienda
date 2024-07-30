@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
+import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.databinding.FragmentGalleryBinding;
 import com.example.demo.main.KeyDwonFragment;
 
@@ -43,7 +45,7 @@ public class GalleryFragment extends KeyDwonFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+    
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -106,9 +108,12 @@ public class GalleryFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
+        DialogoAnimaciones.hideLoadingDialog();
+        DialogoAnimaciones.showLoadingDialog(getContext());
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
+                DialogoAnimaciones.hideLoadingDialog();
                 if (result != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
@@ -126,9 +131,11 @@ public class GalleryFragment extends KeyDwonFragment {
                         provedores.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarSpinners(provedores,datos,metodo,id));
+
                     }
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarSpinners(provedores,datos,metodo,id));
                 }
             }
         });

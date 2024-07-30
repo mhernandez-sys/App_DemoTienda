@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class EntradasFragment extends KeyDwonFragment {
 
     private EntradasViewModel mViewModel;
@@ -93,31 +92,31 @@ public class EntradasFragment extends KeyDwonFragment {
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
-                    CB_Lotes.setChecked(false);
-                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
-                }else {
+                CB_Lotes.setChecked(false);
+                Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
+            }else {
                 if (isChecked) {
-                        CB_Unidad.setChecked(false);
-                        // Mostrar TextView y EditText
-                        setLotesVisibility(View.VISIBLE);
-                    } else {
-                        // Ocultar TextView y EditText
-                        setLotesVisibility(View.GONE);
-                    }
+                    CB_Unidad.setChecked(false);
+                    // Mostrar TextView y EditText
+                    setLotesVisibility(View.VISIBLE);
+                } else {
+                    // Ocultar TextView y EditText
+                    setLotesVisibility(View.GONE);
+                }
             }
         });
 
         CB_Unidad.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
-                    CB_Unidad.setChecked(false);
-                    Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (isChecked) {
-                        CB_Lotes.setChecked(false);
-                        cantidadIngresada = ET_ArtEsperados.getText().toString();
-                        showCustomAlertDialog("Número de serie");
-                    }
+                CB_Unidad.setChecked(false);
+                Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
+            }else {
+                if (isChecked) {
+                    CB_Lotes.setChecked(false);
+                    cantidadIngresada = ET_ArtEsperados.getText().toString();
+                    showCustomAlertDialog("Número de serie");
                 }
+            }
         });
 
         BT_Añadir.setOnClickListener(v -> {
@@ -267,11 +266,10 @@ public class EntradasFragment extends KeyDwonFragment {
                         provedores.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-273", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
                     }
                 } else {
-                    //Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
-                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", new Runnable() {
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-276", new Runnable() {
                         @Override
                         public void run() {
                             llenarSpinners(provedores,datos,metodo,id,Descripcion);

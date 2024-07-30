@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.WebServiceManager;
+import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.main.KeyDwonFragment;
 import com.example.demo.ui.productos.GalleryFragment;
 
@@ -255,10 +256,13 @@ public class SalidasFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
+        DialogoAnimaciones.hideLoadingDialog();
+        DialogoAnimaciones.showLoadingDialog(getContext());
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
-                if (result != null) {
+                DialogoAnimaciones.hideLoadingDialog();
+                if (result != null||result.contains("Error")) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
                         datos.add(new TipoItem("0", "Seleccionar")); // Opción predeterminada
@@ -275,9 +279,11 @@ public class SalidasFragment extends KeyDwonFragment {
                         provedores.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-285", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
                     }
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-288", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
+
                 }
             }
         });
