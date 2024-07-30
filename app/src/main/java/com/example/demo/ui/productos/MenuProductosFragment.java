@@ -80,10 +80,13 @@ public class MenuProductosFragment extends Fragment {
             public void onClick(View v) {
 
                 if (selectedItem != null) {
+                    String codigo = selectedItem.getClave();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("selected_product", selectedItem);
+                    bundle.putString("barcode", codigo);
 
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                    // Navegar al fragmento BarcodeFragment
                     navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
                 } else {
                     Toast.makeText(getContext(), "Por favor, seleccione un producto.", Toast.LENGTH_SHORT).show();

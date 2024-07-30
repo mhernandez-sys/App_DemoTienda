@@ -283,10 +283,10 @@
                 android:layout_margin="5dp"/>
 
             <Button
-                android:id="@+id/BT_Imprimir"
+                android:id="@+id/BT_Cancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Imprimir"
+                android:text="Cancelar"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/boton_colores"
                 android:layout_weight="1"

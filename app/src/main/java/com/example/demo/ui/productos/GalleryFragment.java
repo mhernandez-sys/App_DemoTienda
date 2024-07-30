@@ -36,7 +36,7 @@ public class GalleryFragment extends KeyDwonFragment {
 
     private Spinner SP_TipoProducto, SP_ClasProd;
     private EditText ET_DescProducto, ET_ClaveProducto;
-    public Button BT_Guardar, BT_Imprimir;
+    public Button BT_Guardar, BT_Cancelar;
     private WebServiceManager webServiceManager;
     private FragmentGalleryBinding binding;
     private List<TipoItem> datosProductos = new ArrayList<>();
@@ -57,10 +57,10 @@ public class GalleryFragment extends KeyDwonFragment {
         SP_ClasProd = root.findViewById(R.id.SP_ClasProd);
         //Edit_text  para introcucir descripcion y gernerar la clave
         ET_DescProducto = root.findViewById(R.id.ET_DescProducto);
-        ET_ClaveProducto = root.findViewById(R.id.ET_ClaveProducto<)>;
+        ET_ClaveProducto = root.findViewById(R.id.ET_ClaveProducto);
         //Botones para imprimir y llamar a WS
         BT_Guardar = root.findViewById(R.id.BT_Guardar);
-        BT_Imprimir = root.findViewById(R.id.BT_Imprimir);
+        BT_Cancelar = root.findViewById(R.id.BT_Cancelar);
         // Llama al WebService para obtener los datos
         DialogoAnimaciones.showLoadingDialog(getContext());
         llenarSpinners(SP_TipoProducto, datosProductos, "Tipo_Producto", "id_Tipo");
@@ -80,10 +80,11 @@ public class GalleryFragment extends KeyDwonFragment {
             }
         };
 
-        BT_Imprimir.setOnClickListener(new View.OnClickListener() {
+        BT_Cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cambiarLayout();
+                // Esto te llevará al fragmento anterior en la pila de back stack
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
