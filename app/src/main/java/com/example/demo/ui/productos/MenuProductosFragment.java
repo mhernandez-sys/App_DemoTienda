@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.ReciclerView.ListAdapterProductos;
@@ -34,9 +35,10 @@ public class MenuProductosFragment extends Fragment {
     private ListAdapterProductos listAdapterProductos;
     private WebServiceManager webServiceManager;
     private String[] Id, Descripvion, Clave, Existencia, TipoProducto, ClasificacionProducto;
-    private ImageButton AddProducto;
+    private ImageButton AddProducto, ImprimirProducto, BuscarProductos;
     private SearchView SV_BusquedaProductos;
     private FloatingActionButton FB_Buscar;
+    private ListProductos selectedItem; // Para almacenar el producto seleccionado
 
 
 
@@ -55,6 +57,8 @@ public class MenuProductosFragment extends Fragment {
         webServiceManager = new WebServiceManager(getContext());
         recyclerView = root.findViewById(R.id.ListRecyclerViewproductos);
         AddProducto = root.findViewById(R.id.IB_AgregarProducto);
+        ImprimirProducto = root.findViewById(R.id.IB_ImprimirProducto);
+        BuscarProductos = root.findViewById(R.id.IB_BuscarProductos);
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
         lleanrlista();
@@ -62,12 +66,29 @@ public class MenuProductosFragment extends Fragment {
         AddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
 
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selected_product", selectedItem);
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.nav_agregarproducto, bundle);
 
-                // Navegar al fragmento BarcodeFragment
-                navController.navigate(R.id.nav_agregarproducto, bundle);
+            }
+        });
+
+        ImprimirProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (selectedItem != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selected_product", selectedItem);
+
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
+                } else {
+                    Toast.makeText(getContext(), "Por favor, seleccione un producto.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         // Configurar el SearchView para filtrar los datos
@@ -85,7 +106,7 @@ public class MenuProductosFragment extends Fragment {
         });
 
         // Configurar el FAB para mostrar el SearchView
-        FB_Buscar.setOnClickListener(new View.OnClickListener() {
+        BuscarProductos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (SV_BusquedaProductos.getVisibility() == View.GONE) {
@@ -128,7 +149,7 @@ public class MenuProductosFragment extends Fragment {
         listAdapterProductos = new ListAdapterProductos(elements, getContext(), new ListAdapterProductos.OnItemClickListeners() {
             @Override
             public void onItemClick(ListProductos item) {
-
+                selectedItem = item;
             }
             @Override
             public void onItemLongClick(ListProductos item) {
@@ -147,6 +168,7 @@ public class MenuProductosFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Opciones")
                 .setMessage("Producto: " + item.getDesProducto() + "\nClave: " + item.getClave())
+
                 .setPositiveButton("Editar", (dialog, which) -> {
                     // Acción para editar
                 })

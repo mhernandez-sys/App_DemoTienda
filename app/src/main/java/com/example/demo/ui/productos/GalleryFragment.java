@@ -41,31 +41,30 @@ public class GalleryFragment extends KeyDwonFragment {
     private FragmentGalleryBinding binding;
     private List<TipoItem> datosProductos = new ArrayList<>();
     private List<String> datosClasificacionP = new ArrayList<>();
+    private int spinnersLoadedCount = 0;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-    
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         // Inicializa WebServiceManager
         webServiceManager = new WebServiceManager(requireContext());
-
         //Spiners que son llenados en WS
         SP_TipoProducto = root.findViewById(R.id.SP_TipoProducto);
         SP_ClasProd = root.findViewById(R.id.SP_ClasProd);
         //Edit_text  para introcucir descripcion y gernerar la clave
         ET_DescProducto = root.findViewById(R.id.ET_DescProducto);
-        ET_ClaveProducto = root.findViewById(R.id.ET_ClaveProducto);
+        ET_ClaveProducto = root.findViewById(R.id.ET_ClaveProducto<)>;
         //Botones para imprimir y llamar a WS
         BT_Guardar = root.findViewById(R.id.BT_Guardar);
         BT_Imprimir = root.findViewById(R.id.BT_Imprimir);
-
         // Llama al WebService para obtener los datos
+        DialogoAnimaciones.showLoadingDialog(getContext());
         llenarSpinners(SP_TipoProducto, datosProductos, "Tipo_Producto", "id_Tipo");
-        llenarSpinners(SP_ClasProd, datosClasificacionP, "Clasifica_producto", "id_ClasiP");
+       llenarSpinners(SP_ClasProd, datosClasificacionP, "Clasifica_producto", "id_ClasiP");
         //obtenerDatosParaSpinners(SP_TipoProducto, SP_ClasProd, spinner3, spinner4);
 
         // Añadir listeners a los spinners
@@ -108,12 +107,9 @@ public class GalleryFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id) {
-        DialogoAnimaciones.hideLoadingDialog();
-        DialogoAnimaciones.showLoadingDialog(getContext());
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
-                DialogoAnimaciones.hideLoadingDialog();
                 if (result != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
@@ -129,6 +125,9 @@ public class GalleryFragment extends KeyDwonFragment {
                         ArrayAdapter<TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         provedores.setAdapter(adapter);
+                        spinnersLoadedCount++;
+                        checkAllSpinnersLoaded();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarSpinners(provedores,datos,metodo,id));
@@ -224,4 +223,9 @@ public class GalleryFragment extends KeyDwonFragment {
         }
     }
 
+    private void checkAllSpinnersLoaded() {
+        if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
+            DialogoAnimaciones.hideLoadingDialog();
+        }
+    }
 }
