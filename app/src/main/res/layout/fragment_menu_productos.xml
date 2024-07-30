@@ -14,13 +14,15 @@
 
 
         <SearchView
+            android:id="@+id/SV_BusquedaProductos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="4dp"
             android:background="@drawable/borde_redondeado2"
             android:padding="6dp"
+            android:iconifiedByDefault="false"
             android:backgroundTint="@color/azulgris2"
-            />
+            android:visibility="gone"/>
 
 
         <LinearLayout
@@ -35,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="76dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/azulgris2"
+                android:backgroundTint="@color/white"
                 android:src="@mipmap/agregarproducto_foreground" />
 
             <ImageButton
@@ -43,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="76dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/azulgris2"
+                android:backgroundTint="@color/white"
                 android:src="@mipmap/eliminarproducto_foreground" />
 
             <ImageButton
@@ -51,8 +53,8 @@
                 android:layout_width="0dp"
                 android:layout_height="76dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/azulgris2"
-                android:src="@mipmap/impresoraproducto_foreground" />
+                android:backgroundTint="@color/white"
+                android:src="@mipmap/imprimirproducto_foreground" />
 
         </LinearLayout>
 
@@ -65,5 +67,18 @@
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp" />
     </LinearLayout>
+
+    <!-- FloatingActionButton para mostrar el SearchView -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FB_Buscar"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/icon_buscar2" />
 
 </FrameLayout>
