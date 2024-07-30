@@ -141,7 +141,6 @@ public class GalleryFragment extends KeyDwonFragment {
         });
     }
 
-
     private void cambiarLayout() {
         String codigo = ET_ClaveProducto.getText().toString();
         Bundle bundle = new Bundle();
@@ -183,7 +182,7 @@ public class GalleryFragment extends KeyDwonFragment {
     }
 
     private void insertar_producto() {
-
+        DialogoAnimaciones.showLoadingDialog(getContext());
         TipoItem selected_tipoProducto = (TipoItem) SP_TipoProducto.getSelectedItem();
         TipoItem selected_clasProducto = (TipoItem) SP_ClasProd.getSelectedItem();
         // Obtener el id_Tipo del elemento seleccionado
@@ -202,16 +201,22 @@ public class GalleryFragment extends KeyDwonFragment {
         webServiceManager.callWebService("GuardarProductos", propeties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
+                DialogoAnimaciones.hideLoadingDialog();
                 if (result != null) {
                     try {
-                        Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
-                        salir();
+                        if (result.equals("Se realizó el insert correctamente.")) {
+                            Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
+                            salir();
+                        } else if (result.equals("Producto ya existente")) {
+                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> insertar_producto());
                     }
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> insertar_producto());
                 }
             }
         });
