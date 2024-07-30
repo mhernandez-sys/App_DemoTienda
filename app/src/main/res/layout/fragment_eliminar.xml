@@ -12,18 +12,36 @@
         android:orientation="horizontal"
         android:layout_marginBottom="16dp">
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/SW_Buscar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borde_redondeado2"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
         <TextView
+            android:id="@+id/TV_Descripcion_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Label 1"
+            android:text="Descripción:"
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/ET_Descripcion_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Enter value 1" />
+            android:hint="Enter value 1"
+            android:background="@drawable/borde_redondeado2"/>
     </LinearLayout>
 
     <!-- Second Row -->
@@ -34,17 +52,20 @@
         android:layout_marginBottom="16dp">
 
         <TextView
+            android:id="@+id/TV_Clave_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Label 2"
+            android:text="Clave:"
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/ET_Clave_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Enter value 2" />
+            android:hint="Enter value 2"
+            android:background="@drawable/borde_redondeado2"/>
     </LinearLayout>
 
     <!-- Third Row -->
@@ -55,23 +76,29 @@
         android:layout_marginBottom="16dp">
 
         <TextView
+            android:id="@+id/TV_Existencia_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Label 3"
+            android:text="Existencia:"
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/ET_Existencia_elim"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Enter value 3" />
+            android:hint="Enter value 3"
+            android:background="@drawable/borde_redondeado2"/>
     </LinearLayout>
 
     <!-- Delete Button -->
     <Button
+        android:id="@+id/BT_Eliminar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Eliminar"
-        android:onClick="onDeleteClick" />
+        android:onClick="onDeleteClick"
+        android:backgroundTint="@color/boton_colores"
+        android:textColor="@color/white"/>
 </LinearLayout>
