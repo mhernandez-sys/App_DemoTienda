@@ -64,7 +64,8 @@ public class MenuProductosFragment extends Fragment {
         recyclerView = root.findViewById(R.id.ListRecyclerViewproductos);
         AddProducto = root.findViewById(R.id.IB_AgregarProducto);
         ImprimirProducto = root.findViewById(R.id.IB_ImprimirProducto);
-        BuscarProductos = root.findViewById(R.id.IB_EliminarProducto);
+        BuscarProductos = root.findViewById(R.id.IB_BuscarProductos);
+        SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
         //lleanrlista();
         llenarListaProductos();
@@ -208,20 +209,7 @@ public class MenuProductosFragment extends Fragment {
         });
     }
 
-    public class TipoItem {
-        private String idTipo;
-        private String descripcion;
 
-        public TipoItem(String idTipo, String descripcion) {
-            this.idTipo = idTipo;
-            this.descripcion = descripcion;
-        }
-
-        @Override
-        public String toString() {
-            return descripcion; // Esto es lo que se mostrará en el Spinner
-        }
-    }
 
 
 }
