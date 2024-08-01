@@ -38,7 +38,18 @@
 
     <fragment
         android:id="@+id/nav_clientes"
-        android:name="com.example.demo.ui.FragDinamico.ClientesFragment"
+        android:name="com.example.demo.ui.clientes.MenuClientesFragment"
+        android:label="@string/Menu_CLI"
+        tools:layout="@layout/fragment_menu_clientes">
+
+        <action
+            android:id="@+id/menuCliente_to_addCliente"
+            app:destination="@id/nav_agregarcliente" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_agregarcliente"
+        android:name="com.example.demo.ui.clientes.ClientesFragment"
         android:label="@string/Menu_CLI"
         tools:layout="@layout/fragment_clientes" />
 

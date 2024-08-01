@@ -19,46 +19,43 @@
 
     <!-- res/values/styles.xml -->
 
-        <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
-            <item name="android:fontFamily">@font/coiny</item>
-            <!-- otros atributos -->
-        </style>
+    <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/coiny</item>
+        <!-- otros atributos -->
+    </style>
 
-        <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
-            <item name="android:fontFamily">@font/coiny</item>
-            <!-- otros atributos -->
-        </style>
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:fontFamily">@font/coiny</item>
+        <!-- otros atributos -->
+    </style>
 
 
     <!-- res/values/styles.xml -->
-        <style name="CustomEditTextStyle2" parent="Widget.AppCompat.EditText">
-            <item name="android:background">@drawable/edittext</item>
-            <item name="android:padding">12dp</item>
-            <item name="android:textColor">@color/black</item>
-            <item name="android:textSize">16sp</item>
+    <style name="CustomEditTextStyle2" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
 
-        </style>
+    </style>
 
-        <style name="CustomSpinnerStyle3" parent="Widget.AppCompat.Spinner">
-            <item name="android:background">@drawable/spinner</item>
-            <item name="android:padding">12dp</item>
-            <item name="android:textColor">@color/black</item>
-            <item name="android:textSize">16sp</item>
-        </style>
+    <style name="CustomSpinnerStyle3" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/spinner</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
-<!--    <string name="app_name">Arkcom</string>-->
-<!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
-<!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
-<!--    <string name="nav_header_title">Android Studio</string>-->
-<!--    <string name="nav_header_subtitle">android.studio@android.com</string>-->
-<!--    <string name="nav_header_desc">Navigation header</string>-->
-<!--    <string name="action_settings">Exportar DAtos</string>-->
+    <!--    <string name="app_name">Arkcom</string>-->
+    <!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
+    <!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
+    <!--    <string name="nav_header_title">Android Studio</string>-->
+    <!--    <string name="nav_header_subtitle">android.studio@android.com</string>-->
+    <!--    <string name="nav_header_desc">Navigation header</string>-->
+    <!--    <string name="action_settings">Exportar DAtos</string>-->
     <string name="action_uhf_ver">UHF Version</string>
     <string name="Error_1">Error de conexion !!!</string>
     <string name="carga">Volver a cargar</string>
-
-
-
 
 
     <string name="menu_inicio">Inicio</string>
@@ -357,8 +354,6 @@
     <string name="Credito3"><a href="https://www.flaticon.es/iconos-gratis/eliminar-producto" title="eliminar producto iconos">Eliminar producto iconos creados por Andrean Prabowo - Flaticon</a></string>
     <string name="Credito4"><a href="https://www.flaticon.es/iconos-gratis/inspeccion" title="inspección iconos">Inspección iconos creados por Andrean Prabowo - Flaticon</a></string>
     <string name="Credito5"><a href="https://www.flaticon.es/iconos-gratis/imprimir-tarjetas" title="imprimir tarjetas iconos">Imprimir tarjetas iconos creados por madness - Flaticon</a></string>
-
-
 
 
 </resources>

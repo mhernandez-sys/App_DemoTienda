@@ -1,23 +1,17 @@
 package com.example.demo.ui.FragDinamico;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
@@ -29,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 public class ProveedorFragment extends KeyDwonFragment {
 
-    private ClientesViewModel mViewModel;
+
     private EditText ET_Nom_Provedor, ET_FRC, ET_ClaveProvedor;
     private Button BT_GuardarProvedor;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
@@ -66,7 +60,7 @@ public class ProveedorFragment extends KeyDwonFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ClientesViewModel.class);
+
         // TODO: Use the ViewModel
     }
 

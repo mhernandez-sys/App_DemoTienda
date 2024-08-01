@@ -1,4 +1,4 @@
-package com.example.demo.ui.FragDinamico;
+package com.example.demo.ui.clientes;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +19,11 @@ import com.example.demo.WebServiceManager;
 import com.example.demo.animaciones.DialogoAnimaciones;
 import com.example.demo.main.KeyDwonFragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class ClientesFragment extends KeyDwonFragment {
 
-    private ClientesViewModel mViewModel;
     private EditText editTextCliente1, editTextCliente2, editTextCliente3;
     private Button buttonSaveCliente;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
@@ -65,7 +60,7 @@ public class ClientesFragment extends KeyDwonFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ClientesViewModel.class);
+
         // TODO: Use the ViewModel
     }
 

@@ -67,6 +67,22 @@ public class MenuProductosFragment extends Fragment {
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
         EliminarProducto = root.findViewById(R.id.IB_EliminarProducto);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
+//         Inicializar la lista y el adaptador
+        elements = new ArrayList<>();
+        listAdapterProductos = new ListAdapterProductos(elements, getContext(), new ListAdapterProductos.OnItemClickListeners() {
+            @Override
+            public void onItemClick(ListProductos item) {
+                selectedItem = item;
+            }
+
+            @Override
+            public void onItemLongClick(ListProductos item) {
+                showOptionsDialog(item);
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(listAdapterProductos);
+
         //lleanrlista();
         llenarListaProductos();
 
@@ -78,7 +94,6 @@ public class MenuProductosFragment extends Fragment {
                     bundle.putSerializable("selected_product", selectedItem);
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
                     navController.navigate(R.id.nav_agregarproducto, bundle);
-
             }
         });
 
@@ -233,7 +248,6 @@ public class MenuProductosFragment extends Fragment {
                 if (result != null) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
-                        elements = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String idproducto = jsonObject.getString("id_Prod");
@@ -274,6 +288,22 @@ public class MenuProductosFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        limpiarDatos();
+    }
+
+    private void limpiarDatos() {
+        if (elements != null) {
+            elements.clear();
+        }
+        if (listAdapterProductos != null) {
+            listAdapterProductos.notifyDataSetChanged();
+        }
+        selectedItem = null;
+    }
+
     private void eliminar_producto() {
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener el id_Tipo del elemento seleccionado
@@ -308,8 +338,5 @@ public class MenuProductosFragment extends Fragment {
             }
         });
     }
-
-
-
 
 }

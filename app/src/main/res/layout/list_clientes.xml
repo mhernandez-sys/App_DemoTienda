@@ -30,7 +30,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_weight="0.6"
-                android:src="@mipmap/producto_foreground"/>
+                android:src="@drawable/icon_usuarios"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout_cv"
@@ -45,13 +45,14 @@
                 android:padding="2dp">
 
                 <TextView
-                    android:id="@+id/TV_DescripcionProducto"
+                    android:id="@+id/TV_Nombre_Cliente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Descripcion Producto "
+                    android:text="Nombre Cliente"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,45 +60,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/TV_TipoProducto"
+                        android:id="@+id/TV_RFC"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Tipo Producto"
-                        android:textSize="14sp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColor="@color/black"/>
+                        android:text="RFC"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/TV_ClasificacionProducto"
+                        android:id="@+id/TV_ClaveCliente"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Clasificacion Producto"
+                        android:text="Clave Cliente"
                         android:textSize="14sp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/TV_Existencia"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Existencía"
-                        android:textSize="14sp"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/TV_Clave"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Clave"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
