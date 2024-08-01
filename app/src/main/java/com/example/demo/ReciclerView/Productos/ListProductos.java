@@ -1,4 +1,4 @@
-package com.example.demo.ReciclerView;
+package com.example.demo.ReciclerView.Productos;
 
 import java.io.Serializable;
 

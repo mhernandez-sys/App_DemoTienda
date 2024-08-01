@@ -13,20 +13,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
-import com.example.demo.ReciclerView.ListAdapterProductos;
-import com.example.demo.ReciclerView.ListProductos;
+import com.example.demo.ReciclerView.Productos.ListAdapterProductos;
+import com.example.demo.ReciclerView.Productos.ListProductos;
 import com.example.demo.WebServiceManager;
 import com.example.demo.animaciones.DialogoAnimaciones;
-import com.example.demo.databinding.FragmentGalleryBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -302,7 +298,7 @@ public class MenuProductosFragment extends Fragment {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
                         }
 
-                    } catch (Exception e) {<
+                    } catch (Exception e) {
                         e.printStackTrace();
                         DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_producto());
                     }
