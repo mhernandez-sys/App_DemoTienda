@@ -65,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="Seleccionar dispositivo"
                     android:textColor="@color/white"
+                    android:layout_gravity="center"
                     android:backgroundTint="@color/boton_colores"/>
             </LinearLayout>
         </LinearLayout>
@@ -73,7 +74,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Et_DescripcionLKP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                android:layout_marginBottom="10dp"
+                android:hint="Descripcion del producto"/>
 
             <TextView
                 android:id="@+id/Et_datosLKP"

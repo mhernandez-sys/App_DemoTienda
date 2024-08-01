@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MenuProductosFragment extends Fragment {
 
@@ -66,6 +69,7 @@ public class MenuProductosFragment extends Fragment {
         ImprimirProducto = root.findViewById(R.id.IB_ImprimirProducto);
         BuscarProductos = root.findViewById(R.id.IB_BuscarProductos);
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
+        EliminarProducto = root.findViewById(R.id.IB_EliminarProducto);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
         //lleanrlista();
         llenarListaProductos();
@@ -87,7 +91,7 @@ public class MenuProductosFragment extends Fragment {
             public void onClick(View v) {
 
                 if (selectedItem != null) {
-                    String codigo = selectedItem.getClave();
+                    String codigo = selectedItem.getClave() + "+" + selectedItem.getDesProducto();
                     Bundle bundle = new Bundle();
                     bundle.putString("barcode", codigo);
 
@@ -128,6 +132,17 @@ public class MenuProductosFragment extends Fragment {
             }
         });
 
+        EliminarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedItem != null) {
+                    showDeleteConfirmationDialog(selectedItem);
+                } else {
+                    Toast.makeText(getContext(), "Por favor, seleccione un producto.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         // Configurar el SearchView para filtrar los datos
         SV_BusquedaProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -146,18 +161,72 @@ public class MenuProductosFragment extends Fragment {
         return root;
     }
 
+    //Mensaje que muestra un mensaje con las dos opciones
     private void showOptionsDialog(ListProductos item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Opciones")
-                .setMessage("Producto: " + item.getDesProducto() + "\nClave: " + item.getClave())
 
-                .setPositiveButton("Editar", (dialog, which) -> {
-                    // Acción para editar
-                })
-                .setNegativeButton("Eliminar", (dialog, which) -> {
-                    // Acción para eliminar
-                })
-                .show();
+        // Personalizar el título
+        TextView title = new TextView(getContext());
+        title.setText("Opciones");
+        title.setPadding(10, 10, 10, 10);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(20);
+        builder.setCustomTitle(title);
+
+        // Personalizar el mensaje
+        TextView message = new TextView(getContext());
+        message.setText("Producto: " + item.getDesProducto() + "\nClave: " + item.getClave());
+        message.setPadding(10, 10, 10, 10);
+
+        builder.setView(message);
+
+        builder.setPositiveButton("Impirmir", (dialog, which) -> {
+            // Acción para editar
+            String codigo = item.getClave() + "+" + item.getDesProducto();
+            Bundle bundle = new Bundle();
+            bundle.putString("barcode", codigo);
+
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+            // Navegar al fragmento BarcodeFragment
+            navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
+        });
+
+        builder.setNegativeButton("Eliminar", (dialog, which) -> {
+            showDeleteConfirmationDialog(item);
+        });
+
+        builder.show();
+    }
+
+    //Mensaje que muestra un mensaje de alerta
+    private void showDeleteConfirmationDialog(ListProductos item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        // Personalizar el título
+        TextView title = new TextView(getContext());
+        title.setText("Confirmación");
+        title.setPadding(10, 10, 10, 10);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(20);
+        builder.setCustomTitle(title);
+
+        // Personalizar el mensaje
+        TextView message = new TextView(getContext());
+        message.setText("¿Estás seguro de eliminar este producto?");
+        message.setPadding(10, 20, 10, 10);
+        message.setGravity(Gravity.CENTER);
+        builder.setView(message);
+
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            eliminar_producto(); // Llamada a la función para eliminar el producto
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {
+            dialog.dismiss(); // Cierra el diálogo sin hacer nada
+        });
+
+        builder.show();
     }
 
     private void llenarListaProductos() {
@@ -167,7 +236,6 @@ public class MenuProductosFragment extends Fragment {
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
                     try {
-                        DialogoAnimaciones.hideLoadingDialog();
                         JSONArray jsonArray = new JSONArray(result);
                         elements = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -194,6 +262,7 @@ public class MenuProductosFragment extends Fragment {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(listAdapterProductos);
+                        DialogoAnimaciones.hideLoadingDialog();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -204,6 +273,41 @@ public class MenuProductosFragment extends Fragment {
                 } else {
                     DialogoAnimaciones.hideLoadingDialog();
                     DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarListaProductos( ));
+                }
+            }
+        });
+    }
+
+    private void eliminar_producto() {
+        DialogoAnimaciones.showLoadingDialog(getContext());
+        // Obtener el id_Tipo del elemento seleccionado
+        String P_eliminado = selectedItem.getId();
+        String Existencia = selectedItem.getExistencia();
+
+
+        Map<String, String> propeties = new HashMap<>();
+        propeties.put("existencia",Existencia);
+        propeties.put("id_Prod",P_eliminado);
+
+
+        webServiceManager.callWebService("EliminarProductos", propeties, new WebServiceManager.WebServiceCallback() {
+            @Override
+            public void onWebServiceCallComplete(String result) {
+                DialogoAnimaciones.hideLoadingDialog();
+                if (result != null) {
+                    try {
+                        if (result.equals("Se realizó el insert correctamente.")) {
+                            Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
+                        } else if (result.equals("Producto ya existente")) {
+                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (Exception e) {<
+                        e.printStackTrace();
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_producto());
+                    }
+                } else {
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_producto());
                 }
             }
         });

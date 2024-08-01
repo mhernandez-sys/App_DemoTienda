@@ -50,7 +50,7 @@ public class BarcodeFragment extends KeyDwonFragment {
     public String Id_identi, Descripcion_identi;
 
     private EditText edit_addressBT;
-    private TextView Et_datosLKP;
+    private TextView Et_datosLKP, Et_DescripcionLKP;
     private Button button_select, button_gencode, button_clear, button_cancelar;
 
     private ImageView barcodeImageView;
@@ -87,15 +87,18 @@ public class BarcodeFragment extends KeyDwonFragment {
         button_clear = view.findViewById(R.id.ButtonClearBT);
         button_gencode = view.findViewById(R.id.btngencode);
         Et_datosLKP = view.findViewById(R.id.Et_datosLKP);
+        Et_DescripcionLKP = view.findViewById(R.id.Et_DescripcionLKP);
         button_select = view.findViewById(R.id.ButtonSelectBT);
         button_cancelar = view.findViewById(R.id.btncancelar);
 
         Bundle args = getArguments();
         if (args != null) {
             codigobarras = args.getString("barcode");
-            // Usa el valor de barcode como necesites
+            // Usa el valor de barcode como necesitesString cadena = "123+Telas -junco";
+            String[] partes = codigobarras.split("\\+"); // Escapa el signo más (+) ya que es un carácter especial en regex
 
-            Et_datosLKP.setText(codigobarras);
+            Et_datosLKP.setText(partes[0]);
+            Et_DescripcionLKP.setText(partes[1]);
         }
 
         button_select.setOnClickListener(new View.OnClickListener() {
