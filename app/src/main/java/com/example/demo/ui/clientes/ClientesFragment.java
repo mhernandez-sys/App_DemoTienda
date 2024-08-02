@@ -127,4 +127,9 @@ public class ClientesFragment extends KeyDwonFragment {
         editTextCliente2.setText("");
         editTextCliente3.setText("");
     }
+    public void reset(){
+        editTextCliente1.setText("");
+        editTextCliente2.setText("");
+        editTextCliente3.setText("");
+    }
 }

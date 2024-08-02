@@ -67,23 +67,8 @@ public class MenuProveedorFragment extends KeyDwonFragment {
         EliminarProducto = root.findViewById(R.id.IB_EliminarProveedor);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
 
-        // Inicializar la lista y el adaptador
-        elements = new ArrayList<>();
-        ListAdapterProveedor = new ListAdapterProveedor(elements, getContext(), new ListAdapterProveedor.OnItemClickListeners() {
-            @Override
-            public void onItemClick(ListProveedor item) {
-                selectedItem = item;
-            }
+        inicializar();
 
-            @Override
-            public void onItemLongClick(ListProveedor item) {
-                showOptionsDialog(item);
-            }
-        });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(ListAdapterProveedor);
-
-        //lleanrlista();
         llenarListaProductos();
 
         AddProveedor.setOnClickListener(new View.OnClickListener() {
@@ -292,8 +277,12 @@ public class MenuProveedorFragment extends KeyDwonFragment {
                     try {
                         if (result.equals("Se realizó el delete correctamente.")) {
                             Toast.makeText(getContext(), "Se elimino con exito", Toast.LENGTH_LONG).show();
+                            inicializar();
+                            llenarListaProductos();
                         } else if (result.equals("Proveedor Existente.")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                            inicializar();
+                            llenarListaProductos();
                         }
 
                     } catch (Exception e) {
@@ -305,7 +294,25 @@ public class MenuProveedorFragment extends KeyDwonFragment {
                 }
             }
         });
-}
+    }
+
+    public void inicializar(){
+        // Inicializar la lista y el adaptador
+        elements = new ArrayList<>();
+        ListAdapterProveedor = new ListAdapterProveedor(elements, getContext(), new ListAdapterProveedor.OnItemClickListeners() {
+            @Override
+            public void onItemClick(ListProveedor item) {
+                selectedItem = item;
+            }
+
+            @Override
+            public void onItemLongClick(ListProveedor item) {
+                showOptionsDialog(item);
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(ListAdapterProveedor);
+    }
 
 
 }
