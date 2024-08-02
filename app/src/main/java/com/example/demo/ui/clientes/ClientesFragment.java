@@ -26,7 +26,7 @@ import java.util.Map;
 public class ClientesFragment extends KeyDwonFragment {
 
     private EditText editTextCliente1, editTextCliente2, editTextCliente3;
-    private Button buttonSaveCliente;
+    private Button buttonSaveCliente, button_cancelar_cliente;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
 
     public static ClientesFragment newInstance() {
@@ -43,6 +43,7 @@ public class ClientesFragment extends KeyDwonFragment {
         editTextCliente2 = view.findViewById(R.id.edit_text_cliente_2);
         editTextCliente3 = view.findViewById(R.id.edit_text_cliente_3);
         buttonSaveCliente = view.findViewById(R.id.button_save_cliente);
+        button_cancelar_cliente = view.findViewById(R.id.button_cancelar_cliente);
 
         // Inicializar WebServiceManager
         webServiceManager = new WebServiceManager(getContext());
@@ -52,6 +53,13 @@ public class ClientesFragment extends KeyDwonFragment {
             @Override
             public void onClick(View v) {
                 saveClient();
+            }
+        });
+        button_cancelar_cliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Esto te llevará al fragmento anterior en la pila de back stack
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

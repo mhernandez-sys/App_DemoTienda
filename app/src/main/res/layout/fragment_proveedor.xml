@@ -29,12 +29,32 @@
         android:background="@drawable/borde_redondeado"
         android:layout_marginBottom="8dp"/>
 
-    <Button
-        android:id="@+id/BT_GuardarProvedor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar Proveedor"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/boton_colores"
-        android:textColor="@color/white"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="4dp">
+
+        <Button
+            android:id="@+id/BT_GuardarProvedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="@color/boton_colores"
+            android:text="Guardar"
+            android:textColor="@color/white"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:id="@+id/BT_CancelarProvedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="@color/boton_colores"
+            android:text="Cancelar"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>
