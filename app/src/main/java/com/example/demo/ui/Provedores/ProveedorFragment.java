@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,6 +113,7 @@ public class ProveedorFragment extends KeyDwonFragment {
 
             if (result.equals("Se realizó el insert correctamente.")) {
                 limpiar();
+                salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -120,6 +122,12 @@ public class ProveedorFragment extends KeyDwonFragment {
         } catch (Exception e) {
             e.printStackTrace();
             DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: PF-129", () -> saveClient());
+        }
+    }
+    public void salir(){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
         }
     }
     private void limpiar() {

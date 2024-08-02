@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/azulgris</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/azulgrisc</item>
+        <item name="colorSecondary">@color/gris</item>
         <item name="colorSecondaryVariant">@color/azulclaro</item>
         <item name="colorOnSecondary">@color/black</item>  <!-- Status bar color. -->
         <!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->

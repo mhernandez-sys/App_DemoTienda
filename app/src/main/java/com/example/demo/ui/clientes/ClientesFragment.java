@@ -1,5 +1,6 @@
 package com.example.demo.ui.clientes;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -112,6 +113,7 @@ public class ClientesFragment extends KeyDwonFragment {
 
             if (result.equals("Se realizó el insert correctamente.")) {
                 limpiar();
+                salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -120,6 +122,12 @@ public class ClientesFragment extends KeyDwonFragment {
         } catch (Exception e) {
             e.printStackTrace();
             DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: CF-127", () -> saveClient());
+        }
+    }
+    public void salir(){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
         }
     }
     private void limpiar() {
