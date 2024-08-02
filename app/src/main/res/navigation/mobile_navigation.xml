@@ -55,7 +55,18 @@
 
     <fragment
         android:id="@+id/nav_proveedores"
-        android:name="com.example.demo.ui.FragDinamico.ProveedorFragment"
+        android:name="com.example.demo.ui.Provedores.MenuProveedorFragment"
+        android:label="@string/Menu_PRO"
+        tools:layout="@layout/fragment_menu_proveedor" >
+
+        <action
+            android:id="@+id/menuProvedor_to_addProvedor"
+            app:destination="@id/nav_agregarproveedores" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_agregarproveedores"
+        android:name="com.example.demo.ui.Provedores.ProveedorFragment"
         android:label="@string/Menu_PRO"
         tools:layout="@layout/fragment_proveedor" />
 

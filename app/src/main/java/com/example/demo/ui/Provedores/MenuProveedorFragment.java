@@ -1,9 +1,8 @@
-package com.example.demo.ui.productos;
+package com.example.demo.ui.Provedores;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,10 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
-import com.example.demo.ReciclerView.Productos.ListAdapterProductos;
-import com.example.demo.ReciclerView.Productos.ListProductos;
+import com.example.demo.ReciclerView.Provedores.ListAdapterProveedor;
 import com.example.demo.WebServiceManager;
 import com.example.demo.animaciones.DialogoAnimaciones;
+import com.example.demo.main.KeyDwonFragment;
+import com.example.demo.ReciclerView.Provedores.ListProveedor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -34,17 +34,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuProductosFragment extends Fragment {
+public class MenuProveedorFragment extends KeyDwonFragment {
 
-    private List<ListProductos> elements;
+    private List<ListProveedor> elements;
     private RecyclerView recyclerView;
-    private ListAdapterProductos listAdapterProductos;
+    private ListAdapterProveedor ListAdapterProveedor;
     private WebServiceManager webServiceManager;
     private String[] Id, Descripvion, Clave, Existencia, TipoProducto, ClasificacionProducto;
-    private ImageButton AddProducto, ImprimirProducto, BuscarProductos, EliminarProducto;
+    private ImageButton AddProveedor, BuscarProveedor, EliminarProducto;
     private SearchView SV_BusquedaProductos;
     private FloatingActionButton FB_Buscar;
-    private ListProductos selectedItem; // Para almacenar el producto seleccionado
+    private ListProveedor selectedItem; // Para almacenar el producto seleccionado
 
 
     @Override
@@ -58,49 +58,47 @@ public class MenuProductosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_menu_productos, container, false);
+        View root = inflater.inflate(R.layout.fragment_menu_proveedor, container, false);
         webServiceManager = new WebServiceManager(getContext());
-        recyclerView = root.findViewById(R.id.ListRecyclerViewproductos);
-        AddProducto = root.findViewById(R.id.IB_AgregarProducto);
-        ImprimirProducto = root.findViewById(R.id.IB_ImprimirProducto);
-        BuscarProductos = root.findViewById(R.id.IB_BuscarProductos);
+        recyclerView = root.findViewById(R.id.ListRecyclerViewProveedor);
+        AddProveedor = root.findViewById(R.id.IB_AgregarProveedor);
+        BuscarProveedor = root.findViewById(R.id.IB_BuscarProveedors);
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
-        EliminarProducto = root.findViewById(R.id.IB_EliminarProducto);
+        EliminarProducto = root.findViewById(R.id.IB_EliminarProveedor);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
-        inicilizar_lista();
+
+        // Inicializar la lista y el adaptador
+        elements = new ArrayList<>();
+        ListAdapterProveedor = new ListAdapterProveedor(elements, getContext(), new ListAdapterProveedor.OnItemClickListeners() {
+            @Override
+            public void onItemClick(ListProveedor item) {
+                selectedItem = item;
+            }
+
+            @Override
+            public void onItemLongClick(ListProveedor item) {
+                showOptionsDialog(item);
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(ListAdapterProveedor);
+
         //lleanrlista();
         llenarListaProductos();
 
-        AddProducto.setOnClickListener(new View.OnClickListener() {
+        AddProveedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("selected_product", selectedItem);
-                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-                    navController.navigate(R.id.nav_agregarproducto, bundle);
-            }
-        });
-
-        ImprimirProducto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (selectedItem != null) {
-                    String codigo = selectedItem.getClave() + "+" + selectedItem.getDesProducto();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("barcode", codigo);
-
-                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-
-                    // Navegar al fragmento BarcodeFragment
-                    navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
-                } else {
-                    Toast.makeText(getContext(), "Por favor, seleccione un producto.", Toast.LENGTH_SHORT).show();
-                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selected_product", selectedItem);
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.menuProvedor_to_addProvedor, bundle);
 
             }
         });
+
+
         // Configurar el SearchView para filtrar los datos
         SV_BusquedaProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -110,13 +108,13 @@ public class MenuProductosFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                listAdapterProductos.filter(newText);
+                ListAdapterProveedor.filter(newText);
                 return false;
             }
         });
 
-        // Configurar el FAB para mostrar el SearchView
-        BuscarProductos.setOnClickListener(new View.OnClickListener() {
+//        // Configurar el FAB para mostrar el SearchView
+        BuscarProveedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (SV_BusquedaProductos.getVisibility() == View.GONE) {
@@ -148,7 +146,7 @@ public class MenuProductosFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                listAdapterProductos.filter(newText);
+                ListAdapterProveedor.filter(newText);
                 return false;
             }
         });
@@ -157,8 +155,7 @@ public class MenuProductosFragment extends Fragment {
         return root;
     }
 
-    //Mensaje que muestra un mensaje con las dos opciones
-    private void showOptionsDialog(ListProductos item) {
+    private void showOptionsDialog(ListProveedor item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         // Personalizar el título
@@ -171,22 +168,11 @@ public class MenuProductosFragment extends Fragment {
 
         // Personalizar el mensaje
         TextView message = new TextView(getContext());
-        message.setText("Producto: " + item.getDesProducto() + "\nClave: " + item.getClave());
+        message.setText("Producto: " + item.getNombre() + "\nClave: " + item.getClaveProv());
         message.setPadding(10, 10, 10, 10);
 
         builder.setView(message);
 
-        builder.setPositiveButton("Impirmir", (dialog, which) -> {
-            // Acción para editar
-            String codigo = item.getClave() + "+" + item.getDesProducto();
-            Bundle bundle = new Bundle();
-            bundle.putString("barcode", codigo);
-
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-
-            // Navegar al fragmento BarcodeFragment
-            navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
-        });
 
         builder.setNegativeButton("Eliminar", (dialog, which) -> {
             showDeleteConfirmationDialog(item);
@@ -196,7 +182,7 @@ public class MenuProductosFragment extends Fragment {
     }
 
     //Mensaje que muestra un mensaje de alerta
-    private void showDeleteConfirmationDialog(ListProductos item) {
+    private void showDeleteConfirmationDialog(ListProveedor item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         // Personalizar el título
@@ -215,7 +201,7 @@ public class MenuProductosFragment extends Fragment {
         builder.setView(message);
 
         builder.setPositiveButton("Aceptar", (dialog, which) -> {
-            eliminar_producto(); // Llamada a la función para eliminar el producto
+            eliminar_proveedor(); // Llamada a la función para eliminar el producto
         });
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> {
@@ -225,40 +211,39 @@ public class MenuProductosFragment extends Fragment {
         builder.show();
     }
 
+
     private void llenarListaProductos() {
         DialogoAnimaciones.showLoadingDialog(getContext());
-        webServiceManager.callWebService("ObtenerProductosConDetalles", null, new WebServiceManager.WebServiceCallback() {
+        webServiceManager.callWebService("ObtenerProveedores", null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
                     try {
+                        DialogoAnimaciones.hideLoadingDialog();
                         JSONArray jsonArray = new JSONArray(result);
+                        elements = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String idproducto = jsonObject.getString("id_Prod");
-                            String descripcion = jsonObject.getString("Descripcion");
-                            String clave = jsonObject.getString("ClaveProds");
-                            String existencia = jsonObject.getString("Existencia");
-                            String tipoDescripcion = jsonObject.getString("Descripcion_Tipo");
-                            String clasificacionDescripcion = jsonObject.getString("Descripcion_Clasificacion");
-                            elements.add(new ListProductos(idproducto,descripcion,tipoDescripcion,clasificacionDescripcion,existencia,clave));
+                            String idProveedor = jsonObject.getString("id_Proveedores");
+                            String nombre = jsonObject.getString("Nombre");
+                            String RFC = jsonObject.getString("RFC");
+                            String claveProv = jsonObject.getString("ClaveProv");
+                            elements.add(new ListProveedor(idProveedor,nombre, RFC, claveProv));
                         }
                         //Cuando se seleciona un producto
-                        listAdapterProductos = new ListAdapterProductos(elements, getContext(), new ListAdapterProductos.OnItemClickListeners() {
+                        ListAdapterProveedor = new ListAdapterProveedor(elements, getContext(), new ListAdapterProveedor.OnItemClickListeners() {
                             @Override
-                            public void onItemClick(ListProductos item) {
+                            public void onItemClick(ListProveedor item) {
                                 selectedItem = item;
                             }
                             @Override
-                            public void onItemLongClick(ListProductos item) {
-                                selectedItem = item;
+                            public void onItemLongClick(ListProveedor item) {
                                 showOptionsDialog(item);
                             }
                         });
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(listAdapterProductos);
-                        DialogoAnimaciones.hideLoadingDialog();
+                        recyclerView.setAdapter(ListAdapterProveedor);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -268,12 +253,11 @@ public class MenuProductosFragment extends Fragment {
                     }
                 } else {
                     DialogoAnimaciones.hideLoadingDialog();
-                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> llenarListaProductos( ));
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de analisis", () -> llenarListaProductos( ));
                 }
             }
         });
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -284,25 +268,23 @@ public class MenuProductosFragment extends Fragment {
         if (elements != null) {
             elements.clear();
         }
-        if (listAdapterProductos != null) {
-            listAdapterProductos.notifyDataSetChanged();
+        if (ListAdapterProveedor != null) {
+            ListAdapterProveedor.notifyDataSetChanged();
         }
         selectedItem = null;
     }
 
-    private void eliminar_producto() {
+    private void eliminar_proveedor() {
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener el id_Tipo del elemento seleccionado
-        String P_eliminado = selectedItem.getId();
-        String Existencia = selectedItem.getExistencia();
+        String P_eliminado = selectedItem.getClaveProv();
 
 
         Map<String, String> propeties = new HashMap<>();
-        propeties.put("existencia",Existencia);
-        propeties.put("id_Prod",P_eliminado);
+        propeties.put("ClaveProveedor",P_eliminado);
 
 
-        webServiceManager.callWebService("EliminarProductos", propeties, new WebServiceManager.WebServiceCallback() {
+        webServiceManager.callWebService("EliminarProveedor", propeties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 DialogoAnimaciones.hideLoadingDialog();
@@ -310,39 +292,20 @@ public class MenuProductosFragment extends Fragment {
                     try {
                         if (result.equals("Se realizó el delete correctamente.")) {
                             Toast.makeText(getContext(), "Se elimino con exito", Toast.LENGTH_LONG).show();
-                            inicilizar_lista();
-                            llenarListaProductos();
-                        } else if (result.equals("No se pudo realizar el delete.")) {
+                        } else if (result.equals("Proveedor Existente.")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_producto());
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_proveedor());
                     }
                 } else {
-                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_producto());
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion", () -> eliminar_proveedor());
                 }
-                }
-        });
-    }
-
-    public void inicilizar_lista(){
-        //         Inicializar la lista y el adaptador
-        elements = new ArrayList<>();
-        listAdapterProductos = new ListAdapterProductos(elements, getContext(), new ListAdapterProductos.OnItemClickListeners() {
-            @Override
-            public void onItemClick(ListProductos item) {
-                selectedItem = item;
-            }
-
-            @Override
-            public void onItemLongClick(ListProductos item) {
-                showOptionsDialog(item);
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(listAdapterProductos);
-    }
+}
+
 
 }
