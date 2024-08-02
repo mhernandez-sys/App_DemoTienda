@@ -47,9 +47,8 @@ public class MenuClientesFragment extends Fragment {
     private ListClientes selectedItem; // Para almacenar el producto seleccionado
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {   
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
