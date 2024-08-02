@@ -23,22 +23,22 @@
 
         <item
             android:id="@+id/nav_proveedores"
-            android:icon="@drawable/proveedores"
+            android:icon="@drawable/provedores"
             android:title="@string/Menu_PRO" />
 
         <item
             android:id="@+id/nav_entradas"
-            android:icon="@drawable/caja"
+            android:icon="@drawable/entradas"
             android:title="@string/Menu_ENT"/>
 
         <item
             android:id="@+id/nav_salidas"
-            android:icon="@drawable/carga"
+            android:icon="@drawable/salidas"
             android:title="@string/Menu_SAL"/>
 
         <item
             android:id="@+id/nav_inventario"
-            android:icon="@drawable/icono_de_tareas"
+            android:icon="@drawable/inventario"
             android:title="@string/Menu_inventario" />
 
         <item
