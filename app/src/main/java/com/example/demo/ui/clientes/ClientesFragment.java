@@ -112,7 +112,7 @@ public class ClientesFragment extends KeyDwonFragment {
         try {
 
             if (result.equals("Se realizó el insert correctamente.")) {
-                limpiar();
+                reset();
                 salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
 

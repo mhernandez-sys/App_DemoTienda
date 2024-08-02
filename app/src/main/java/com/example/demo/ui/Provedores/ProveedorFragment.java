@@ -112,7 +112,7 @@ public class ProveedorFragment extends KeyDwonFragment {
         try {
 
             if (result.equals("Se realizó el insert correctamente.")) {
-                limpiar();
+               reset();
                 salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
 
@@ -135,4 +135,9 @@ public class ProveedorFragment extends KeyDwonFragment {
         ET_FRC.setText("");
         ET_ClaveProvedor.setText("");
     }
+private void reset() {
+    ET_Nom_Provedor.setText("");
+    ET_FRC.setText("");
+    ET_ClaveProvedor.setText("");
+}
 }
