@@ -43,11 +43,10 @@ public class MenuClientesFragment extends Fragment {
     private WebServiceManager webServiceManager;
     private ImageButton AddCliente, BuscarClientes, EliminarClientes;
     private SearchView SV_BusquedaClientes;
-    private FloatingActionButton FB_Buscar;
     private ListClientes selectedItem; // Para almacenar el producto seleccionado
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {   
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 

@@ -48,7 +48,7 @@
                     android:id="@+id/TV_Nombre_Cliente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre Cliente"
+                    android:text="Nombre Clientes"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
