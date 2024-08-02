@@ -29,13 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="4dp">
+            android:layout_margin="4dp"
+            android:padding="4dp">
 
 
             <ImageButton
                 android:id="@+id/IB_AgregarProducto"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:src="@mipmap/agregarproducto_foreground" />
@@ -43,7 +44,7 @@
             <ImageButton
                 android:id="@+id/IB_EliminarProducto"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:src="@mipmap/eliminarproducto_foreground" />
@@ -51,7 +52,7 @@
             <ImageButton
                 android:id="@+id/IB_ImprimirProducto"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:src="@mipmap/imprimirproducto_foreground" />
@@ -59,7 +60,7 @@
             <ImageButton
                 android:id="@+id/IB_BuscarProductos"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:src="@mipmap/buscarproducto_foreground" />

@@ -23,7 +23,7 @@ public class ProveedorFragment extends KeyDwonFragment {
 
 
     private EditText ET_Nom_Provedor, ET_FRC, ET_ClaveProvedor;
-    private Button BT_GuardarProvedor;
+    private Button BT_GuardarProvedor, BT_CancelarProvedor;
     private WebServiceManager webServiceManager; // Asegúrate de tener una instancia de WebServiceManager
 
 
@@ -38,6 +38,8 @@ public class ProveedorFragment extends KeyDwonFragment {
         ET_FRC = view.findViewById(R.id.ET_FRC);
         ET_ClaveProvedor = view.findViewById(R.id.ET_ClaveProvedor);
         BT_GuardarProvedor = view.findViewById(R.id.BT_GuardarProvedor);
+        BT_CancelarProvedor = view.findViewById(R.id.BT_CancelarProvedor);
+
 
         // Inicializar WebServiceManager
         webServiceManager = new WebServiceManager(getContext());
@@ -51,6 +53,13 @@ public class ProveedorFragment extends KeyDwonFragment {
 
         });
 
+        BT_CancelarProvedor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Esto te llevará al fragmento anterior en la pila de back stack
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }
