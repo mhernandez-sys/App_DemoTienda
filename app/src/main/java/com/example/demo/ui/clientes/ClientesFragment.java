@@ -120,11 +120,14 @@ public class ClientesFragment extends KeyDwonFragment {
         try {
 
             if (result.equals("Se realizó el insert correctamente.")) {
-                reset();
                 salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+            } else if (result.equals("Cliente ya existente")) {
+                Toast.makeText(getContext(), "Cliente ya existente", Toast.LENGTH_SHORT).show();
+                reset();
 
-            } else {
+
+        } else {
                 DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: CF-123", () -> saveClient());
             }
         } catch (Exception e) {

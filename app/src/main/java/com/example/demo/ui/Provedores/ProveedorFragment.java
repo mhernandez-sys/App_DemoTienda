@@ -124,6 +124,9 @@ public class ProveedorFragment extends KeyDwonFragment {
                reset();
                 salir();
                 Toast.makeText(getContext(), "Cliente guardado exitosamente", Toast.LENGTH_SHORT).show();
+            } else if (result.equals("Proveedor ya existente")) {
+                Toast.makeText(getContext(), "Proveedor ya existente", Toast.LENGTH_SHORT).show();
+                reset();
 
             } else {
                 DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: PF-127", () -> saveClient());
