@@ -194,7 +194,7 @@ public class MenuProductosFragment extends Fragment {
         builder.show();
     }
 
-    //Mensaje que muestra un mensaje de alerta
+    //Mensaje que muestra una alerta
     private void showDeleteConfirmationDialog(ListProductos item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -313,6 +313,8 @@ public class MenuProductosFragment extends Fragment {
                             llenarListaProductos();
                         } else if (result.equals("No se pudo realizar el delete.")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                            inicilizar_lista();
+                            llenarListaProductos();
                         }
 
                     } catch (Exception e) {

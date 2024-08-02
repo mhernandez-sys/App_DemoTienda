@@ -40,7 +40,7 @@ public class GalleryFragment extends KeyDwonFragment {
     private WebServiceManager webServiceManager;
     private FragmentGalleryBinding binding;
     private List<TipoItem> datosProductos = new ArrayList<>();
-    private List<String> datosClasificacionP = new ArrayList<>();
+    private List<TipoItem> datosClasificacionP = new ArrayList<>();
     private int spinnersLoadedCount = 0;
 
 
@@ -141,17 +141,6 @@ public class GalleryFragment extends KeyDwonFragment {
         });
     }
 
-    private void cambiarLayout() {
-        String codigo = ET_ClaveProducto.getText().toString();
-        Bundle bundle = new Bundle();
-        bundle.putString("barcode", codigo);
-
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-
-        // Navegar al fragmento BarcodeFragment
-        navController.navigate(R.id.action_nav_gallery_to_nav_barcode, bundle);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -209,6 +198,13 @@ public class GalleryFragment extends KeyDwonFragment {
                             salir();
                         } else if (result.equals("Producto ya existente")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                            // Ejemplo de llamada después de un proceso específico
+                            reset();
+                        }else {
+                            Toast.makeText(getContext(), "Erro al introducir los datos", Toast.LENGTH_LONG).show();
+                            // Ejemplo de llamada después de un proceso específico
+                            reset();
+
                         }
 
                     } catch (Exception e) {
@@ -233,5 +229,12 @@ public class GalleryFragment extends KeyDwonFragment {
         if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
             DialogoAnimaciones.hideLoadingDialog();
         }
+    }
+
+    private void reset() {
+        SP_TipoProducto.setSelection(0);
+        SP_ClasProd.setSelection(0);
+        ET_ClaveProducto.setText("");
+        ET_DescProducto.setText("");
     }
 }

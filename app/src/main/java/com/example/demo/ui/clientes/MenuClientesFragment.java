@@ -60,20 +60,7 @@ public class MenuClientesFragment extends Fragment {
         BuscarClientes = root.findViewById(R.id.IB_BuscarClientes);
         SV_BusquedaClientes = root.findViewById(R.id.SV_BusquedaClientes);
         EliminarClientes = root.findViewById(R.id.IB_EliminarClientes);
-        // Inicializar la lista y el adaptador
-        listClientes = new ArrayList<>();
-        listAdapterClientes =new ListAdapterClientes(listClientes, getContext(),new ListAdapterClientes.OnItemClickListeners(){
-
-            @Override
-            public void onItemClick(ListClientes item) {
-
-            }
-
-            @Override
-            public void onItemLongClick(ListClientes item) {
-
-            }
-        });
+        inicilizar();
         llenarListaClientes();
         //Se programa boton para insertar un nuevo cliente
         AddCliente.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +140,7 @@ public class MenuClientesFragment extends Fragment {
                             }
                             @Override
                             public void onItemLongClick(ListClientes item) {
+                                selectedItem = item;
                                 showOptionsDialog(item);
                             }
                         });
@@ -192,11 +180,15 @@ public class MenuClientesFragment extends Fragment {
                 DialogoAnimaciones.hideLoadingDialog();
                 if (result != null) {
                     try {
-                        if (result.equals("Se realizó el insert correctamente.")) {
+                        if (result.equals("Se realizó el delete correctamente.")) {
                             Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
-                        } else if (result.equals("Producto ya existente")) {
+                            inicilizar();
+                            llenarListaClientes();
+                        } else if (result.equals("No se pudo realizar el delete.")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                        }
+                            inicilizar();
+                            llenarListaClientes();
+                        }else {}
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -267,4 +259,20 @@ public class MenuClientesFragment extends Fragment {
         builder.show();
     }
 
+    public void inicilizar(){
+        // Inicializar la lista y el adaptador
+        listClientes = new ArrayList<>();
+        listAdapterClientes =new ListAdapterClientes(listClientes, getContext(),new ListAdapterClientes.OnItemClickListeners(){
+
+            @Override
+            public void onItemClick(ListClientes item) {
+
+            }
+
+            @Override
+            public void onItemLongClick(ListClientes item) {
+
+            }
+        });
+    }
 }
