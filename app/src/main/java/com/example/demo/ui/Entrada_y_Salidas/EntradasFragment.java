@@ -157,8 +157,9 @@ public class EntradasFragment extends KeyDwonFragment {
 
         TV_CanEsperada.setText(cantidadIngresada);
         ET_Numserie.setHint(hintText);
-        ET_Numserie.requestFocus();
+        ET_Numserie.requestFocus(); // Solicitar enfoque
         ET_Numserie.setEnabled(true); // Habilitar el EditText
+        ET_Numserie.setFocusable(true); // Hacer que el EditText sea enfocable
 
         if (QR_CAJA.equals(hintText)) {
             llPorCajas.setVisibility(View.VISIBLE);

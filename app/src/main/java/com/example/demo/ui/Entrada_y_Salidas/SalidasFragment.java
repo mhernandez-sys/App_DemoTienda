@@ -346,11 +346,23 @@ public class SalidasFragment extends KeyDwonFragment {
             }
         });
     }
-    public void salir(){
+    public void salir() {
         FragmentManager fragmentManager = getParentFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         }
+
+        }
+        public void reset(){
+            CB_SalLote.setChecked(false);
+            CB_SalUnidad.setChecked(false);
+            ET_SalidasArtEsperados.setText("");
+            ET_FechaSalidas.setText("");
+            Et_SalCajasCan.setText("");
+            ET_SalPiezasCaja.setText("");
+            sp_cliente.setSelection(0);
+            sp_producto.setSelection(0);
+        }
     }
 
-}
+
