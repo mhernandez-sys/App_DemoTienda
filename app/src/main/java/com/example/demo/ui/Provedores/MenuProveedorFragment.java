@@ -40,7 +40,6 @@ public class MenuProveedorFragment extends KeyDwonFragment {
     private RecyclerView recyclerView;
     private ListAdapterProveedor ListAdapterProveedor;
     private WebServiceManager webServiceManager;
-    private String[] Id, Descripvion, Clave, Existencia, TipoProducto, ClasificacionProducto;
     private ImageButton AddProveedor, BuscarProveedor, EliminarProducto;
     private SearchView SV_BusquedaProductos;
     private FloatingActionButton FB_Buscar;
@@ -66,9 +65,7 @@ public class MenuProveedorFragment extends KeyDwonFragment {
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
         EliminarProducto = root.findViewById(R.id.IB_EliminarProveedor);
         FB_Buscar = root.findViewById(R.id.FB_Buscar);
-
         inicializar();
-
         llenarListaProductos();
 
         AddProveedor.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +220,7 @@ public class MenuProveedorFragment extends KeyDwonFragment {
                             }
                             @Override
                             public void onItemLongClick(ListProveedor item) {
+                                selectedItem = item;
                                 showOptionsDialog(item);
                             }
                         });
@@ -263,10 +261,13 @@ public class MenuProveedorFragment extends KeyDwonFragment {
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener el id_Tipo del elemento seleccionado
         String P_eliminado = selectedItem.getClaveProv();
+        String ID_Proveedor = selectedItem.getProv();
 
 
         Map<String, String> propeties = new HashMap<>();
         propeties.put("ClaveProveedor",P_eliminado);
+        propeties.put("id_Proveedores",ID_Proveedor);
+
 
 
         webServiceManager.callWebService("EliminarProveedor", propeties, new WebServiceManager.WebServiceCallback() {
