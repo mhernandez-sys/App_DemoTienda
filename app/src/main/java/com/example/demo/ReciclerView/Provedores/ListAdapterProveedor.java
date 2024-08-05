@@ -1,6 +1,7 @@
 package com.example.demo.ReciclerView.Provedores;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,78 +12,98 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demo.R;
+import com.example.demo.ReciclerView.Productos.ListAdapterProductos;
+import com.example.demo.ReciclerView.Productos.ListProductos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAdapterProveedor extends RecyclerView.Adapter<ListAdapterProveedor.ProveedorViewHolder> {
+public class ListAdapterProveedor extends RecyclerView.Adapter<ListAdapterProveedor.ViewHolder> {
 
-    private List<ListProveedor> proveedorList;
-    private List<ListProveedor> proveedorListFull;
+    private List<ListProveedor> mData;
+    private List<ListProveedor> mDataFiltered;
+    private LayoutInflater mInflater;
+    private Context context;
     private OnItemClickListeners onItemClickListeners;
+    private int selectedPosition=-1;  // Índice del elemento seleccionado
 
     public interface OnItemClickListeners {
         void onItemClick(ListProveedor item);
         void onItemLongClick(ListProveedor item);
     }
 
-    public ListAdapterProveedor(List<ListProveedor> proveedorList, Context context, OnItemClickListeners onItemClickListeners) {
-        this.proveedorList = proveedorList;
-        this.proveedorListFull = new ArrayList<>(proveedorList);
+    public ListAdapterProveedor(List<ListProveedor> itemList, Context context, OnItemClickListeners onItemClickListeners) {
+        this.mInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.mData = itemList;
+        this.mDataFiltered = new ArrayList<>(itemList); // Inicializa mDataFiltered con todos los datos
         this.onItemClickListeners = onItemClickListeners;
     }
 
     @NonNull
     @Override
-    public ProveedorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_proveedor, parent, false);
-        return new ProveedorViewHolder(view);
+    public ListAdapterProveedor.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.list_proveedor, parent, false);
+        return new ListAdapterProveedor.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProveedorViewHolder holder, int position) {
-        ListProveedor proveedor = proveedorList.get(position);
-
-        holder.tvNombreProveedor.setText(proveedor.getNombre());
-        holder.tvRFCProveedor.setText(proveedor.getRFC());
-        holder.tvClaveProveedor.setText(proveedor.getClaveProv());
-        holder.itemView.setOnClickListener(v -> onItemClickListeners.onItemClick(proveedor));
-        holder.itemView.setOnLongClickListener(v -> {
-            onItemClickListeners.onItemLongClick(proveedor);
-            return true;
-        });
+    public void onBindViewHolder(final ListAdapterProveedor.ViewHolder holder, int position) {
+        holder.bindData(mDataFiltered.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return proveedorList.size();
+        return mDataFiltered.size(); // Usa la lista filtrada
     }
 
     public void filter(String text) {
-        proveedorList.clear();
+        mDataFiltered.clear();
         if (text.isEmpty()) {
-            proveedorList.addAll(proveedorListFull);
+            mDataFiltered.addAll(mData);
         } else {
             text = text.toLowerCase();
-            for (ListProveedor item : proveedorListFull) {
-                if (item.getNombre().toLowerCase().contains(text) || item.getRFC().toLowerCase().contains(text) || item.getClaveProv().toLowerCase().contains(text)) {
-                    proveedorList.add(item);
+            for (ListProveedor item : mData) {
+                if (item.getClaveProv().toLowerCase().contains(text) ||
+                        item.getNombre().toLowerCase().contains(text) ||
+                        item.getRFC().toLowerCase().contains(text)) {
+                    mDataFiltered.add(item);
                 }
             }
         }
         notifyDataSetChanged();
     }
 
-    public static class ProveedorViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombreProveedor, tvRFCProveedor, tvClaveProveedor;
         ImageView iconProveedor;
 
-        public ProveedorViewHolder(@NonNull View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             tvNombreProveedor = itemView.findViewById(R.id.TV_NombreProveedor);
             tvRFCProveedor = itemView.findViewById(R.id.TV_RFCProveedor);
             tvClaveProveedor = itemView.findViewById(R.id.TV_ClaveProveedor);
             iconProveedor = itemView.findViewById(R.id.Icon_Proveedor);
+        }
+
+        void bindData(final ListProveedor item, final int position) {
+            tvNombreProveedor.setText(item.getNombre());
+            tvRFCProveedor.setText(item.getRFC());
+            tvClaveProveedor.setText(item.getClaveProv());
+
+            // Resaltar el fondo si el elemento está seleccionado
+            itemView.setBackgroundColor(selectedPosition == position ? Color.LTGRAY : Color.TRANSPARENT);
+
+            itemView.setOnClickListener(v -> {
+                onItemClickListeners.onItemClick(item);
+                selectedPosition = position;
+                notifyDataSetChanged(); // Notificar cambios al adapter para actualizar la vista
+            });
+
+            itemView.setOnLongClickListener(v -> {
+                onItemClickListeners.onItemLongClick(item);
+                return true;
+            });
         }
     }
 }

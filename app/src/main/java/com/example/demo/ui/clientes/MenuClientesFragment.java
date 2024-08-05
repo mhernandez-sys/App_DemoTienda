@@ -128,8 +128,8 @@ public class MenuClientesFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String idCliente = jsonObject.getString("id_Cliente");
                             String nombre = jsonObject.getString("Nombre");
-                            String clave = jsonObject.getString("RFC");
-                            String RFC = jsonObject.getString("ClaveClient");
+                            String RFC = jsonObject.getString("RFC");
+                            String clave = jsonObject.getString("ClaveClient");
                             listClientes.add(new ListClientes(idCliente,nombre,RFC, clave));
                         }
                         //Cuando se seleciona un producto

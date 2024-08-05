@@ -223,6 +223,7 @@ public class MenuProveedorFragment extends KeyDwonFragment {
                             }
                             @Override
                             public void onItemLongClick(ListProveedor item) {
+                                selectedItem = item;
                                 showOptionsDialog(item);
                             }
                         });
@@ -263,11 +264,11 @@ public class MenuProveedorFragment extends KeyDwonFragment {
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener el id_Tipo del elemento seleccionado
         String P_eliminado = selectedItem.getClaveProv();
-
+        String ID_Proveedor = selectedItem.getProv();
 
         Map<String, String> propeties = new HashMap<>();
         propeties.put("ClaveProveedor",P_eliminado);
-
+        propeties.put("id_Proveedores",ID_Proveedor);
 
         webServiceManager.callWebService("EliminarProveedor", propeties, new WebServiceManager.WebServiceCallback() {
             @Override
