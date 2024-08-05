@@ -9,24 +9,24 @@
     <Spinner
         android:id="@+id/sp_proveedor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="34dp"
+        android:layout_margin="10dp"
         android:entries="@array/sp_provedores"
         android:background="@drawable/borde_redondeado2"/>
 
     <Spinner
         android:id="@+id/sp_producto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="34dp"
+        android:layout_margin="10dp"
         android:entries="@array/sp_productos"
         android:background="@drawable/borde_redondeado2"/>
 
     <EditText
         android:id="@+id/ET_ArtEsperados"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="34dp"
+        android:layout_margin="10dp"
         android:background="@drawable/borde_redondeado"
         android:hint="Cantidad de entrada"
         android:inputType="number"
@@ -35,9 +35,9 @@
     <EditText
         android:id="@+id/ET_FechaEntrada"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="34dp"
+        android:layout_margin="10dp"
         android:hint="Fecha de entrada"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/borde_redondeado"
         android:inputType="date"/>
 
@@ -51,7 +51,8 @@
         <CheckBox
             android:id="@+id/CB_Lotes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:buttonTint="@color/azul1.1"
             android:text="Por lotes:"
             android:textSize="16sp" />
@@ -64,9 +65,8 @@
             <TextView
                 android:id="@+id/TV_Cajas"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Num. de cajas:"
@@ -138,7 +138,8 @@
         <CheckBox
             android:id="@+id/CB_Unidad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:text="Por unidad:"
             android:buttonTint="@color/azul1.1"
             android:textSize="16sp"/>

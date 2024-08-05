@@ -13,22 +13,22 @@
         <Spinner
             android:id="@+id/sp_cliente"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:background="@drawable/borde_redondeado2" />
 
         <Spinner
             android:id="@+id/sp_producto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:background="@drawable/borde_redondeado2" />
 
         <EditText
             android:id="@+id/ET_SalidasArtEsperados"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:background="@drawable/borde_redondeado"
             android:inputType="number"
             android:gravity=""
@@ -37,9 +37,9 @@
         <EditText
             android:id="@+id/ET_FechaSalidas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:hint="Fecha de salida"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/borde_redondeado"
             android:inputType="date"/>
 
@@ -48,8 +48,8 @@
             <CheckBox
                 android:id="@+id/CB_SalLote"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"
                 android:buttonTint="@color/azul1.1"
                 android:text="Lotes" />
 
@@ -129,7 +129,8 @@
         <CheckBox
             android:id="@+id/CB_SalUnidad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
+            android:layout_margin="10dp"
             android:text="Número de serie"
             android:buttonTint="@color/azul1.1"
             android:layout_marginBottom="16dp" />

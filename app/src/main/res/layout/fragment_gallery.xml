@@ -44,18 +44,18 @@
             <TextView
                 android:id="@+id/tv_add_descripcion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_height="34dp"
                 android:layout_weight="1"
                 android:text="Tipo Prod:"
+                
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <Spinner
                 android:id="@+id/SP_TipoProducto"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="0.25"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"                android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </Spinner>
@@ -70,8 +70,8 @@
             <TextView
                 android:id="@+id/tv_add_valor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Clasifica Prod:"
                 android:textColor="@color/black"
@@ -80,8 +80,8 @@
             <Spinner
                 android:id="@+id/SP_ClasProd"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="0.25"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"                android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </Spinner>
@@ -96,8 +96,8 @@
             <TextView
                 android:id="@+id/tv_add_unidad"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Desc Prod:"
                 android:textColor="@color/black"
@@ -106,8 +106,8 @@
             <EditText
                 android:id="@+id/ET_DescProducto"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="0.25"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"                android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </EditText>
@@ -122,8 +122,8 @@
             <TextView
                 android:id="@+id/tv_add_claveActivo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Clav Prod:"
                 android:textColor="@color/black"
@@ -132,8 +132,8 @@
             <EditText
                 android:id="@+id/ET_ClaveProducto"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="0.25"
+                android:layout_height="34dp"
+                android:layout_margin="10dp"                android:layout_weight="0.25"
                 android:background="@drawable/borde_redondeado2">
             </EditText>
         </LinearLayout>
