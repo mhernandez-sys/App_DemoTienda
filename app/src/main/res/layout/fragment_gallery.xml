@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
 <!--        <TextView-->
@@ -44,10 +44,10 @@
             <TextView
                 android:id="@+id/tv_add_descripcion"
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="Tipo Prod:"
-                
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -55,7 +55,8 @@
                 android:id="@+id/SP_TipoProducto"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"                android:layout_weight="0.25"
+                android:layout_weight="0.30"
+                android:layout_marginLeft="6dp"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </Spinner>
@@ -71,9 +72,9 @@
                 android:id="@+id/tv_add_valor"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Clasifica Prod:"
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -81,7 +82,8 @@
                 android:id="@+id/SP_ClasProd"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"                android:layout_weight="0.25"
+                android:layout_weight="0.30"
+                android:layout_marginLeft="6dp"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </Spinner>
@@ -97,8 +99,8 @@
                 android:id="@+id/tv_add_unidad"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="Desc Prod:"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -107,7 +109,8 @@
                 android:id="@+id/ET_DescProducto"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"                android:layout_weight="0.25"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="0.30"
                 android:background="@drawable/borde_redondeado2">
                 <!-- Aquí coloca los elementos que desees dentro del Spinner -->
             </EditText>
@@ -123,9 +126,9 @@
                 android:id="@+id/tv_add_claveActivo"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Clav Prod:"
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -133,7 +136,8 @@
                 android:id="@+id/ET_ClaveProducto"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"                android:layout_weight="0.25"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="0.30"
                 android:background="@drawable/borde_redondeado2">
             </EditText>
         </LinearLayout>
@@ -141,7 +145,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="4dp"
             android:gravity="center"
             android:visibility="gone">
 

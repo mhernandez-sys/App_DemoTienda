@@ -2,48 +2,123 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_layout">
+    android:id="@+id/main_layout"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TV_Clientes"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Cliente:"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <Spinner
             android:id="@+id/sp_cliente"
             android:layout_width="match_parent"
             android:layout_height="34dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/borde_redondeado2" />
+            android:layout_weight="0.30"
+            android:layout_marginLeft="6dp"
+            android:paddingLeft="4dp"
+            android:background="@drawable/borde_redondeado2">
+            <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TV_Productos"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Producto:"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <Spinner
             android:id="@+id/sp_producto"
             android:layout_width="match_parent"
             android:layout_height="34dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/borde_redondeado2" />
+            android:layout_weight="0.30"
+            android:layout_marginLeft="6dp"
+            android:paddingLeft="4dp"
+            android:background="@drawable/borde_redondeado2">
+            <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TV_PiezasAñadidas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Piezas vendidas:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/ET_SalidasArtEsperados"
             android:layout_width="match_parent"
             android:layout_height="34dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/borde_redondeado"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="0.30"
+            android:background="@drawable/borde_redondeado2"
             android:inputType="number"
-            android:gravity=""
-            android:hint="Cantidad de salidas" />
+            android:focusable="true"
+            android:paddingLeft="8dp"
+            android:hint="Maximo de piezas"/>
+    </LinearLayout>
 
-        <EditText
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_add_unidad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Fecha:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/ET_FechaSalidas"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_margin="10dp"
-            android:hint="Fecha de salida"
-            android:background="@drawable/borde_redondeado"
-            android:inputType="date"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:paddingLeft="4dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-
+    </LinearLayout>
 
             <CheckBox
                 android:id="@+id/CB_SalLote"
@@ -56,7 +131,7 @@
         <LinearLayout
             android:id="@+id/LL_SalidasLote"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -135,5 +210,4 @@
             android:buttonTint="@color/azul1.1"
             android:layout_marginBottom="16dp" />
 
-    </LinearLayout>
 </LinearLayout>

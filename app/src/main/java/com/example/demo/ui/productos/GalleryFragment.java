@@ -236,5 +236,6 @@ public class GalleryFragment extends KeyDwonFragment {
         SP_ClasProd.setSelection(0);
         ET_ClaveProducto.setText("");
         ET_DescProducto.setText("");
+        spinnersLoadedCount = 0;
     }
 }
