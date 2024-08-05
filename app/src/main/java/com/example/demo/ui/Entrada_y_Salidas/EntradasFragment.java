@@ -158,6 +158,7 @@ public class EntradasFragment extends KeyDwonFragment {
         TV_CanEsperada.setText(cantidadIngresada);
         ET_Numserie.setHint(hintText);
         ET_Numserie.requestFocus();
+        ET_Numserie.setEnabled(true); // Habilitar el EditText
 
         if (QR_CAJA.equals(hintText)) {
             llPorCajas.setVisibility(View.VISIBLE);
@@ -186,6 +187,8 @@ public class EntradasFragment extends KeyDwonFragment {
                                 // Suma de los artículos leídos
                                 int datopz = Integer.parseInt(ET_PiezasCaja.getText().toString());
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                                int Artesperados = Integer.parseInt(cantidadIngresada);
+                                int cajasesperadas = Integer.parseInt(Et_CanCajas.getText().toString());
                                 int suma = datopz + datoleidos;
                                 TV_ArtLeidos.setText(String.valueOf(suma));
 
@@ -193,11 +196,23 @@ public class EntradasFragment extends KeyDwonFragment {
                                 int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
                                 numcajas++;
                                 TV_CajasLeidas.setText(String.valueOf(numcajas));
+                                if (suma == Artesperados || numcajas == cajasesperadas){
+                                    ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
+                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
+                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+                                }
                             } else {
                                 // Suma de los artículos leídos
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+                                int Artesperados = Integer.parseInt(cantidadIngresada);
+
                                 datoleidos++;
                                 TV_ArtLeidos.setText(String.valueOf(datoleidos));
+                                if (datoleidos == Artesperados ){
+                                    ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
+                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
+                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+                                }
                             }
 
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
