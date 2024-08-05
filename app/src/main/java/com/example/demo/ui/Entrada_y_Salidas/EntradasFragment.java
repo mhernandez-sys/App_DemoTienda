@@ -39,20 +39,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class EntradasFragment extends KeyDwonFragment {
 
     private String cantidadIngresada;
     private CheckBox CB_Lotes, CB_Unidad;
     private Spinner Sp_Provedor, SP_Producto;
-    private TextView TV_Cantidad, TV_Cajas;
-    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas, ET_FechaEntrada;
+    private TextView TV_Cantidad, TV_Cajas, ET_FechaEntrada;
+    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas;
     private Button BT_Añadir;
     private String Ban_leido = "";
     private WebServiceManager webServiceManager;
     private String seleccionado = "";
     private List<String> DatosProvedor = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
-
+    private int spinnersLoadedCount = 0;
 
     private static final String QR_CAJA = "QR Caja";
     private static final String NUMERO_SERIE = "Número de serie";
@@ -84,9 +87,16 @@ public class EntradasFragment extends KeyDwonFragment {
         Et_CanCajas = root.findViewById(R.id.Et_CanCajas);
         ET_FechaEntrada = root.findViewById(R.id.ET_FechaEntrada);
 
+        DialogoAnimaciones.showLoadingDialog(getContext());
         // Llama al WebService para obtener los datos
         llenarSpinners(Sp_Provedor, DatosProvedor, "Proveedoressp", "id_Proveedores", "Nombre");
         llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
+
+        // Obtener la fecha actual
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato de fecha deseado
+        String currentDate = sdf.format(Calendar.getInstance().getTime());
+        ///Establece la fecha en el ET+
+        ET_FechaEntrada.setText(currentDate);
 
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -197,7 +207,8 @@ public class EntradasFragment extends KeyDwonFragment {
                                 numcajas++;
                                 TV_CajasLeidas.setText(String.valueOf(numcajas));
                                 if (suma == Artesperados || numcajas == cajasesperadas){
-                                    ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
+                                    ET_Numserie.setVisibility(View.GONE);
+                                    ET_Numserie.clearFocus(); // Quita el foco del EditText
                                     ET_Numserie.setEnabled(false); // Bloquea el EditText
                                     Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
                                 }
@@ -211,7 +222,7 @@ public class EntradasFragment extends KeyDwonFragment {
                                 if (datoleidos == Artesperados ){
                                     ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
                                     ET_Numserie.setEnabled(false); // Bloquea el EditText
-                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -237,10 +248,6 @@ public class EntradasFragment extends KeyDwonFragment {
 
         btnCompletar.setOnClickListener(v -> {
             insertar_producto();
-            FragmentManager fragmentManager = getParentFragmentManager();
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            }
             alertDialog.dismiss();
         });
 
@@ -258,12 +265,10 @@ public class EntradasFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
-        DialogoAnimaciones.hideLoadingDialog();
-        DialogoAnimaciones.showLoadingDialog(getContext());
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
-                DialogoAnimaciones.hideLoadingDialog();
+
                 if (result != null||result.contains("Error")) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
@@ -278,6 +283,8 @@ public class EntradasFragment extends KeyDwonFragment {
                         ArrayAdapter<GalleryFragment.TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         provedores.setAdapter(adapter);
+                        spinnersLoadedCount++;
+                        checkAllSpinnersLoaded();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-273", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
@@ -358,5 +365,10 @@ public class EntradasFragment extends KeyDwonFragment {
         }
     }
 
+    private void checkAllSpinnersLoaded() {
+        if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
+            DialogoAnimaciones.hideLoadingDialog();
+        }
+    }
 
 }

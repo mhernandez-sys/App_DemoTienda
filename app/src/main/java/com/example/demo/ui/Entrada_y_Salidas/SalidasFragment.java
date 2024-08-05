@@ -33,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +49,13 @@ public class SalidasFragment extends KeyDwonFragment {
     private WebServiceManager webServiceManager;
 
     private LinearLayout LL_SalidasLote;
-    private EditText Et_SalCajasCan, ET_SalPiezasCaja, ET_SalidasArtEsperados, ET_FechaSalidas;
+    private EditText Et_SalCajasCan, ET_SalPiezasCaja, ET_SalidasArtEsperados;
+    private TextView ET_FechaSalidas;
     private Button BT_Añadir;
     private String Ban_leido = "";
     private List<String> DatosClientes = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
+    private int spinnersLoadedCount = 0;
 
 
     @Override
@@ -67,10 +71,6 @@ public class SalidasFragment extends KeyDwonFragment {
 
         webServiceManager = new WebServiceManager(requireContext());
 
-        // Llama al WebService para obtener los datos
-        llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre");
-        llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
-
         //Linear layout para lotes
         LL_SalidasLote = view.findViewById(R.id.LL_SalidasLote);
         //Edit text para lotes y unidad
@@ -80,6 +80,17 @@ public class SalidasFragment extends KeyDwonFragment {
         ET_FechaSalidas = view.findViewById(R.id.ET_FechaSalidas);
         //Boton para llamar a recicler view
         BT_Añadir = view.findViewById(R.id.BT_SalAñadir);
+
+        // Obtener la fecha actual
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato de fecha deseado
+        String currentDate = sdf.format(Calendar.getInstance().getTime());
+        ///Establece la fecha en el ET+
+        ET_FechaSalidas.setText(currentDate);
+
+        DialogoAnimaciones.showLoadingDialog(getContext());
+        // Llama al WebService para obtener los datos
+        llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre");
+        llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
 
         CB_SalLote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -186,17 +197,32 @@ public class SalidasFragment extends KeyDwonFragment {
                                 int datopz = Integer.parseInt(ET_SalPiezasCaja.getText().toString());
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
                                 int suma = datopz + datoleidos;
+                                int Artesperados = Integer.parseInt(cantidadIngresada);
+                                int cajasesperadas = Integer.parseInt(Et_SalCajasCan.getText().toString());
                                 TV_ArtLeidos.setText(String.valueOf(suma));
 
                                 // Suma de las cajas leídas
                                 int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
                                 numcajas++;
                                 TV_CajasLeidas.setText(String.valueOf(numcajas));
+                                if (suma == Artesperados || numcajas == cajasesperadas){
+                                    ET_Numserie.setVisibility(View.GONE);
+                                    ET_Numserie.clearFocus(); // Quita el foco del EditText
+                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
+                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+                                }
                             } else {
                                 // Suma de los artículos leídos
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
                                 datoleidos++;
                                 TV_ArtLeidos.setText(String.valueOf(datoleidos));
+                                int Artesperados = Integer.parseInt(cantidadIngresada);
+
+                                if (datoleidos == Artesperados ){
+                                    ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
+                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
+                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+                                }
                             }
 
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
@@ -226,13 +252,8 @@ public class SalidasFragment extends KeyDwonFragment {
         btnCompletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-
-                // Comprueba que haya tenido un fragmento anteriormente
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    // Regresa al fragmento anterior
-                    fragmentManager.popBackStack();
-                }
+                eliminar_producto();
+                reset();
                 alertDialog.dismiss();
             }
         });
@@ -256,12 +277,9 @@ public class SalidasFragment extends KeyDwonFragment {
     }
 
     private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
-        DialogoAnimaciones.hideLoadingDialog();
-        DialogoAnimaciones.showLoadingDialog(getContext());
         webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
-                DialogoAnimaciones.hideLoadingDialog();
                 if (result != null||result.contains("Error")) {
                     try {
                         JSONArray jsonArray = new JSONArray(result);
@@ -277,6 +295,8 @@ public class SalidasFragment extends KeyDwonFragment {
                         ArrayAdapter<GalleryFragment.TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         provedores.setAdapter(adapter);
+                        spinnersLoadedCount++;
+                        checkAllSpinnersLoaded();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-285", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
@@ -312,7 +332,7 @@ public class SalidasFragment extends KeyDwonFragment {
         }
     }
 
-    private void insertar_producto() {
+    private void eliminar_producto() {
 
         TipoItem selected_cliente = (TipoItem) sp_cliente.getSelectedItem();
         TipoItem selected_producto = (TipoItem) sp_producto.getSelectedItem();
@@ -334,8 +354,14 @@ public class SalidasFragment extends KeyDwonFragment {
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
                     try {
-                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                        salir();
+                        if(result.equals("Compra aprobada.")){
+                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                            salir();
+                        } else if (result.contains("Stock insuficiente.")) {
+                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -351,6 +377,23 @@ public class SalidasFragment extends KeyDwonFragment {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         }
+    }
+
+    private void checkAllSpinnersLoaded() {
+        if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
+            DialogoAnimaciones.hideLoadingDialog();
+        }
+    }
+
+    public void reset() {
+        CB_SalLote.setChecked(false);
+        CB_SalUnidad.setChecked(false);
+        ET_SalidasArtEsperados.setText("");
+        ET_FechaSalidas.setText("");
+        Et_SalCajasCan.setText("");
+        ET_SalPiezasCaja.setText("");
+        sp_cliente.setSelection(0);
+        sp_producto.setSelection(0);
     }
 
 }

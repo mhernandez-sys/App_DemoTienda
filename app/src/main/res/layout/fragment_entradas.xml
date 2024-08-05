@@ -4,47 +4,128 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
-    <Spinner
-        android:id="@+id/sp_proveedor"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:layout_margin="10dp"
-        android:entries="@array/sp_provedores"
-        android:background="@drawable/borde_redondeado2"/>
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:gravity="center">
 
-    <Spinner
-        android:id="@+id/sp_producto"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:layout_margin="10dp"
-        android:entries="@array/sp_productos"
-        android:background="@drawable/borde_redondeado2"/>
+        <TextView
+            android:id="@+id/TV_Provedor"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Proveedor:"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/ET_ArtEsperados"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/borde_redondeado"
-        android:hint="Cantidad de entrada"
-        android:inputType="number"
-        android:focusable="true"/>
+        <Spinner
+            android:id="@+id/sp_proveedor"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_weight="0.30"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/borde_redondeado2">
+            <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+        </Spinner>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/ET_FechaEntrada"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:layout_margin="10dp"
-        android:hint="Fecha de entrada"
-        android:background="@drawable/borde_redondeado"
-        android:inputType="date"/>
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TV_Productos"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Producto:"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:paddingLeft="4dp"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/sp_producto"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_weight="0.30"
+            android:layout_marginLeft="6dp"
+            android:paddingLeft="4dp"
+            android:background="@drawable/borde_redondeado2">
+            <!-- Aquí coloca los elementos que desees dentro del Spinner -->
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/TV_PiezasAñadidas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Piezas a registrar:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ET_ArtEsperados"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="0.30"
+            android:background="@drawable/borde_redondeado2"
+            android:inputType="number"
+            android:focusable="true"
+            android:paddingLeft="4dp"
+            android:hint="Piezas a agregar"
+            >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_add_unidad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Fecha:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/ET_FechaEntrada"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/LL_Lotes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="4dp">
 
