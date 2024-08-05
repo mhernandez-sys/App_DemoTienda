@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 public class EntradasFragment extends KeyDwonFragment {
 
-    private EntradasViewModel mViewModel;
     private String cantidadIngresada;
     private CheckBox CB_Lotes, CB_Unidad;
     private Spinner Sp_Provedor, SP_Producto;
@@ -138,7 +137,6 @@ public class EntradasFragment extends KeyDwonFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EntradasViewModel.class);
     }
 
     private void showCustomAlertDialog(String hintText) {
@@ -147,6 +145,7 @@ public class EntradasFragment extends KeyDwonFragment {
         View dialogView = inflater.inflate(R.layout.salidasve, null);
         builder.setView(dialogView).setCancelable(false);
         AlertDialog alertDialog = builder.create();
+        seleccionado = hintText;
 
         TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
         TextView TV_CajasLeidas = dialogView.findViewById(R.id.TV_CajasLeidas);

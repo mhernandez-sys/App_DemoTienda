@@ -129,7 +129,7 @@ public class MenuClientesFragment extends Fragment {
                             String idCliente = jsonObject.getString("id_Cliente");
                             String nombre = jsonObject.getString("Nombre");
                             String RFC = jsonObject.getString("RFC");
-                            String clave= jsonObject.getString("ClaveClient");
+                            String clave = jsonObject.getString("ClaveClient");
                             listClientes.add(new ListClientes(idCliente,nombre,RFC, clave));
                         }
                         //Cuando se seleciona un producto
@@ -171,7 +171,7 @@ public class MenuClientesFragment extends Fragment {
 
         Map<String, String> propeties = new HashMap<>();
         propeties.put("ClaveCliente",clave);
-        propeties.put("id_cliente",C_eliminado);
+        propeties.put("cliente",C_eliminado);
 
 
         webServiceManager.callWebService("EliminarCliente", propeties, new WebServiceManager.WebServiceCallback() {
@@ -181,10 +181,9 @@ public class MenuClientesFragment extends Fragment {
                 if (result != null) {
                     try {
                         if (result.equals("Se realizó el delete correctamente.")) {
-                            Toast.makeText(getContext(), "Se elimino con exito", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Se inserto con exito", Toast.LENGTH_LONG).show();
                             inicilizar();
                             llenarListaClientes();
-                            selectedItem = null;
                         } else if (result.equals("No se pudo realizar el delete.")) {
                             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
                             inicilizar();

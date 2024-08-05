@@ -40,10 +40,8 @@ public class MenuProductosFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListAdapterProductos listAdapterProductos;
     private WebServiceManager webServiceManager;
-    private String[] Id, Descripvion, Clave, Existencia, TipoProducto, ClasificacionProducto;
     private ImageButton AddProducto, ImprimirProducto, BuscarProductos, EliminarProducto;
     private SearchView SV_BusquedaProductos;
-    private FloatingActionButton FB_Buscar;
     private ListProductos selectedItem; // Para almacenar el producto seleccionado
 
 
@@ -65,7 +63,6 @@ public class MenuProductosFragment extends Fragment {
         BuscarProductos = root.findViewById(R.id.IB_BuscarProductos);
         SV_BusquedaProductos = root.findViewById(R.id.SV_BusquedaProductos);
         EliminarProducto = root.findViewById(R.id.IB_EliminarProducto);
-        FB_Buscar = root.findViewById(R.id.FB_Buscar);
         inicilizar_lista();
         //lleanrlista();
         llenarListaProductos();
