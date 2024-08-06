@@ -49,11 +49,11 @@ public class SalidasFragment extends KeyDwonFragment {
     private WebServiceManager webServiceManager;
 
     private LinearLayout LL_SalidasLote;
-    private EditText Et_SalCajasCan, ET_SalPiezasCaja, ET_SalidasArtEsperados;
-    private TextView ET_FechaSalidas;
+    private EditText Et_SalNumlote, ET_SalidasArtEsperados;
+    private TextView ET_FechaSalidas, ET_SalPiezasCaja;
     private Button BT_Añadir;
     private String Ban_leido = "";
-    private List<String> DatosClientes = new ArrayList<>();
+    private final List<String> DatosClientes = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
     private int spinnersLoadedCount = 0;
 
@@ -74,7 +74,7 @@ public class SalidasFragment extends KeyDwonFragment {
         //Linear layout para lotes
         LL_SalidasLote = view.findViewById(R.id.LL_SalidasLote);
         //Edit text para lotes y unidad
-        Et_SalCajasCan = view.findViewById(R.id.Et_SalCajasCan);
+        Et_SalNumlote = view.findViewById(R.id.Et_SalNumlote);
         ET_SalPiezasCaja = view.findViewById(R.id.ET_SalPiezasCaja);
         ET_SalidasArtEsperados =view.findViewById(R.id.ET_SalidasArtEsperados);
         ET_FechaSalidas = view.findViewById(R.id.ET_FechaSalidas);
@@ -96,11 +96,13 @@ public class SalidasFragment extends KeyDwonFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(ET_SalidasArtEsperados.getText().toString().isEmpty()){
-                    CB_SalLote.setChecked(false);
+
                     Toast.makeText(getContext(), "Por favor, Introdusca la cantidad total que va a salir.", Toast.LENGTH_SHORT).show();
                 }else {
                     if (isChecked) {
                         CB_SalUnidad.setChecked(false);
+                        cantidadIngresada = ET_SalidasArtEsperados.getText().toString();
+                        ET_SalPiezasCaja.setText(cantidadIngresada);
                         LL_SalidasLote.setVisibility(View.VISIBLE);
                     } else {
                         LL_SalidasLote.setVisibility(View.GONE);
@@ -128,8 +130,7 @@ public class SalidasFragment extends KeyDwonFragment {
         BT_Añadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cantidadIngresada = ET_SalidasArtEsperados.getText().toString();
-                showCustomAlertDialog("QR Caja");
+                eliminar_producto();
             }
         });
         return view;
@@ -150,7 +151,7 @@ public class SalidasFragment extends KeyDwonFragment {
         TextView TV_CajasLeidas = dialogView.findViewById(R.id.TV_CajasLeidas);
         TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
         LinearLayout llPorCajas = dialogView.findViewById(R.id.LL_PorCajas);
-        EditText ET_Numserie = dialogView.findViewById(R.id.ET_Numserie);
+        EditText ET_Numserie = dialogView.findViewById(R.id.ET_NumserieAutomatico);
         Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
         Button BT_Siguiente = dialogView.findViewById(R.id.BT_Siguiente);
         String seleccionado = hintText;
@@ -163,14 +164,12 @@ public class SalidasFragment extends KeyDwonFragment {
 
         if (hintText.equals("QR Caja")){
             llPorCajas.setVisibility(View.VISIBLE);
-            BT_Siguiente.setVisibility(View.GONE);
-            btnCompletar.setVisibility(View.GONE);
 
         }else {
             llPorCajas.setVisibility(View.GONE);
-            BT_Siguiente.setVisibility(View.GONE);
-            btnCompletar.setVisibility(View.GONE);
         }
+        BT_Siguiente.setVisibility(View.GONE);
+        btnCompletar.setVisibility(View.GONE);
 
 
         // Aquí se pueden agregar más funcionalidades, por ejemplo, al ingresar datos en etLoteSerie
@@ -198,7 +197,7 @@ public class SalidasFragment extends KeyDwonFragment {
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
                                 int suma = datopz + datoleidos;
                                 int Artesperados = Integer.parseInt(cantidadIngresada);
-                                int cajasesperadas = Integer.parseInt(Et_SalCajasCan.getText().toString());
+                                int cajasesperadas = Integer.parseInt(Et_SalNumlote.getText().toString());
                                 TV_ArtLeidos.setText(String.valueOf(suma));
 
                                 // Suma de las cajas leídas
@@ -311,7 +310,7 @@ public class SalidasFragment extends KeyDwonFragment {
 
     public class TipoItem {
         private String idTipo;
-        private String descripcion;
+        private final String  descripcion;
 
         public TipoItem(String idTipo, String descripcion) {
             this.idTipo = idTipo;
@@ -326,6 +325,7 @@ public class SalidasFragment extends KeyDwonFragment {
             return descripcion;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return descripcion; // Esto es lo que se mostrará en el Spinner
@@ -333,13 +333,12 @@ public class SalidasFragment extends KeyDwonFragment {
     }
 
     private void eliminar_producto() {
-
         TipoItem selected_cliente = (TipoItem) sp_cliente.getSelectedItem();
         TipoItem selected_producto = (TipoItem) sp_producto.getSelectedItem();
         // Obtener el id_Tipo del elemento seleccionado
         String Cliente = selected_cliente.getIdTipo();
         String Producto = selected_producto.getIdTipo();
-        String Cantidad = ET_SalidasArtEsperados.getText().toString();
+        String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaSalidas.getText().toString();
 
         Map<String, String> propeties = new HashMap<>();
@@ -349,26 +348,25 @@ public class SalidasFragment extends KeyDwonFragment {
         propeties.put("nuevafecha",Fecha);
         propeties.put("nuevocliente",Cliente);
 
-        webServiceManager.callWebService("GuardarSalidas ", propeties, new WebServiceManager.WebServiceCallback() {
-            @Override
-            public void onWebServiceCallComplete(String result) {
-                if (result != null) {
-                    try {
-                        if(result.equals("Compra aprobada.")){
-                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                            salir();
-                        } else if (result.contains("Stock insuficiente.")) {
-                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                        }else {
-                            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        webServiceManager.callWebService("GuardarSalidas ", propeties, result -> {
+            if (result != null) {
+                try {
+                    if(result.equals("Compra aprobada.")){
+                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        salir();
+                    } else if (result.contains("Stock insuficiente.")) {
+                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        reset();
+                    }else {
+                        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        reset();
                     }
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            } else {
+                Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -390,7 +388,7 @@ public class SalidasFragment extends KeyDwonFragment {
         CB_SalUnidad.setChecked(false);
         ET_SalidasArtEsperados.setText("");
         ET_FechaSalidas.setText("");
-        Et_SalCajasCan.setText("");
+        Et_SalNumlote.setText("");
         ET_SalPiezasCaja.setText("");
         sp_cliente.setSelection(0);
         sp_producto.setSelection(0);

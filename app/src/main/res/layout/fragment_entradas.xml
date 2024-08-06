@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Piezas a registrar:"
+            android:text="Piezas a ingresar:"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -88,9 +88,7 @@
             android:inputType="number"
             android:focusable="true"
             android:paddingLeft="4dp"
-            android:hint="Piezas a agregar"
-            >
-        </EditText>
+            android:hint="Numero de piezas"/>
     </LinearLayout>
 
     <LinearLayout
@@ -147,22 +145,24 @@
                 android:id="@+id/TV_Cajas"
                 android:layout_width="0dp"
                 android:layout_height="34dp"
-                android:layout_margin="10dp"                android:layout_gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Num. de cajas:"
+                android:text="Num. de Lote:"
                 android:textSize="16sp"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/Et_CanCajas"
+                android:id="@+id/Et_NumLotes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
-                android:hint="Numero de Cajas"
+                android:hint="Numero de Lote"
                 android:inputType="number"
                 android:textSize="16dp"
+                android:paddingLeft="4dp"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -177,14 +177,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Piezas:"
                 android:textSize="16sp"
                 android:visibility="gone" />
 
-            <EditText
+            <TextView
                 android:id="@+id/ET_PiezasCaja"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -193,6 +193,7 @@
                 android:hint="Numero de piezas"
                 android:inputType="number"
                 android:textSize="16dp"
+                android:paddingLeft="4dp"
                 android:visibility="gone" />
 
         </LinearLayout>
