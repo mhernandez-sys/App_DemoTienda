@@ -99,11 +99,10 @@ public class EntradasFragment extends KeyDwonFragment {
         llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
 
         // Obtener la fecha actual
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato de fecha deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Formato de fecha deseado
         String currentDate = sdf.format(Calendar.getInstance().getTime());
         ///Establece la fecha en el ET+
         ET_FechaEntrada.setText(currentDate);
-
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
@@ -162,7 +161,6 @@ public class EntradasFragment extends KeyDwonFragment {
         View dialogView = inflater.inflate(R.layout.salidasve, null);
         builder.setView(dialogView).setCancelable(false);
         AlertDialog alertDialog = builder.create();
-        seleccionado = hintText;
 
         TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
         TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
