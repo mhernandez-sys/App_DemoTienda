@@ -1,5 +1,7 @@
 package com.example.demo.ui.Entrada_y_Salidas;
 
+import static com.google.android.material.internal.ViewUtils.showKeyboard;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +23,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +53,8 @@ public class EntradasFragment extends KeyDwonFragment {
     private String cantidadIngresada;
     private CheckBox CB_Lotes, CB_Unidad;
     private Spinner Sp_Provedor, SP_Producto;
-    private TextView TV_Cantidad, TV_Cajas, ET_FechaEntrada;
-    private EditText ET_PiezasCaja, ET_ArtEsperados, Et_CanCajas;
+    private TextView TV_Cantidad, TV_Cajas, ET_FechaEntrada,ET_PiezasCaja;
+    private EditText  ET_ArtEsperados, Et_NumLotes;
     private Button BT_Añadir;
     private String Ban_leido = "";
     private WebServiceManager webServiceManager;
@@ -58,7 +64,7 @@ public class EntradasFragment extends KeyDwonFragment {
     private int spinnersLoadedCount = 0;
 
     private static final String QR_CAJA = "QR Caja";
-    private static final String NUMERO_SERIE = "Número de serie";
+    private boolean isLocked = false;
 
     public static EntradasFragment newInstance() {
         return new EntradasFragment();
@@ -84,7 +90,7 @@ public class EntradasFragment extends KeyDwonFragment {
         TV_Cantidad = root.findViewById(R.id.TV_Cantidad);
         ET_PiezasCaja = root.findViewById(R.id.ET_PiezasCaja);
         ET_ArtEsperados = root.findViewById(R.id.ET_ArtEsperados);
-        Et_CanCajas = root.findViewById(R.id.Et_CanCajas);
+        Et_NumLotes = root.findViewById(R.id.Et_NumLotes);
         ET_FechaEntrada = root.findViewById(R.id.ET_FechaEntrada);
 
         DialogoAnimaciones.showLoadingDialog(getContext());
@@ -108,6 +114,8 @@ public class EntradasFragment extends KeyDwonFragment {
                     CB_Unidad.setChecked(false);
                     // Mostrar TextView y EditText
                     setLotesVisibility(View.VISIBLE);
+                    cantidadIngresada = ET_ArtEsperados.getText().toString();
+                    ET_PiezasCaja.setText(cantidadIngresada);
                 } else {
                     // Ocultar TextView y EditText
                     setLotesVisibility(View.GONE);
@@ -129,8 +137,7 @@ public class EntradasFragment extends KeyDwonFragment {
         });
 
         BT_Añadir.setOnClickListener(v -> {
-            cantidadIngresada = ET_ArtEsperados.getText().toString();
-            showCustomAlertDialog(QR_CAJA);
+            insertar_producto();
         });
 
         return root;
@@ -139,7 +146,7 @@ public class EntradasFragment extends KeyDwonFragment {
     private void setLotesVisibility(int visibility) {
         ET_PiezasCaja.setVisibility(visibility);
         TV_Cantidad.setVisibility(visibility);
-        Et_CanCajas.setVisibility(visibility);
+        Et_NumLotes.setVisibility(visibility);
         TV_Cajas.setVisibility(visibility);
         BT_Añadir.setVisibility(visibility);
     }
@@ -158,18 +165,19 @@ public class EntradasFragment extends KeyDwonFragment {
         seleccionado = hintText;
 
         TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
-        TextView TV_CajasLeidas = dialogView.findViewById(R.id.TV_CajasLeidas);
         TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
         LinearLayout llPorCajas = dialogView.findViewById(R.id.LL_PorCajas);
-        EditText ET_Numserie = dialogView.findViewById(R.id.ET_Numserie);
+        EditText ET_NumserieAutomatico = dialogView.findViewById(R.id.ET_NumserieAutomatico);
+        EditText ET_NumserieManual = dialogView.findViewById(R.id.ET_NumserieManual);
         Button btnCompletar = dialogView.findViewById(R.id.btn_completar);
         Button BT_Siguiente = dialogView.findViewById(R.id.BT_Siguiente);
+        Switch SW_Modo = dialogView.findViewById(R.id.SW_Modo);
+        TextView TV_SWEstatus = dialogView.findViewById(R.id.TV_SWEstatus);
+        Button BT_Cancelar = dialogView.findViewById(R.id.BT_Cancelar);
 
         TV_CanEsperada.setText(cantidadIngresada);
-        ET_Numserie.setHint(hintText);
-        ET_Numserie.requestFocus(); // Solicitar enfoque
-        ET_Numserie.setEnabled(true); // Habilitar el EditText
-        ET_Numserie.setFocusable(true); // Hacer que el EditText sea enfocable
+        ET_NumserieAutomatico.requestFocus();  // Coloca el foco en el EditText automatico
+        ET_NumserieAutomatico.setHint(hintText);
 
         if (QR_CAJA.equals(hintText)) {
             llPorCajas.setVisibility(View.VISIBLE);
@@ -179,7 +187,55 @@ public class EntradasFragment extends KeyDwonFragment {
         BT_Siguiente.setVisibility(View.GONE);
         btnCompletar.setVisibility(View.GONE);
 
-        ET_Numserie.addTextChangedListener(new TextWatcher() {
+        SW_Modo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    TV_SWEstatus.setText("Manual");
+                    ET_NumserieManual.setEnabled(true); // Habilitar el EditText
+                    ET_NumserieManual.setVisibility(View.VISIBLE);
+                    ET_NumserieAutomatico.setVisibility(View.GONE);
+                    BT_Siguiente.setVisibility(View.VISIBLE);
+                    ET_NumserieManual.requestFocus();  // Coloca el foco en el EditText manual
+                    ET_NumserieManual.setHint(hintText);
+
+                } else {
+                    TV_SWEstatus.setText("Automático");
+                    ET_NumserieAutomatico.setEnabled(true);
+                    ET_NumserieManual.setVisibility(View.GONE);
+                    ET_NumserieAutomatico.setVisibility(View.VISIBLE);
+                    BT_Siguiente.setVisibility(View.GONE);
+                    ET_NumserieAutomatico.requestFocus();  // Coloca el foco en el EditText automatico
+                    ET_NumserieAutomatico.setHint(hintText);
+                    Ban_leido = "0";
+                    isLocked = false; // Asegúrate de marcar el procesamiento como terminado
+                }
+            }
+        });
+
+        BT_Cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+                alertDialog.dismiss();
+            }
+        });
+
+        ET_NumserieAutomatico.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                // Si el EditText está bloqueado, no permitir entradas adicionales
+                if (isLocked) {
+                    return ""; // No permitir la entrada de texto
+                }
+                return null; // Permitir el texto si no está bloqueado
+            }
+        }});
+
+
+
+        ET_NumserieAutomatico.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -188,49 +244,32 @@ public class EntradasFragment extends KeyDwonFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (isLocked) {
+                    // Si ya se está procesando, no hacemos nada
+                    return;
+                }
+                isLocked = true; // Marca que estamos procesando un código
                 try {
                     if (!Ban_leido.equals("1")) {
                         Ban_leido = "1";
-
                         // Verifica si el código introducido es válido (puedes agregar una lógica de validación aquí si es necesario)
                         if (s.length() > 0) {
-                            if (seleccionado.equals("QR Caja")) {
-                                // Suma de los artículos leídos
-                                int datopz = Integer.parseInt(ET_PiezasCaja.getText().toString());
-                                int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
-                                int Artesperados = Integer.parseInt(cantidadIngresada);
-                                int cajasesperadas = Integer.parseInt(Et_CanCajas.getText().toString());
-                                int suma = datopz + datoleidos;
-                                TV_ArtLeidos.setText(String.valueOf(suma));
-
-                                // Suma de las cajas leídas
-                                int numcajas = Integer.parseInt(TV_CajasLeidas.getText().toString());
-                                numcajas++;
-                                TV_CajasLeidas.setText(String.valueOf(numcajas));
-                                if (suma == Artesperados || numcajas == cajasesperadas){
-                                    ET_Numserie.setVisibility(View.GONE);
-                                    ET_Numserie.clearFocus(); // Quita el foco del EditText
-                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
-                                    Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
-                                }
-                            } else {
                                 // Suma de los artículos leídos
                                 int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
                                 int Artesperados = Integer.parseInt(cantidadIngresada);
-
                                 datoleidos++;
                                 TV_ArtLeidos.setText(String.valueOf(datoleidos));
                                 if (datoleidos == Artesperados ){
-                                    ET_Numserie.setVisibility(View.GONE); ET_Numserie.clearFocus(); // Quita el foco del EditText
-                                    ET_Numserie.setEnabled(false); // Bloquea el EditText
+                                    ET_NumserieAutomatico.setVisibility(View.GONE);
+                                    ET_NumserieAutomatico.clearFocus(); // Quita el foco del EditText
+                                    ET_NumserieAutomatico.setEnabled(false); // Bloquea el EditText
                                     //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
                                 }
-                            }
-
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
                             new Handler().postDelayed(() -> {
-                                ET_Numserie.setText("");
+                                ET_NumserieAutomatico.setText("");
                                 Ban_leido = "0";
+                                isLocked = false; // Marca que el procesamiento ha terminado
                             }, 500); // 2000 milisegundos = 2 segundos
 
                             // Comprueba si se ha alcanzado el número esperado de artículos
@@ -243,6 +282,8 @@ public class EntradasFragment extends KeyDwonFragment {
                     }
                 } catch (NumberFormatException e) {
                     Toast.makeText(getContext(), "Por favor, ingrese números válidos.", Toast.LENGTH_SHORT).show();
+                    isLocked = false; // Asegúrate de marcar el procesamiento como terminado
+
                 }
             }
         });
@@ -250,17 +291,30 @@ public class EntradasFragment extends KeyDwonFragment {
         btnCompletar.setOnClickListener(v -> {
             insertar_producto();
             alertDialog.dismiss();
+
         });
 
         BT_Siguiente.setOnClickListener(v -> {
-            ET_Numserie.setText("");
-            Ban_leido = "0";
-
+            // Suma de los artículos leídos
+            int datoleidos = Integer.parseInt(TV_ArtLeidos.getText().toString());
+            int Artesperados = Integer.parseInt(cantidadIngresada);
+            datoleidos++;
+            TV_ArtLeidos.setText(String.valueOf(datoleidos));
+            if (datoleidos == Artesperados ){
+                ET_NumserieManual.setVisibility(View.GONE);
+                ET_NumserieManual.clearFocus(); // Quita el foco del EditText
+                ET_NumserieManual.setEnabled(false); // Bloquea el EditText
+                //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
+            }
+            // Comprueba si se ha alcanzado el número esperado de artículos
             String articulos = TV_ArtLeidos.getText().toString();
             if (articulos.equals(ET_ArtEsperados.getText().toString())) {
                 BT_Siguiente.setVisibility(View.GONE);
                 btnCompletar.setVisibility(View.VISIBLE);
             }
+            ET_NumserieAutomatico.setText("");
+            ET_NumserieManual.setText("");
+
         });
         alertDialog.show();
     }
@@ -326,13 +380,13 @@ public class EntradasFragment extends KeyDwonFragment {
     }
 
     private void insertar_producto() {
-
+        DialogoAnimaciones.showLoadingDialog(getContext());
         TipoItem selected_provedor = (TipoItem) Sp_Provedor.getSelectedItem();
         TipoItem selected_producto = (TipoItem) SP_Producto.getSelectedItem();
         // Obtener el id_Tipo del elemento seleccionado
         String Provedor = selected_provedor.getIdTipo();
         String Producto = selected_producto.getIdTipo();
-        String Cantidad = ET_ArtEsperados.getText().toString();
+        String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaEntrada.getText().toString();
 
         Map<String, String> propeties = new HashMap<>();
@@ -348,13 +402,16 @@ public class EntradasFragment extends KeyDwonFragment {
                 if (result != null) {
                     try {
                         Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                        DialogoAnimaciones.hideLoadingDialog();
                         salir();
 
                     } catch (Exception e) {
+                        DialogoAnimaciones.hideLoadingDialog();
                         e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch data from server", Toast.LENGTH_LONG).show();
+                    DialogoAnimaciones.hideLoadingDialog();
                 }
             }
         });
@@ -370,6 +427,17 @@ public class EntradasFragment extends KeyDwonFragment {
         if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
             DialogoAnimaciones.hideLoadingDialog();
         }
+    }
+
+    public void reset() {
+        CB_Lotes.setChecked(false);
+        CB_Unidad.setChecked(false);
+        ET_ArtEsperados.setText("");
+        ET_FechaEntrada.setText("");
+        Et_NumLotes.setText("");
+        ET_PiezasCaja.setText("");
+        Sp_Provedor.setSelection(0);
+        SP_Producto.setSelection(0);
     }
 
 }
