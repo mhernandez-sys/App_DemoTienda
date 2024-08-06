@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Movimientos.MenuMovimientosFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <SearchView
+            android:id="@+id/SV_BusquedaProductos"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/borde_redondeado2"
+            android:padding="6dp"
+            android:iconifiedByDefault="false"
+            android:backgroundTint="@color/azulgris2"
+            android:visibility="gone"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:padding="4dp">
+
+
+            <ImageButton
+                android:id="@+id/IB_AgregarProducto"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:src="@mipmap/agregarproducto_foreground" />
+
+            <ImageButton
+                android:id="@+id/IB_EliminarProducto"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:src="@mipmap/eliminarproducto_foreground" />
+
+            <ImageButton
+                android:id="@+id/IB_ImprimirProducto"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:src="@mipmap/imprimirproducto_foreground" />
+
+            <ImageButton
+                android:id="@+id/IB_BuscarProductos"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:src="@mipmap/buscarproducto_foreground" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ListRecyclerViewproductos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp" />
+    </LinearLayout>
+
+    <!-- FloatingActionButton para mostrar el SearchView -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FB_Buscar"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/menu_movimientos"
+        />
+
+</FrameLayout>
