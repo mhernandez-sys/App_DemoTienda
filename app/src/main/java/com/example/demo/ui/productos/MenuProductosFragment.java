@@ -270,22 +270,6 @@ public class MenuProductosFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        limpiarDatos();
-    }
-
-    private void limpiarDatos() {
-        if (elements != null) {
-            elements.clear();
-        }
-        if (listAdapterProductos != null) {
-            listAdapterProductos.notifyDataSetChanged();
-        }
-        selectedItem = null;
-    }
-
     private void eliminar_producto() {
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Obtener el id_Tipo del elemento seleccionado

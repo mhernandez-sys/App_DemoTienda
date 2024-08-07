@@ -42,6 +42,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SalidasFragment extends KeyDwonFragment {
 
@@ -61,7 +62,7 @@ public class SalidasFragment extends KeyDwonFragment {
     private int spinnersLoadedCount = 0;
     private static final String QR_CAJA = "QR Caja";
     private boolean isLocked = false;
-
+    public String SKU;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -148,7 +149,6 @@ public class SalidasFragment extends KeyDwonFragment {
         builder.setView(dialogView).setCancelable(false);
         AlertDialog alertDialog = builder.create();
 
-
         TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
         TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
         LinearLayout llPorCajas = dialogView.findViewById(R.id.LL_PorCajas);
@@ -159,6 +159,9 @@ public class SalidasFragment extends KeyDwonFragment {
         Switch SW_Modo = dialogView.findViewById(R.id.SW_Modo);
         TextView TV_SWEstatus = dialogView.findViewById(R.id.TV_SWEstatus);
         Button BT_Cancelar = dialogView.findViewById(R.id.BT_Cancelar);
+        AtomicReference<String> numSerieAutomatico = new AtomicReference<>("");
+        AtomicReference<String> numSerieManual = new AtomicReference<>("");
+        SKU = "";
 
         TV_CanEsperada.setText(cantidadIngresada);
         ET_NumserieAutomatico.requestFocus();  // Coloca el foco en el EditText automatico
@@ -250,6 +253,8 @@ public class SalidasFragment extends KeyDwonFragment {
                             }
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
                             new Handler().postDelayed(() -> {
+                                numSerieAutomatico.set(ET_NumserieAutomatico.getText().toString().trim());
+                                SKU += numSerieAutomatico+ ",";
                                 ET_NumserieAutomatico.setText("");
                                 Ban_leido = "0";
                                 isLocked = false; // Marca que el procesamiento ha terminado
@@ -289,12 +294,9 @@ public class SalidasFragment extends KeyDwonFragment {
                 ET_NumserieManual.setEnabled(false); // Bloquea el EditText
                 //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
             }
-            // Comprueba si se ha alcanzado el número esperado de artículos
-            String articulos = TV_ArtLeidos.getText().toString();
-            if (articulos.equals(ET_SalidasArtEsperados.getText().toString())) {
-                BT_Siguiente.setVisibility(View.GONE);
-                btnCompletar.setVisibility(View.VISIBLE);
-            }
+
+            numSerieManual.set(ET_NumserieManual.getText().toString().trim());
+            SKU += numSerieManual+ ",";
             ET_NumserieAutomatico.setText("");
             ET_NumserieManual.setText("");
 
@@ -367,15 +369,21 @@ public class SalidasFragment extends KeyDwonFragment {
         String Producto = selected_producto.getIdTipo();
         String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaSalidas.getText().toString();
+        String NumLote = Et_SalNumlote.getText().toString();
+        if(NumLote.isEmpty()){
+            Cantidad = "1";
+        }
 
         Map<String, String> propeties = new HashMap<>();
         propeties.put("nuevoTM","2");
         propeties.put("nuevoproducto",Producto);
         propeties.put("nuevacant",Cantidad);
+        propeties.put("sku",SKU);
+        propeties.put("NumLote",NumLote);
         propeties.put("nuevafecha",Fecha);
-        propeties.put("nuevocliente",Cliente);
+        propeties.put("nuevoprovedor",Cliente);
 
-        webServiceManager.callWebService("GuardarSalidas ", propeties, result -> {
+        webServiceManager.callWebService("EntradasManAut", propeties, result -> {
             if (result != null) {
                 try {
                     if(result.equals("Compra aprobada.")){
