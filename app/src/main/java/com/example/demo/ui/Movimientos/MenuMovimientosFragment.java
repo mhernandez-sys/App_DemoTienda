@@ -83,7 +83,10 @@ public class MenuMovimientosFragment extends Fragment {
                             String id_Prod = jsonObject.getString("id_Prod");
                             String Cantidad = jsonObject.getString("Cantidad");
                             String Fecha = jsonObject.getString("Fecha_Mov");
-                            elements.add(new ListMovimientos(id_tipoMov, id_Prod, Desc_Movimiento, Desc_Producto,Lote_SKU, Cantidad, Fecha));
+                            String Desc_Concepto = jsonObject.getString("Descripcion");
+                            String id_Concepto = jsonObject.getString("Id_concepto");
+
+                            elements.add(new ListMovimientos(id_tipoMov, id_Prod, Desc_Movimiento, Desc_Producto,Lote_SKU, Cantidad, Fecha, id_Concepto, Desc_Concepto));
                         }
                         //Cuando se seleciona un producto
                         listAdapterMovimiento = new ListAdapterMovimiento(getContext(), elements, new ListAdapterMovimiento.OnItemClickListeners() {
@@ -136,11 +139,11 @@ public class MenuMovimientosFragment extends Fragment {
 
     public void llenar_listaManual(){
         elements = new ArrayList<>();
-        elements.add(new ListMovimientos("1","22", "Entrada", "CPU 40-24", "1234/789", "45", "24/04/2024"));
-        elements.add(new ListMovimientos("2","22", "Salidas", "Monitores", "148655/48", "20", "2/08/2024"));
-        elements.add(new ListMovimientos("2","098", "Salidas", "Compresores", "KJ45/89", "150", "15/12/2023"));
-        elements.add(new ListMovimientos("1","5012", "Entradas", "C5 Chainway", "156878/82", "203", "12/08/2024"));
-        elements.add(new ListMovimientos("1","22", "Entrada", "CPU 40-24", "1234/789", "45", "24/04/2024"));
+        elements.add(new ListMovimientos("1","22", "Entrada", "CPU 40-24", "1234/789", "45", "24/04/2024", "",""));
+        elements.add(new ListMovimientos("2","22", "Salidas", "Monitores", "148655/48", "20", "2/08/2024","",""));
+        elements.add(new ListMovimientos("2","098", "Salidas", "Compresores", "KJ45/89", "150", "15/12/2023","", ""));
+        elements.add(new ListMovimientos("1","5012", "Entradas", "C5 Chainway", "156878/82", "203", "12/08/2024","",""));
+        elements.add(new ListMovimientos("1","22", "Entrada", "CPU 40-24", "1234/789", "45", "24/04/2024","",""));
 
         //Cuando se seleciona un producto
         listAdapterMovimiento = new ListAdapterMovimiento(getContext(), elements, new ListAdapterMovimiento.OnItemClickListeners() {

@@ -30,7 +30,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_weight="0.6"
-                android:src="@drawable/menu_movimientos" />
+                android:src="@mipmap/producto_foreground" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_cv"

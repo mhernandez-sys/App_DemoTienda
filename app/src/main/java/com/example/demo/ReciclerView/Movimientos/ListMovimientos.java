@@ -7,13 +7,16 @@ import java.io.Serializable;
 public class ListMovimientos implements Serializable {
     public String id_TipoMovimiento;
     public String id_Producto;
+    public String id_Concepto;
     public String Desc_Movimiento;
     public String Desc_Producto;
+    public String Desc_Concepto;
     public String SKU_NumLote;
     public String Existencia;
     public String Fecha;
 
-    public ListMovimientos(String id_TipoMovimiento, String id_Producto, String desc_Movimiento, String desc_Producto, String SKU_NumLote, String existencia, String fecha) {
+
+    public ListMovimientos(String id_TipoMovimiento, String id_Producto, String desc_Movimiento, String desc_Producto, String SKU_NumLote, String existencia, String fecha, String id_Concepto, String desc_Concepto) {
         this.id_TipoMovimiento = id_TipoMovimiento;
         this.id_Producto = id_Producto;
         Desc_Movimiento = desc_Movimiento;
@@ -21,6 +24,24 @@ public class ListMovimientos implements Serializable {
         this.SKU_NumLote = SKU_NumLote;
         Existencia = existencia;
         Fecha = fecha;
+        this.id_Concepto = id_Concepto;
+        Desc_Concepto = desc_Concepto;
+    }
+
+    public String getDesc_Concepto() {
+        return Desc_Concepto;
+    }
+
+    public void setDesc_Concepto(String desc_Concepto) {
+        Desc_Concepto = desc_Concepto;
+    }
+
+    public String getId_Concepto() {
+        return id_Concepto;
+    }
+
+    public void setId_Concepto(String id_Concepto) {
+        this.id_Concepto = id_Concepto;
     }
 
     public String getId_TipoMovimiento() {
