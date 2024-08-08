@@ -113,7 +113,7 @@ public class MainActivity extends BaseTabFragmentActivity {
 
         // Setup AppBarConfiguration
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_proveedores, R.id.nav_clientes,
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_proveedores, R.id.nav_clientes,R.id.nav_movimientos,
                 R.id.nav_inventario, R.id.nav_configuraciones, R.id.nav_salidas, R.id.nav_entradas)
                 .setOpenableLayout(drawer)
                 .build();

@@ -15,6 +15,7 @@
     <string name="Menu_SAL">Salidas</string>
     <string name="Menu_configuracion">Configuraciones</string>
     <string name="Menu_inventario">Inventario</string>
+    <string name="Menu_movimientos">Movimientos</string>
 
 
     <!-- res/values/styles.xml -->

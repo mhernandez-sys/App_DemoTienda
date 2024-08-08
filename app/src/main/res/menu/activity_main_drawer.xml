@@ -37,6 +37,11 @@
             android:title="@string/Menu_SAL"/>
 
         <item
+            android:id="@+id/nav_movimientos"
+            android:icon="@drawable/menu_movimientos"
+            android:title="@string/Menu_movimientos" />
+
+        <item
             android:id="@+id/nav_inventario"
             android:icon="@drawable/inventario"
             android:title="@string/Menu_inventario" />

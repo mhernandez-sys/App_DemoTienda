@@ -3,7 +3,6 @@ package com.example.demo.ui.Entrada_y_Salidas;
 import static com.google.android.material.internal.ViewUtils.showKeyboard;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -47,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class EntradasFragment extends KeyDwonFragment {
 
@@ -62,6 +62,7 @@ public class EntradasFragment extends KeyDwonFragment {
     private List<String> DatosProvedor = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
     private int spinnersLoadedCount = 0;
+    public String SKU;
 
     private static final String QR_CAJA = "QR Caja";
     private boolean isLocked = false;
@@ -99,11 +100,10 @@ public class EntradasFragment extends KeyDwonFragment {
         llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
 
         // Obtener la fecha actual
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato de fecha deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Formato de fecha deseado
         String currentDate = sdf.format(Calendar.getInstance().getTime());
         ///Establece la fecha en el ET+
         ET_FechaEntrada.setText(currentDate);
-
 
         CB_Lotes.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(ET_ArtEsperados.getText().toString().isEmpty()){
@@ -162,7 +162,6 @@ public class EntradasFragment extends KeyDwonFragment {
         View dialogView = inflater.inflate(R.layout.salidasve, null);
         builder.setView(dialogView).setCancelable(false);
         AlertDialog alertDialog = builder.create();
-        seleccionado = hintText;
 
         TextView TV_CanEsperada = dialogView.findViewById(R.id.TV_CanEsperada);
         TextView TV_ArtLeidos = dialogView.findViewById(R.id.TV_ArtLeidos);
@@ -174,6 +173,10 @@ public class EntradasFragment extends KeyDwonFragment {
         Switch SW_Modo = dialogView.findViewById(R.id.SW_Modo);
         TextView TV_SWEstatus = dialogView.findViewById(R.id.TV_SWEstatus);
         Button BT_Cancelar = dialogView.findViewById(R.id.BT_Cancelar);
+        AtomicReference<String> numSerieAutomatico = new AtomicReference<>("");
+        AtomicReference<String> numSerieManual = new AtomicReference<>("");
+        SKU = "";
+
 
         TV_CanEsperada.setText(cantidadIngresada);
         ET_NumserieAutomatico.requestFocus();  // Coloca el foco en el EditText automatico
@@ -232,8 +235,6 @@ public class EntradasFragment extends KeyDwonFragment {
             }
         }});
 
-
-
         ET_NumserieAutomatico.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -260,13 +261,17 @@ public class EntradasFragment extends KeyDwonFragment {
                                 datoleidos++;
                                 TV_ArtLeidos.setText(String.valueOf(datoleidos));
                                 if (datoleidos == Artesperados ){
+
                                     ET_NumserieAutomatico.setVisibility(View.GONE);
                                     ET_NumserieAutomatico.clearFocus(); // Quita el foco del EditText
                                     ET_NumserieAutomatico.setEnabled(false); // Bloquea el EditText
+                                    // Obtener el texto de los EditText
                                     //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
                                 }
                             // Muestra el código leído por 2 segundos antes de limpiar el EditText
                             new Handler().postDelayed(() -> {
+                                numSerieAutomatico.set(ET_NumserieAutomatico.getText().toString().trim());
+                                SKU += numSerieAutomatico+ ",";
                                 ET_NumserieAutomatico.setText("");
                                 Ban_leido = "0";
                                 isLocked = false; // Marca que el procesamiento ha terminado
@@ -291,7 +296,6 @@ public class EntradasFragment extends KeyDwonFragment {
         btnCompletar.setOnClickListener(v -> {
             insertar_producto();
             alertDialog.dismiss();
-
         });
 
         BT_Siguiente.setOnClickListener(v -> {
@@ -304,17 +308,14 @@ public class EntradasFragment extends KeyDwonFragment {
                 ET_NumserieManual.setVisibility(View.GONE);
                 ET_NumserieManual.clearFocus(); // Quita el foco del EditText
                 ET_NumserieManual.setEnabled(false); // Bloquea el EditText
-                //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
-            }
-            // Comprueba si se ha alcanzado el número esperado de artículos
-            String articulos = TV_ArtLeidos.getText().toString();
-            if (articulos.equals(ET_ArtEsperados.getText().toString())) {
                 BT_Siguiente.setVisibility(View.GONE);
                 btnCompletar.setVisibility(View.VISIBLE);
+                //Toast.makeText(getContext(), "Todos los artículos han sido escaneados.", Toast.LENGTH_LONG).show();
             }
+            numSerieManual.set(ET_NumserieManual.getText().toString().trim());
+            SKU += numSerieManual+ ",";
             ET_NumserieAutomatico.setText("");
             ET_NumserieManual.setText("");
-
         });
         alertDialog.show();
     }
@@ -388,15 +389,21 @@ public class EntradasFragment extends KeyDwonFragment {
         String Producto = selected_producto.getIdTipo();
         String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaEntrada.getText().toString();
+        String NumLote = Et_NumLotes.getText().toString();
+        if(NumLote.isEmpty()){
+            Cantidad = "1";
+        }
 
         Map<String, String> propeties = new HashMap<>();
         propeties.put("nuevoTM","1");
         propeties.put("nuevoproducto",Producto);
         propeties.put("nuevacant",Cantidad);
+        propeties.put("sku",SKU);
+        propeties.put("NumLote",NumLote);
         propeties.put("nuevafecha",Fecha);
         propeties.put("nuevoprovedor",Provedor);
 
-        webServiceManager.callWebService("GuardarEntradas", propeties, new WebServiceManager.WebServiceCallback() {
+        webServiceManager.callWebService("EntradasManAut", propeties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null) {
