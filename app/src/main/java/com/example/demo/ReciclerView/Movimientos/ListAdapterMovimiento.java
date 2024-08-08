@@ -81,13 +81,14 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView Icon_Movimientos;
-        TextView TV_DescripcionProducto, TV_DescMovimineto, TV_SKU_NumLote, TV_Existencia, TV_Fecha;
+        TextView TV_DescripcionProducto, TV_DescMovimineto, TV_SKU_NumLote, TV_Existencia, TV_Fecha, TV_DescConcepto;
 
         ViewHolder(View itemView) {
             super(itemView);
             Icon_Movimientos = itemView.findViewById(R.id.Icon_Movimientos);
             TV_DescripcionProducto = itemView.findViewById(R.id.TV_DescripcionProducto);
             TV_DescMovimineto = itemView.findViewById(R.id.TV_DescMovimineto);
+            TV_DescConcepto = itemView.findViewById(R.id.TV_DescConcepto);
             TV_SKU_NumLote = itemView.findViewById(R.id.TV_SKU_NumLote);
             TV_Existencia = itemView.findViewById(R.id.TV_Existencia);
             TV_Fecha = itemView.findViewById(R.id.TV_Fecha);
@@ -96,6 +97,7 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
         void bindData(final ListMovimientos item, final int position) {
             TV_DescripcionProducto.setText(item.getDesc_Producto());
             TV_DescMovimineto.setText(item.getDesc_Movimiento());
+            TV_DescConcepto.setText(item.getDesc_Concepto());
             TV_SKU_NumLote.setText(item.getSKU_NumLote());
             TV_Existencia.setText(item.getExistencia());
             TV_Fecha.setText(item.getFecha());

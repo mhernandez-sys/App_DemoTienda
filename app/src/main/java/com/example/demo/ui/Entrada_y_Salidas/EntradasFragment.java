@@ -52,7 +52,7 @@ public class EntradasFragment extends KeyDwonFragment {
 
     private String cantidadIngresada;
     private CheckBox CB_Lotes, CB_Unidad;
-    private Spinner Sp_Provedor, SP_Producto;
+    private Spinner Sp_Provedor, SP_Producto, SP_concepto;
     private TextView TV_Cantidad, TV_Cajas, ET_FechaEntrada,ET_PiezasCaja;
     private EditText  ET_ArtEsperados, Et_NumLotes;
     private Button BT_Añadir;
@@ -61,6 +61,7 @@ public class EntradasFragment extends KeyDwonFragment {
     private String seleccionado = "";
     private List<String> DatosProvedor = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
+    private List<String> DatosConcepto = new ArrayList<>();
     private int spinnersLoadedCount = 0;
     public String SKU;
 
@@ -80,6 +81,7 @@ public class EntradasFragment extends KeyDwonFragment {
         // Obtén los Spinners del layout
         Sp_Provedor = root.findViewById(R.id.sp_proveedor);
         SP_Producto = root.findViewById(R.id.sp_producto);
+        SP_concepto = root.findViewById(R.id.sp_concepto);
 
         // Obtén los CheckBoxes y el EditText del layout
         CB_Lotes = root.findViewById(R.id.CB_Lotes);
@@ -96,8 +98,9 @@ public class EntradasFragment extends KeyDwonFragment {
 
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Llama al WebService para obtener los datos
-        llenarSpinners(Sp_Provedor, DatosProvedor, "Proveedoressp", "id_Proveedores", "Nombre");
-        llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
+        llenarSpinners(Sp_Provedor, DatosProvedor, "Proveedoressp", "id_Proveedores", "Nombre", null);
+        llenarSpinners(SP_Producto, DatosProducto, "productossp", "id_Prod", "Descripcion", null);
+        llenarSpinners(SP_concepto, DatosConcepto,"Conceptosp","Id_concepto", "Descripcion","1");
 
         // Obtener la fecha actual
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Formato de fecha deseado
@@ -320,8 +323,14 @@ public class EntradasFragment extends KeyDwonFragment {
         alertDialog.show();
     }
 
-    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
-        webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion, String Entradas) {
+        Map<String, String> propeties = new HashMap<>();
+        // Solo agregar 'Entradas' si no es nulo y no está vacío
+        if (Entradas != null && !Entradas.isEmpty()) {
+        propeties.put("entrada",Entradas);
+        }
+
+        webServiceManager.callWebService(metodo, propeties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
 
@@ -335,7 +344,6 @@ public class EntradasFragment extends KeyDwonFragment {
                             String descripcion = jsonObject.getString(Descripcion);
                             datos.add(new TipoItem(idTipo, descripcion));
                         }
-
                         ArrayAdapter<GalleryFragment.TipoItem> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, datos);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         provedores.setAdapter(adapter);
@@ -343,13 +351,13 @@ public class EntradasFragment extends KeyDwonFragment {
                         checkAllSpinnersLoaded();
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-273", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-273", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion, Entradas));
                     }
                 } else {
                     DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: EF-276", new Runnable() {
                         @Override
                         public void run() {
-                            llenarSpinners(provedores,datos,metodo,id,Descripcion);
+                            llenarSpinners(provedores,datos,metodo,id,Descripcion, Entradas);
                         }
                     });
                 }
@@ -384,12 +392,15 @@ public class EntradasFragment extends KeyDwonFragment {
         DialogoAnimaciones.showLoadingDialog(getContext());
         TipoItem selected_provedor = (TipoItem) Sp_Provedor.getSelectedItem();
         TipoItem selected_producto = (TipoItem) SP_Producto.getSelectedItem();
+        TipoItem selected_concepto = (TipoItem) SP_concepto.getSelectedItem();
         // Obtener el id_Tipo del elemento seleccionado
         String Provedor = selected_provedor.getIdTipo();
         String Producto = selected_producto.getIdTipo();
+        String Concepto = selected_concepto.getIdTipo();
         String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaEntrada.getText().toString();
         String NumLote = Et_NumLotes.getText().toString();
+
         if(NumLote.isEmpty()){
             Cantidad = "1";
         }
@@ -397,6 +408,7 @@ public class EntradasFragment extends KeyDwonFragment {
         Map<String, String> propeties = new HashMap<>();
         propeties.put("nuevoTM","1");
         propeties.put("nuevoproducto",Producto);
+        propeties.put("concepto",Concepto);
         propeties.put("nuevacant",Cantidad);
         propeties.put("sku",SKU);
         propeties.put("NumLote",NumLote);
@@ -431,7 +443,7 @@ public class EntradasFragment extends KeyDwonFragment {
     }
 
     private void checkAllSpinnersLoaded() {
-        if (spinnersLoadedCount == 2) { // Cambiar a 2 si tienes dos Spinners
+        if (spinnersLoadedCount == 3) { // Cambiar a 2 si tienes dos Spinners
             DialogoAnimaciones.hideLoadingDialog();
         }
     }

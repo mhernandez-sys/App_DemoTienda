@@ -48,7 +48,7 @@ public class SalidasFragment extends KeyDwonFragment {
 
     private String cantidadIngresada;
     private CheckBox CB_SalLote, CB_SalUnidad;
-    private Spinner sp_cliente, sp_producto;
+    private Spinner sp_cliente, sp_producto, sp_conceptoSalidas;
 
     private WebServiceManager webServiceManager;
 
@@ -59,6 +59,8 @@ public class SalidasFragment extends KeyDwonFragment {
     private String Ban_leido = "";
     private final List<String> DatosClientes = new ArrayList<>();
     private List<String> DatosProducto = new ArrayList<>();
+    private List<String> DatosConcepto = new ArrayList<>();
+
     private int spinnersLoadedCount = 0;
     private static final String QR_CAJA = "QR Caja";
     private boolean isLocked = false;
@@ -86,6 +88,7 @@ public class SalidasFragment extends KeyDwonFragment {
         ET_FechaSalidas = view.findViewById(R.id.ET_FechaSalidas);
         //Boton para llamar a recicler view
         BT_Añadir = view.findViewById(R.id.BT_SalAñadir);
+        sp_conceptoSalidas = view.findViewById(R.id.sp_conceptoSalidas);
 
         // Obtener la fecha actual
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Formato de fecha deseado
@@ -95,8 +98,10 @@ public class SalidasFragment extends KeyDwonFragment {
 
         DialogoAnimaciones.showLoadingDialog(getContext());
         // Llama al WebService para obtener los datos
-        llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre");
-        llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion");
+        llenarSpinners(sp_cliente, DatosClientes, "clientessp", "id_Cliente", "Nombre", null);
+        llenarSpinners(sp_producto, DatosProducto, "productossp", "id_Prod", "Descripcion", null);
+        llenarSpinners(sp_conceptoSalidas, DatosConcepto,"Conceptosp","Id_concepto", "Descripcion","2");
+
 
         CB_SalLote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -303,8 +308,14 @@ public class SalidasFragment extends KeyDwonFragment {
         });
         alertDialog.show();
     }
-    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion) {
-        webServiceManager.callWebService(metodo, null, new WebServiceManager.WebServiceCallback() {
+    private void llenarSpinners(Spinner provedores, List datos, String metodo, String id, String Descripcion, String Entradas) {
+
+        Map<String, String> propeties = new HashMap<>();
+        // Solo agregar 'Entradas' si no es nulo y no está vacío
+        if (Entradas != null && !Entradas.isEmpty()) {
+            propeties.put("entrada",Entradas);
+        }
+        webServiceManager.callWebService(metodo, propeties, new WebServiceManager.WebServiceCallback() {
             @Override
             public void onWebServiceCallComplete(String result) {
                 if (result != null||result.contains("Error")) {
@@ -326,10 +337,10 @@ public class SalidasFragment extends KeyDwonFragment {
                         checkAllSpinnersLoaded();
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-285", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
+                        DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-285", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion, Entradas));
                     }
                 } else {
-                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-288", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion));
+                    DialogoAnimaciones.showNoInternetDialog(getContext(), "Error de conexion: SF-288", () -> llenarSpinners(provedores,datos,metodo,id,Descripcion, Entradas));
 
                 }
             }
@@ -364,9 +375,11 @@ public class SalidasFragment extends KeyDwonFragment {
         DialogoAnimaciones.showLoadingDialog(getContext());
         TipoItem selected_cliente = (TipoItem) sp_cliente.getSelectedItem();
         TipoItem selected_producto = (TipoItem) sp_producto.getSelectedItem();
+        TipoItem selected_concepto = (TipoItem) sp_conceptoSalidas.getSelectedItem();
         // Obtener el id_Tipo del elemento seleccionado
         String Cliente = selected_cliente.getIdTipo();
         String Producto = selected_producto.getIdTipo();
+        String Concepto = selected_concepto.getIdTipo();
         String Cantidad = cantidadIngresada;
         String Fecha = ET_FechaSalidas.getText().toString();
         String NumLote = Et_SalNumlote.getText().toString();
@@ -377,6 +390,7 @@ public class SalidasFragment extends KeyDwonFragment {
         Map<String, String> propeties = new HashMap<>();
         propeties.put("nuevoTM","2");
         propeties.put("nuevoproducto",Producto);
+        propeties.put("concepto",Concepto);
         propeties.put("nuevacant",Cantidad);
         propeties.put("sku",SKU);
         propeties.put("NumLote",NumLote);
