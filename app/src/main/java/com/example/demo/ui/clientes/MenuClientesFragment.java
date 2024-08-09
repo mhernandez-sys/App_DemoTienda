@@ -63,7 +63,7 @@ public class MenuClientesFragment extends Fragment {
         inicilizar();
         llenarListaClientes();
         //Se programa boton para insertar un nuevo cliente
-        AddCliente.setOnClickListener(new View.OnClickListener() {
+            AddCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
