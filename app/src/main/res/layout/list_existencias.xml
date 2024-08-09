@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_cv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
+                android:orientation="vertical"
+                android:layout_weight="3"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/TV_DescProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripcion Producto"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_Fecha"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/TV_Clave"
+                        android:layout_width="0dp"
+                        android:layout_height="19dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Clave"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/azul2.1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_ARTEsperados"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Art. Esperados"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"/>
+
+                    <!-- Línea divisoria entre los TextViews -->
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/azul2.1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/TV_ARTEncontrados"
+                        android:layout_width="0dp"
+                        android:layout_height="19dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Art.Encontrados"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_CanEsperada"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="14"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"/>
+
+                    <!-- Línea divisoria entre los TextViews -->
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/azul2.1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/TV_Can_Encontrados"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="15"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
