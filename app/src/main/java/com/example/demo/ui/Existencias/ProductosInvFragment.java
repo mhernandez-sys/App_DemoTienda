@@ -330,9 +330,15 @@ public class ProductosInvFragment extends Fragment {
         btnCompletar.setOnClickListener(v -> {
             ///En esta parte se agrega
             String Leidos = TV_ArtLeidos.getText().toString();
+            String Esperados = selectedItem.getExistencia();
+            String Descripcion = selectedItem.getDesProducto();
+            String Clave = selectedItem.getClave();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("selected_product", selectedItem);
-            bundle.putSerializable("articulos", Leidos);
+            //bundle.putSerializable("selected_product", selectedItem);
+            bundle.putSerializable("ART_Leidos", Leidos);
+            bundle.putSerializable("ART_Esperados", Esperados);
+            bundle.putSerializable("Descripcion", Descripcion);
+            bundle.putSerializable("Clave", Clave);
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
             navController.navigate(R.id.action_nav_productos_inventario_to_nav_inventario, bundle);
             alertDialog.dismiss();
