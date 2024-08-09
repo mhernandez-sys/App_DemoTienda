@@ -146,7 +146,7 @@
             android:id="@+id/btn_completar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Completar"
+            android:text="Finalizar"
             android:layout_weight="1"
             android:visibility="gone"
             android:layout_marginLeft="4dp"

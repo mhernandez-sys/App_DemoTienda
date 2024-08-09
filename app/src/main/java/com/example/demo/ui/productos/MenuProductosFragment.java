@@ -74,7 +74,7 @@ public class MenuProductosFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("selected_product", selectedItem);
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-                    navController.navigate(R.id.nav_agregarproducto, bundle);
+                    navController.navigate(R.id.action_nav_inventario_to_nav_productos, bundle);
             }
         });
 
