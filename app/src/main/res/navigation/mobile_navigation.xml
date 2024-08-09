@@ -105,7 +105,11 @@
         android:id="@+id/nav_productos_inventario"
         android:name="com.example.demo.ui.Existencias.ProductosInvFragment"
         android:label="@string/Menu_inventario"
-        tools:layout="@layout/fragment_productos_inv" />
+        tools:layout="@layout/fragment_productos_inv" >
+        <action
+            android:id="@+id/action_nav_productos_inventario_to_nav_inventario"
+            app:destination="@id/nav_inventario" />
+    </fragment>
 
 
     <fragment

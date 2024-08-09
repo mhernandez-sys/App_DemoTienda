@@ -329,6 +329,12 @@ public class ProductosInvFragment extends Fragment {
 
         btnCompletar.setOnClickListener(v -> {
             ///En esta parte se agrega
+            String Leidos = TV_ArtLeidos.getText().toString();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("selected_product", selectedItem);
+            bundle.putSerializable("articulos", Leidos);
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.action_nav_productos_inventario_to_nav_inventario, bundle);
             alertDialog.dismiss();
         });
 
