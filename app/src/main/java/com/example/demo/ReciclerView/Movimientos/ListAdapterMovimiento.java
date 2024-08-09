@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
     private Context context;
     private OnItemClickListeners listeners;
     private int selectedPosition = -1; // Índice del elemento seleccionado
+    private int lastPosition = -1;
+
 
     public interface OnItemClickListeners{
         void onItemClick(ListMovimientos item);
@@ -49,8 +53,17 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
     @Override
     public void onBindViewHolder(@NonNull ListAdapterMovimiento.ViewHolder holder, int position) {
         holder.bindData(mDataFiltered.get(position), position);
+
+// Añadir la animación aquí
+        setAnimation(holder.itemView, position);
     }
 
+    private void setAnimation(View viewToAnimate, int position) {
+        // Solo animar los elementos que no han sido mostrados todavía
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.animacion_uno);
+            viewToAnimate.startAnimation(animation);
+
+    }
     @Override
     public int getItemCount() {
         return mDataFiltered.size();
@@ -83,6 +96,7 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
         ImageView Icon_Movimientos;
         TextView TV_DescripcionProducto, TV_DescMovimineto, TV_SKU_NumLote, TV_Existencia, TV_Fecha, TV_DescConcepto;
 
+
         ViewHolder(View itemView) {
             super(itemView);
             Icon_Movimientos = itemView.findViewById(R.id.Icon_Movimientos);
@@ -102,6 +116,13 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
             TV_Existencia.setText(item.getExistencia());
             TV_Fecha.setText(item.getFecha());
 
+            // Cambiar el icono dependiendo del tipo de movimiento
+            if ("Entrada".equalsIgnoreCase(item.getDesc_Movimiento())) {
+                Icon_Movimientos.setImageResource(R.drawable.verde);
+            } else if ("Salida".equalsIgnoreCase(item.getDesc_Movimiento())) {
+                Icon_Movimientos.setImageResource(R.drawable.rojo);
+            }
+
             // Resaltar el fondo si el elemento está seleccionado
             itemView.setBackgroundColor(selectedPosition == position ? Color.LTGRAY : Color.TRANSPARENT);
 
@@ -109,6 +130,10 @@ public class ListAdapterMovimiento extends RecyclerView.Adapter<ListAdapterMovim
                 listeners.onItemClick(item);
                 selectedPosition = position;
                 notifyDataSetChanged(); // Notificar cambios al adapter para actualizar la vista
+
+                // Añadir animación al hacer clic
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.animacion_uno);
+                itemView.startAnimation(animation);
             });
 
             itemView.setOnLongClickListener(v -> {

@@ -15,11 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="34dp"
             android:layout_margin="4dp"
-            android:background="@drawable/borde_redondeado2"
+            android:background="@drawable/buscadores"
             android:padding="6dp"
             android:iconifiedByDefault="false"
-            android:backgroundTint="@color/azulgris2"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:queryHint="Buscar Cliente..." />
 
         <LinearLayout
             android:layout_width="match_parent"

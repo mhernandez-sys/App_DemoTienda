@@ -141,10 +141,25 @@ public class SalidasFragment extends KeyDwonFragment {
         BT_Añadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eliminar_producto();
+                if (validarEntradas()) {
+                    eliminar_producto();
+                } else {
+                    Toast.makeText(getContext(), "Por favor, asegúrese de que todos los campos estén llenos.", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+            });
         return view;
+    }
+    private boolean validarEntradas() {
+        // Comprueba que se haya seleccionado un elemento de los spinners que no sea "Seleccionar"
+        boolean spinnersLlenos = !((EntradasFragment.TipoItem) sp_cliente.getSelectedItem()).getIdTipo().equals("0") &&
+                !((EntradasFragment.TipoItem) sp_producto.getSelectedItem()).getIdTipo().equals("0") &&
+                !((EntradasFragment.TipoItem) sp_conceptoSalidas.getSelectedItem()).getIdTipo().equals("0");
+
+        // Comprueba que el EditText no esté vacío
+        boolean editTextLleno = !ET_SalidasArtEsperados.getText().toString().trim().isEmpty();
+
+        return spinnersLlenos && editTextLleno;
     }
 
     private void showCustomAlertDialog(String hintText) {

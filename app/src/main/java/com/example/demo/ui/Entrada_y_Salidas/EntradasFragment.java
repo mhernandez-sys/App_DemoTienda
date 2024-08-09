@@ -140,10 +140,26 @@ public class EntradasFragment extends KeyDwonFragment {
         });
 
         BT_Añadir.setOnClickListener(v -> {
-            insertar_producto();
+            if (validarEntradas()) {
+                insertar_producto();
+            } else {
+                Toast.makeText(getContext(), "Por favor, asegúrese de que todos los campos estén llenos.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return root;
+    }
+
+    private boolean validarEntradas() {
+        // Comprueba que se haya seleccionado un elemento de los spinners que no sea "Seleccionar"
+        boolean spinnersLlenos = !((TipoItem) Sp_Provedor.getSelectedItem()).getIdTipo().equals("0") &&
+                !((TipoItem) SP_Producto.getSelectedItem()).getIdTipo().equals("0") &&
+                !((TipoItem) SP_concepto.getSelectedItem()).getIdTipo().equals("0");
+
+        // Comprueba que el EditText no esté vacío
+        boolean editTextLleno = !ET_ArtEsperados.getText().toString().trim().isEmpty();
+
+        return spinnersLlenos && editTextLleno;
     }
 
     private void setLotesVisibility(int visibility) {

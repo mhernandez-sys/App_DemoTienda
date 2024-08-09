@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class ListAdapterProductos extends RecyclerView.Adapter<ListAdapterProduc
     private Context context;
     private OnItemClickListeners listeners;
     private int selectedPosition = -1; // Índice del elemento seleccionado
+    private int lastPosition = -1;
 
     public interface OnItemClickListeners {
         void onItemClick(ListProductos item);
@@ -47,6 +50,17 @@ public class ListAdapterProductos extends RecyclerView.Adapter<ListAdapterProduc
     @Override
     public void onBindViewHolder(final ListAdapterProductos.ViewHolder holder, final int position) {
         holder.bindData(mDataFiltered.get(position), position);
+        // Añadir la animación aquí
+        setAnimation(holder.itemView, position);
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // Solo animar los elementos que no han sido mostrados todavía
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.animacion_uno);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
@@ -105,6 +119,9 @@ public class ListAdapterProductos extends RecyclerView.Adapter<ListAdapterProduc
                 listeners.onItemClick(item);
                 selectedPosition = position;
                 notifyDataSetChanged(); // Notificar cambios al adapter para actualizar la vista
+
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.animacion_uno);
+                itemView.startAnimation(animation);
             });
 
             itemView.setOnLongClickListener(v -> {

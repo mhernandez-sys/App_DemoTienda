@@ -17,11 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="34dp"
             android:layout_margin="4dp"
-            android:background="@drawable/borde_redondeado2"
-            android:backgroundTint="@color/azulgris2"
+            android:background="@drawable/buscadores"
             android:iconifiedByDefault="false"
             android:padding="6dp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:queryHint="Buscar Movimiento..." />
 
         <View
             android:id="@+id/divisormovimientos"
@@ -29,7 +29,8 @@
             android:layout_height="4dp"
             android:background="@color/azulgris"
             android:padding="4dp"
-            android:layout_margin="4dp"/>
+            android:layout_margin="4dp"
+            />
 
 
         <LinearLayout
